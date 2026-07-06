@@ -54,6 +54,17 @@ export const DOCTORS: Doctor[] = [
       "Spécialité cardiologie — CHU La Rabta",
     ],
     nextAvailability: "Aujourd'hui",
+    socials: {
+      facebook: "https://www.facebook.com/dr.aminebensalah.cardio",
+      instagram: "https://www.instagram.com/dr.aminebensalah",
+      linkedin: "https://www.linkedin.com/in/amine-ben-salah-cardio",
+    },
+    calendlyUrl: "https://calendly.com/tabibi-demo/consultation",
+    googleReviews: [
+      { author: "Sami K.", rating: 5, text: "Médecin très à l'écoute, explications claires et cabinet moderne.", date: "2026-05-14" },
+      { author: "Mariem B.", rating: 5, text: "Ponctuel et professionnel, je recommande vivement.", date: "2026-04-02" },
+      { author: "Hedi T.", rating: 4, text: "Très bon suivi, un peu d'attente mais ça vaut le coup.", date: "2026-02-19" },
+    ],
   },
   {
     slug: "dr-ines-trabelsi-dermatologie-la-marsa",
@@ -77,6 +88,14 @@ export const DOCTORS: Doctor[] = [
       "Spécialité dermatologie — Hôpital Charles Nicolle",
     ],
     nextAvailability: "Demain",
+    socials: {
+      instagram: "https://www.instagram.com/dr.ines.dermato",
+      website: "https://dr-ines-dermato.tn",
+    },
+    googleReviews: [
+      { author: "Nour E.", rating: 5, text: "Excellente dermatologue, traitement efficace pour mon acné.", date: "2026-06-01" },
+      { author: "Amina J.", rating: 4, text: "Bonne prise en charge, cabinet facile à trouver à La Marsa.", date: "2026-03-11" },
+    ],
   },
   {
     slug: "dr-mohamed-gharbi-medecine-generale-sfax",
@@ -120,6 +139,11 @@ export const DOCTORS: Doctor[] = [
       "Spécialité pédiatrie — CHU Farhat Hached",
     ],
     nextAvailability: "Aujourd'hui",
+    socials: { facebook: "https://www.facebook.com/dr.salma.pediatre" },
+    googleReviews: [
+      { author: "Olfa M.", rating: 5, text: "Formidable avec les enfants, ma fille n'a plus peur du docteur !", date: "2026-05-28" },
+      { author: "Karim S.", rating: 5, text: "Diagnostic rapide et suivi sérieux de la vaccination.", date: "2026-01-15" },
+    ],
   },
   {
     slug: "dr-karim-jlassi-dentiste-ariana",
@@ -206,6 +230,11 @@ export const DOCTORS: Doctor[] = [
       "Spécialité psychiatrie — Hôpital Razi",
     ],
     nextAvailability: "Aujourd'hui",
+    socials: { linkedin: "https://www.linkedin.com/in/yosra-chaabane-psy" },
+    calendlyUrl: "https://calendly.com/tabibi-demo/teleconsultation",
+    googleReviews: [
+      { author: "Anonyme", rating: 5, text: "La téléconsultation m'a beaucoup aidé, écoute exceptionnelle.", date: "2026-04-22" },
+    ],
   },
   {
     slug: "dr-hatem-baccouche-orthopedie-sfax",
@@ -288,6 +317,16 @@ export const DOCTORS: Doctor[] = [
     nextAvailability: "Aujourd'hui",
   },
 ];
+
+/** Lien Google Maps dérivé de l'adresse (surchargable via doctor.googleMapsUrl). */
+export function mapsUrl(d: Doctor): string {
+  return d.googleMapsUrl ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.address)}`;
+}
+
+/** URL d'embed Google Maps sans clé API. */
+export function mapsEmbedUrl(d: Doctor): string {
+  return `https://www.google.com/maps?q=${encodeURIComponent(d.address)}&output=embed`;
+}
 
 export function findDoctor(slug: string): Doctor | undefined {
   return DOCTORS.find((d) => d.slug === slug);

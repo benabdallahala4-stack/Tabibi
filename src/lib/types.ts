@@ -1,3 +1,10 @@
+export interface GoogleReview {
+  author: string;
+  rating: number;
+  text: string;
+  date: string;
+}
+
 export interface Doctor {
   slug: string;
   fullName: string;
@@ -17,6 +24,15 @@ export interface Doctor {
   bio: string;
   education: string[];
   nextAvailability: string; // libellé indicatif
+  socials?: {
+    facebook?: string;
+    instagram?: string;
+    linkedin?: string;
+    website?: string;
+  };
+  googleMapsUrl?: string;
+  calendlyUrl?: string; // agenda Calendly optionnel, embarqué sur le profil
+  googleReviews?: GoogleReview[]; // avis de démo — synchro réelle via API Google Places
 }
 
 export interface Specialty {
@@ -24,6 +40,12 @@ export interface Specialty {
   label: string;
   labelAr: string;
   emoji: string;
+}
+
+export interface PatientProfile {
+  name: string;
+  phone: string;
+  email: string;
 }
 
 export interface Appointment {

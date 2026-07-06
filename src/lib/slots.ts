@@ -1,5 +1,6 @@
 // Génération déterministe des créneaux : pas de vrai backend dans ce MVP,
 // mais un même médecin + un même jour donnent toujours les mêmes créneaux.
+// Les libellés de date sont formatés côté composant selon la langue (i18n).
 
 const HOURS = ["08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00"];
 
@@ -13,16 +14,11 @@ function hashCode(input: string): number {
 
 export interface DaySlots {
   dateIso: string; // YYYY-MM-DD
-  weekdayLabel: string;
-  dayLabel: string;
+  weekday: number; // 0 = dimanche
+  day: number;
+  month: number; // 0-11
   times: string[];
 }
-
-const WEEKDAYS_FR = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
-const MONTHS_FR = [
-  "janv.", "févr.", "mars", "avr.", "mai", "juin",
-  "juil.", "août", "sept.", "oct.", "nov.", "déc.",
-];
 
 export function toDateIso(d: Date): string {
   const y = d.getFullYear();
@@ -44,8 +40,9 @@ export function upcomingSlots(doctorSlug: string, from: Date, days = 7): DaySlot
       : HOURS.filter((h) => hashCode(`${doctorSlug}|${dateIso}|${h}`) % 3 !== 0);
     result.push({
       dateIso,
-      weekdayLabel: WEEKDAYS_FR[d.getDay()],
-      dayLabel: `${d.getDate()} ${MONTHS_FR[d.getMonth()]}`,
+      weekday: d.getDay(),
+      day: d.getDate(),
+      month: d.getMonth(),
       times,
     });
   }

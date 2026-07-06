@@ -1,27 +1,35 @@
+"use client";
+
 import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import SearchBar from "@/components/SearchBar";
 import DoctorCard from "@/components/DoctorCard";
 import { searchDoctors } from "@/lib/data";
+import { useLocale } from "@/lib/i18n";
 
-export const metadata = {
-  title: "Rechercher un praticien | Tabibi",
-};
-
-function Results({ q, ville }: { q: string; ville: string }) {
+function SearchContent() {
+  const params = useSearchParams();
+  const { t, city } = useLocale();
+  const q = params.get("q") ?? "";
+  const ville = params.get("ville") ?? "";
   const doctors = searchDoctors(q, ville);
+
   return (
-    <>
+    <div className="mx-auto max-w-4xl px-4 py-8">
+      <h1 className="text-2xl font-bold text-slate-800">{t("search.title")}</h1>
+      <div className="mt-4">
+        <SearchBar initialQuery={q} initialCity={ville} compact />
+      </div>
       <p className="mt-6 text-sm text-slate-500">
-        {doctors.length} praticien{doctors.length > 1 ? "s" : ""} trouvé
-        {doctors.length > 1 ? "s" : ""}
+        {doctors.length} {t("search.found")}
         {q && (
           <>
-            {" "}pour « <span className="font-medium text-slate-700">{q}</span> »
+            {" "}{t("search.for")} « <span className="font-medium text-slate-700">{q}</span> »
           </>
         )}
         {ville && (
           <>
-            {" "}à <span className="font-medium text-slate-700">{ville}</span>
+            {" "}{t("search.in")} <span className="font-medium text-slate-700">{city(ville)}</span>
           </>
         )}
       </p>
@@ -31,32 +39,20 @@ function Results({ q, ville }: { q: string; ville: string }) {
         ))}
         {doctors.length === 0 && (
           <div className="rounded-2xl bg-white p-10 text-center text-slate-500 ring-1 ring-slate-200">
-            Aucun praticien ne correspond à votre recherche.
+            {t("search.none1")}
             <br />
-            Essayez une autre spécialité ou élargissez à « Toute la Tunisie ».
+            {t("search.none2")}
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 
-export default function SearchPage({
-  searchParams,
-}: {
-  searchParams: { q?: string; ville?: string };
-}) {
-  const q = searchParams.q ?? "";
-  const ville = searchParams.ville ?? "";
+export default function SearchPage() {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
-      <h1 className="text-2xl font-bold text-slate-800">Trouver un praticien</h1>
-      <div className="mt-4">
-        <Suspense>
-          <SearchBar initialQuery={q} initialCity={ville} compact />
-        </Suspense>
-      </div>
-      <Results q={q} ville={ville} />
-    </div>
+    <Suspense>
+      <SearchContent />
+    </Suspense>
   );
 }
