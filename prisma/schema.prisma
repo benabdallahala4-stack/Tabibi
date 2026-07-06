@@ -1,0 +1,55 @@
+// Tabibi V1 — schéma PostgreSQL (Neon / Vercel Postgres / Supabase).
+// Voir docs/ARCHITECTURE.md pour le schéma cible complet.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(cuid())
+  phone        String        @unique
+  name         String?
+  createdAt    DateTime      @default(now())
+  appointments Appointment[]
+}
+
+model OtpCode {
+  id        String   @id @default(cuid())
+  phone     String
+  codeHash  String
+  expiresAt DateTime
+  attempts  Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([phone, expiresAt])
+}
+
+model Appointment {
+  id           String   @id
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  doctorSlug   String
+  doctorName   String
+  specialty    String
+  city         String
+  dateIso      String // YYYY-MM-DD
+  time         String // HH:mm
+  kind         String // cabinet | teleconsultation
+  patientName  String
+  patientPhone String
+  patientEmail String   @default("")
+  reason       String   @default("")
+  status       String   @default("confirme") // confirme | annule
+  // Anti-surréservation : slotKey = "doctorSlug|dateIso|time" tant que le RDV
+  // est confirmé ; remis à NULL à l'annulation (l'unicité ignore les NULL).
+  slotKey      String?  @unique
+  createdAt    DateTime @default(now())
+
+  @@index([userId, dateIso])
+  @@index([doctorSlug, dateIso])
+}

@@ -43,7 +43,20 @@ npm run build    # build de production
 
 ## ❓ Où sont enregistrés les rendez-vous ?
 
-Sans compte, les rendez-vous et le profil patient sont stockés dans le **localStorage du navigateur** : ils restent sur l'appareil, survivent au rechargement, mais ne sont pas partagés entre appareils et disparaissent si l'on vide les données du site. La V1 (backend + comptes) ajoutera la synchronisation — voir la feuille de route.
+**Deux modes, bascule automatique :**
+
+- **Mode local** (par défaut, sans base de données) : rendez-vous et profil dans le localStorage du navigateur — mono-appareil.
+- **Mode cloud** (V1, dès que `DATABASE_URL` est configuré) : compte par **SMS OTP**, rendez-vous en **PostgreSQL**, synchronisés entre appareils, avec **anti-surréservation garantie** par contrainte unique sur le créneau (`slotKey`).
+
+## ☁️ Activer le mode cloud (V1) sur Vercel
+
+1. Dans le dashboard Vercel du projet : **Storage → Create Database → Neon (Postgres)** — Vercel ajoute `DATABASE_URL` automatiquement. (Ou créez une base sur [neon.tech](https://neon.tech)/[supabase.com](https://supabase.com) et ajoutez `DATABASE_URL` dans Settings → Environment Variables.)
+2. Ajoutez aussi `SESSION_SECRET` (chaîne aléatoire, ex. `openssl rand -base64 32`).
+3. **Redéployez** : le build exécute `prisma migrate deploy` automatiquement (script `scripts/migrate-if-db.mjs`) et crée les tables.
+4. Vérifiez : `https://<votre-domaine>/api/health` doit répondre `{"db":true,"mode":"cloud"}`.
+5. Connexion : page « Mon compte » → « Vérifier mon numéro par SMS ». Sans passerelle SMS, le code s'affiche à l'écran (mode démo). Pour de vrais SMS : configurez `SMS_GATEWAY_URL` + `SMS_GATEWAY_TOKEN` (Orange/Ooredoo/TT ou agrégateur).
+
+Une fois connecté : les réservations sont poussées au serveur (409 si le créneau vient d'être pris), « Mes rendez-vous » fusionne les données serveur (badge « ☁️ Synchronisé »), et l'annulation libère le créneau.
 
 ## 🔑 Activer la connexion Google
 

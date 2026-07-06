@@ -3,19 +3,36 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { cancelAppointment, listAppointments } from "@/lib/appointments";
+import { cloudCancelAppointment, cloudFetchAppointments, cloudMe } from "@/lib/cloud";
 import type { Appointment } from "@/lib/types";
 import { useLocale } from "@/lib/i18n";
 
 export default function MyAppointmentsPage() {
-  const { t, city } = useLocale();
+  const { t, city, locale } = useLocale();
   const [appointments, setAppointments] = useState<Appointment[] | null>(null);
+  const [cloudSynced, setCloudSynced] = useState(false);
 
   useEffect(() => {
     setAppointments(listAppointments());
+    // Compte connecté : fusion avec les rendez-vous serveur (multi-appareils).
+    (async () => {
+      const user = await cloudMe();
+      if (!user) return;
+      const remote = await cloudFetchAppointments();
+      if (!remote) return;
+      const local = listAppointments();
+      const byId = new Map(local.map((a) => [a.id, a]));
+      for (const r of remote) byId.set(r.id, r); // le serveur fait foi
+      const merged = [...byId.values()];
+      window.localStorage.setItem("tabibi.appointments", JSON.stringify(merged));
+      setAppointments(merged);
+      setCloudSynced(true);
+    })();
   }, []);
 
   function cancel(id: string) {
     cancelAppointment(id);
+    if (cloudSynced) void cloudCancelAppointment(id);
     setAppointments(listAppointments());
   }
 
@@ -30,7 +47,15 @@ export default function MyAppointmentsPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       <h1 className="text-2xl font-bold text-slate-800">{t("mine.title")}</h1>
-      <p className="mt-1 text-sm text-slate-500">{t("mine.sub")}</p>
+      <p className="mt-1 text-sm text-slate-500">
+        {cloudSynced ? (
+          <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
+            ☁️ {locale === "ar" ? "متزامن مع حسابك" : "Synchronisé avec votre compte"}
+          </span>
+        ) : (
+          t("mine.sub")
+        )}
+      </p>
 
       {appointments === null ? (
         <p className="mt-8 text-slate-400">{t("common.loading")}</p>

@@ -137,6 +137,10 @@ const DICT: Record<string, { fr: string; ar: string }> = {
     ar: "يرجى إدخال الاسم ورقم الهاتف على الأقل.",
   },
   "booking.loading": { fr: "Chargement des disponibilités…", ar: "جاري تحميل المواعيد…" },
+  "booking.slotTaken": {
+    fr: "Ce créneau vient d'être réservé par un autre patient — choisissez-en un autre.",
+    ar: "تم حجز هذا الموعد للتو من مريض آخر — اختر موعدًا آخر.",
+  },
 
   // Confirmation
   "confirm.title": { fr: "Rendez-vous confirmé !", ar: "تم تأكيد الموعد!" },

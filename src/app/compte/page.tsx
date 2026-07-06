@@ -4,34 +4,89 @@ import { useEffect, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { loadProfile, saveProfile } from "@/lib/profile";
 import { useLocale } from "@/lib/i18n";
+import {
+  cloudAvailable,
+  cloudLogout,
+  cloudMe,
+  cloudRequestOtp,
+  cloudVerifyOtp,
+  type CloudUser,
+} from "@/lib/cloud";
 
 function SmsOtpBlock() {
   const { t } = useLocale();
   const fr = t("account.whereTitle") === "Où sont enregistrés mes rendez-vous ?";
+  const [cloud, setCloud] = useState<boolean | null>(null);
+  const [cloudUser, setCloudUser] = useState<CloudUser | null>(null);
   const [phone, setPhone] = useState("");
-  const [sentCode, setSentCode] = useState("");
+  const [sentCode, setSentCode] = useState(""); // mode local uniquement
+  const [devCode, setDevCode] = useState<string | null>(null); // mode cloud sans passerelle SMS
+  const [awaitingCode, setAwaitingCode] = useState(false);
   const [entered, setEntered] = useState("");
   const [verified, setVerified] = useState(false);
+  const [otpError, setOtpError] = useState("");
 
   useEffect(() => {
     setVerified(window.localStorage.getItem("tabibi.phoneVerified") === "1");
+    (async () => {
+      const available = await cloudAvailable();
+      setCloud(available);
+      if (available) setCloudUser(await cloudMe());
+    })();
   }, []);
 
-  function send(e: React.FormEvent) {
+  async function send(e: React.FormEvent) {
     e.preventDefault();
     if (phone.trim().length < 8) return;
-    // Démo : le code est affiché à l'écran. Production : envoi via passerelle
-    // SMS tunisienne (Orange / Ooredoo / Tunisie Télécom ou agrégateur).
+    setOtpError("");
+    if (cloud) {
+      // Mode cloud : le serveur génère le code (SMS réel si passerelle configurée).
+      const r = await cloudRequestOtp(phone);
+      if (!r.ok) {
+        setOtpError(fr ? "Envoi impossible, réessayez." : "تعذر الإرسال، أعد المحاولة.");
+        return;
+      }
+      setDevCode(r.devCode ?? null);
+      setAwaitingCode(true);
+      setEntered("");
+      return;
+    }
+    // Mode local (sans base de données) : code affiché à l'écran.
     setSentCode(String(Math.floor(1000 + Math.random() * 9000)));
+    setAwaitingCode(true);
     setEntered("");
   }
 
-  function check(e: React.FormEvent) {
+  async function check(e: React.FormEvent) {
     e.preventDefault();
+    setOtpError("");
+    if (cloud) {
+      const normalized = phone.replace(/[^0-9+]/g, "");
+      const full = normalized.startsWith("+") ? normalized : `+216${normalized}`;
+      const r = await cloudVerifyOtp(full, entered);
+      if (!r.ok) {
+        setOtpError(fr ? "Code incorrect ou expiré." : "رمز خاطئ أو منتهي الصلاحية.");
+        return;
+      }
+      window.localStorage.setItem("tabibi.phoneVerified", "1");
+      setVerified(true);
+      setCloudUser(r.user ?? null);
+      return;
+    }
     if (entered === sentCode) {
       window.localStorage.setItem("tabibi.phoneVerified", "1");
       setVerified(true);
+    } else {
+      setOtpError(fr ? "Code incorrect." : "رمز خاطئ.");
     }
+  }
+
+  async function logout() {
+    await cloudLogout();
+    setCloudUser(null);
+    setVerified(false);
+    setAwaitingCode(false);
+    window.localStorage.removeItem("tabibi.phoneVerified");
   }
 
   return (
@@ -44,23 +99,54 @@ function SmsOtpBlock() {
           ? "Un numéro vérifié fiabilise vos réservations et prépare la connexion par SMS (OTP)."
           : "الرقم الموثّق يعزز موثوقية حجوزاتك ويمهد لتسجيل الدخول عبر SMS."}
       </p>
-      {verified ? (
-        <p className="mt-4 rounded-xl bg-emerald-50 p-3 text-sm font-medium text-emerald-700">
-          ✓ {fr ? "Numéro vérifié" : "الرقم موثّق"}
-        </p>
-      ) : sentCode ? (
-        <form onSubmit={check} className="mt-4 space-y-2">
-          <p className="rounded-xl bg-amber-50 p-3 text-xs text-amber-700">
-            {fr
-              ? `Démo (pas d'envoi SMS réel) — votre code : ${sentCode}. En production, il arriverait par SMS via Orange/Ooredoo/Tunisie Télécom.`
-              : `تجريبي (دون إرسال فعلي) — رمزك: ${sentCode}. في الإنتاج يصلك عبر SMS من Orange/Ooredoo/اتصالات تونس.`}
+      {verified || cloudUser ? (
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-emerald-50 p-3">
+          <p className="text-sm font-medium text-emerald-700">
+            ✓ {fr ? "Numéro vérifié" : "الرقم موثّق"}
+            {cloudUser && (
+              <span className="ms-2 text-emerald-600" dir="ltr">{cloudUser.phone}</span>
+            )}
+            {cloudUser && (
+              <span className="ms-2 rounded-full bg-white px-2 py-0.5 text-xs text-emerald-700">
+                ☁️ {fr ? "Compte cloud — RDV synchronisés" : "حساب سحابي — مواعيد متزامنة"}
+              </span>
+            )}
           </p>
+          {cloudUser && (
+            <button
+              type="button"
+              onClick={logout}
+              className="rounded-lg bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-100"
+            >
+              {fr ? "Se déconnecter" : "تسجيل الخروج"}
+            </button>
+          )}
+        </div>
+      ) : awaitingCode ? (
+        <form onSubmit={check} className="mt-4 space-y-2">
+          {cloud && devCode ? (
+            <p className="rounded-xl bg-amber-50 p-3 text-xs text-amber-700">
+              {fr
+                ? `Passerelle SMS non configurée sur ce déploiement — votre code : ${devCode}. Avec la passerelle (Orange/Ooredoo/TT), il arriverait par SMS.`
+                : `بوابة SMS غير مهيأة في هذا الإصدار — رمزك: ${devCode}. مع البوابة يصلك عبر SMS.`}
+            </p>
+          ) : cloud ? (
+            <p className="rounded-xl bg-sky-50 p-3 text-xs text-sky-700">
+              {fr ? "Code envoyé par SMS — saisissez-le ci-dessous." : "أُرسل الرمز عبر SMS — أدخله أدناه."}
+            </p>
+          ) : (
+            <p className="rounded-xl bg-amber-50 p-3 text-xs text-amber-700">
+              {fr
+                ? `Démo locale (pas d'envoi SMS réel) — votre code : ${sentCode}.`
+                : `تجريبي محلي (دون إرسال فعلي) — رمزك: ${sentCode}.`}
+            </p>
+          )}
           <div className="flex gap-2">
             <input
               value={entered}
               onChange={(e) => setEntered(e.target.value)}
-              placeholder={fr ? "Code à 4 chiffres" : "رمز من 4 أرقام"}
-              maxLength={4}
+              placeholder={fr ? "Code reçu" : "الرمز المستلم"}
+              maxLength={6}
               className="w-40 rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary-400"
               dir="ltr"
             />
@@ -68,6 +154,7 @@ function SmsOtpBlock() {
               {fr ? "Vérifier" : "تحقق"}
             </button>
           </div>
+          {otpError && <p className="text-sm text-accent-600">{otpError}</p>}
         </form>
       ) : (
         <form onSubmit={send} className="mt-4 flex gap-2">
@@ -84,6 +171,7 @@ function SmsOtpBlock() {
           </button>
         </form>
       )}
+      {otpError && !awaitingCode && <p className="mt-2 text-sm text-accent-600">{otpError}</p>}
     </section>
   );
 }

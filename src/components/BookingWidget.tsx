@@ -7,6 +7,7 @@ import { upcomingSlots, type DaySlots } from "@/lib/slots";
 import { saveAppointment } from "@/lib/appointments";
 import { loadProfile } from "@/lib/profile";
 import { notifyUser } from "@/lib/notify";
+import { cloudPushAppointment } from "@/lib/cloud";
 import { useLocale, WEEKDAYS, MONTHS } from "@/lib/i18n";
 
 export default function BookingWidget({ doctor }: { doctor: Doctor }) {
@@ -19,6 +20,7 @@ export default function BookingWidget({ doctor }: { doctor: Doctor }) {
   const [kind, setKind] = useState<"cabinet" | "teleconsultation">("cabinet");
   const [form, setForm] = useState({ name: "", phone: "", email: "", reason: "" });
   const [error, setError] = useState(false);
+  const [slotTaken, setSlotTaken] = useState(false);
 
   useEffect(() => {
     setDays(upcomingSlots(doctor.slug, new Date(), 7));
@@ -26,7 +28,7 @@ export default function BookingWidget({ doctor }: { doctor: Doctor }) {
     setForm((f) => ({ ...f, name: profile.name, phone: profile.phone, email: profile.email }));
   }, [doctor.slug]);
 
-  function confirm(e: React.FormEvent) {
+  async function confirm(e: React.FormEvent) {
     e.preventDefault();
     if (!selected) return;
     if (!form.name.trim() || !form.phone.trim()) {
@@ -34,7 +36,7 @@ export default function BookingWidget({ doctor }: { doctor: Doctor }) {
       return;
     }
     const id = `rdv-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
-    saveAppointment({
+    const appt = {
       id,
       doctorSlug: doctor.slug,
       doctorName: doctor.fullName,
@@ -48,8 +50,17 @@ export default function BookingWidget({ doctor }: { doctor: Doctor }) {
       patientEmail: form.email.trim(),
       reason: form.reason.trim(),
       createdAt: new Date().toISOString(),
-      status: "confirme",
-    });
+      status: "confirme" as const,
+    };
+    // Mode cloud (compte connecté + base de données) : le serveur garantit
+    // qu'un même créneau ne peut pas être réservé deux fois.
+    const cloud = await cloudPushAppointment(appt);
+    if (!cloud.ok && cloud.error === "slot_taken") {
+      setSlotTaken(true);
+      setSelected(null);
+      return;
+    }
+    saveAppointment(appt);
     notifyUser(
       "Tabibi — rendez-vous confirmé ✓",
       `${doctor.fullName} · ${selected.dateIso} à ${selected.time}`
@@ -86,6 +97,10 @@ export default function BookingWidget({ doctor }: { doctor: Doctor }) {
             </button>
           ))}
         </div>
+      )}
+
+      {slotTaken && (
+        <p className="mt-4 rounded-xl bg-amber-50 p-3 text-sm text-amber-700">{t("booking.slotTaken")}</p>
       )}
 
       <div className="mt-5 space-y-4">
