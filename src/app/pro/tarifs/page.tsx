@@ -1,6 +1,6 @@
 "use client";
 
-// Abonnement Tabibi Pro — paiement en ligne via les passerelles tunisiennes.
+// Abonnement Seha Pro — paiement en ligne via les passerelles tunisiennes.
 // Démo : le parcours est complet mais aucun paiement réel n'est effectué.
 // Production : API ClicToPay (SMT), Konnect ou e-Dinar (voir docs/FEATURES.md).
 
@@ -60,7 +60,7 @@ const TIERS = [
     tagline: "Pour développer la patientèle",
     features: [
       "Tout Avancé, plus :",
-      "Mise en avant dans la recherche Tabibi",
+      "Mise en avant dans la recherche Seha",
       "Synchro des avis Google (API Places)",
       "Widget de réservation pour votre site",
       "Multi-assistants / secrétariat",
@@ -121,7 +121,7 @@ export default function TarifsPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      <h1 className="text-center text-3xl font-bold text-slate-800">Tarifs Tabibi Pro</h1>
+      <h1 className="text-center text-3xl font-bold text-slate-800">Tarifs Seha Pro</h1>
       <p className="mx-auto mt-2 max-w-xl text-center text-slate-500">
         <span className="font-semibold text-primary-700">Commencez gratuitement</span> — passez à un plan
         payant quand votre cabinet est prêt. Sans engagement, résiliable à tout moment.

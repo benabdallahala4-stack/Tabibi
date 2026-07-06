@@ -1,6 +1,6 @@
-# Tabibi — Architecture backend & plan de montée en charge
+# Seha — Architecture backend & plan de montée en charge
 
-> Positionnement : *med.tn est un annuaire avec Q&A ; **Tabibi est le système d'exploitation de la santé tunisienne***.
+> Positionnement : *med.tn est un annuaire avec Q&A ; **Seha est le système d'exploitation de la santé tunisienne***.
 > Ce document décrit comment passer du MVP actuel (front Next.js + localStorage) à une plateforme nationale.
 
 ## 1. État actuel (V0 — ce dépôt)
@@ -21,7 +21,7 @@ Tout est côté navigateur : données seed dans `src/lib/*.ts`, état dans `loca
 | Auth | **NextAuth** (Google déjà scaffoldé) + **OTP SMS** (Orange/Ooredoo/TT ou agrégateur) | Téléphone-first pour la Tunisie |
 | Paiements | **ClicToPay (SMT)** + **Konnect** (webhooks d'activation) | Voir docs/FEATURES.md §4 bis |
 | Notifications | **Web Push (VAPID)** + SMS + WhatsApp Business API | Rappels J-1/H-2, créneau libéré, tour de file |
-| Visio | Jitsi auto-hébergé (`meet.tabibi.tn`) | Confidentialité médicale, marque |
+| Visio | Jitsi auto-hébergé (`meet.seha.tn`) | Confidentialité médicale, marque |
 | Observabilité | Sentry + logs structurés + uptime | SLO 99,9 % |
 
 **Conformité tunisienne** : hébergement des données de santé à instruire avec l'INPDP (loi 2004-63) — prévoir un déploiement des données sensibles chez un hébergeur tunisien certifié, chiffrement au repos et en transit, journal d'accès immuable, consentement explicite par praticien.
@@ -47,7 +47,7 @@ model PatientProfile {
   allergies    String?
   chronic      String?
   medications  String?
-  familyMembers FamilyMember[]        // profils famille (Tabibi Plus)
+  familyMembers FamilyMember[]        // profils famille (Seha Plus)
   documents    MedicalDocument[]
   accessGrants RecordAccessGrant[]   // partage par praticien + audit
   appointments Appointment[]
@@ -150,12 +150,12 @@ model Pharmacy { id String @id; name String; cityId String; lat Float; lng Float
 
 ## 4. Découpage des applications
 
-- **tabibi.tn** — app patient (ce front) : recherche/géoloc, RDV, visio, dossier, historique, Plus.
-- **pro.tabibi.tn** — app praticien : agenda, dossiers, caisse, file, messagerie, stats, abonnement. (Aujourd'hui `/pro/dashboard` ; à extraire quand l'équipe grandit.)
-- **clinique.tabibi.tn** — app clinique : devis entrants, praticiens rattachés, stats internationales. (Aujourd'hui `/clinique-admin`.)
-- **labo.tabibi.tn** — dépôt de résultats (aujourd'hui `/labo`).
-- **admin.tabibi.tn** — back-office interne : validation des praticiens (CNOM), modération avis/Q&A, support.
-- **API** commune versionnée (`api.tabibi.tn/v1`) consommée par le web et les apps mobiles (TWA → React Native/Capacitor en V3).
+- **seha.tn** — app patient (ce front) : recherche/géoloc, RDV, visio, dossier, historique, Plus.
+- **pro.seha.tn** — app praticien : agenda, dossiers, caisse, file, messagerie, stats, abonnement. (Aujourd'hui `/pro/dashboard` ; à extraire quand l'équipe grandit.)
+- **clinique.seha.tn** — app clinique : devis entrants, praticiens rattachés, stats internationales. (Aujourd'hui `/clinique-admin`.)
+- **labo.seha.tn** — dépôt de résultats (aujourd'hui `/labo`).
+- **admin.seha.tn** — back-office interne : validation des praticiens (CNOM), modération avis/Q&A, support.
+- **API** commune versionnée (`api.seha.tn/v1`) consommée par le web et les apps mobiles (TWA → React Native/Capacitor en V3).
 
 ## 5. Notifications (V1)
 

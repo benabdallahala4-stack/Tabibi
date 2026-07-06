@@ -16,7 +16,7 @@ export interface QueueState {
   entries: QueueEntry[];
 }
 
-const KEY = "tabibi.queue.v1";
+const KEY = "seha.queue.v1";
 
 const SEED: QueueState = {
   avgMinutes: 20,

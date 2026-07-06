@@ -1,6 +1,6 @@
 "use client";
 
-// Espace praticien Tabibi Pro (démonstration interactive, compte fictif
+// Espace praticien Seha Pro (démonstration interactive, compte fictif
 // « Dr Amine Ben Salah »). Interface en français : langue de travail
 // habituelle du corps médical tunisien.
 
@@ -96,7 +96,7 @@ export default function ProDashboard() {
           href="/pro/tarifs"
           className="rounded-xl bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-700"
         >
-          ⭐ Passer à Tabibi Pro
+          ⭐ Passer à Seha Pro
         </Link>
       </div>
 
@@ -471,7 +471,7 @@ function PatientsTab({ ws, update }: { ws: ProWorkspace; update: (w: ProWorkspac
               </div>
               {consult.certType.trim() && (
                 <p className="text-xs text-amber-700">
-                  ⚖️ Rappel : le certificat doit être remis en main propre après examen — Tabibi n&apos;en conserve
+                  ⚖️ Rappel : le certificat doit être remis en main propre après examen — Seha n&apos;en conserve
                   qu&apos;une trace, aucun certificat n&apos;est émis en ligne.
                 </p>
               )}
@@ -1016,7 +1016,7 @@ function SharedRecordTab() {
     <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
       <h2 className="text-lg font-bold text-slate-800">Consulter un dossier partagé par le patient</h2>
       <p className="mt-1 text-sm text-slate-500">
-        Le patient remplit son dossier sur Tabibi (<span className="font-medium">Mon dossier médical</span>) et
+        Le patient remplit son dossier sur Seha (<span className="font-medium">Mon dossier médical</span>) et
         vous remet son code d&apos;accès à 6 caractères. Sans code — ou si le patient coupe le partage — le
         dossier est inaccessible. <span className="text-slate-400">(Démo : patient et praticien sur le même appareil.)</span>
       </p>

@@ -2,7 +2,7 @@
 
 import type { PatientProfile } from "./types";
 
-const KEY = "tabibi.profile";
+const KEY = "seha.profile";
 
 export function loadProfile(): PatientProfile {
   if (typeof window === "undefined") return { name: "", phone: "", email: "" };

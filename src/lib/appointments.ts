@@ -3,7 +3,7 @@
 
 import type { Appointment } from "./types";
 
-const KEY = "tabibi.appointments";
+const KEY = "seha.appointments";
 
 export function listAppointments(): Appointment[] {
   if (typeof window === "undefined") return [];

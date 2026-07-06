@@ -1,4 +1,4 @@
-// Magazine Santé Tabibi — articles originaux de prévention et d'information.
+// Magazine Santé Seha — articles originaux de prévention et d'information.
 // Objectif : contenu utile pour les patients + référencement naturel (SEO),
 // chaque article renvoyant vers l'annuaire de la spécialité concernée.
 // Production : articles rédigés/validés par des praticiens partenaires signés.
@@ -64,13 +64,13 @@ export const ARTICLES: Article[] = [
       { heading: "Un programme national gratuit", body: "La Tunisie dispose d'un programme national de vaccination qui protège gratuitement les enfants contre des maladies graves : tuberculose, hépatite B, diphtérie, tétanos, coqueluche, polio, rougeole, rubéole… Les doses sont administrées dans les centres de santé de base et chez le pédiatre, selon un calendrier précis qui commence dès la naissance." },
       { heading: "Pourquoi respecter les dates ?", body: "Chaque rappel est calculé pour stimuler l'immunité au bon moment. Un retard de quelques jours n'est pas grave, mais des mois de retard laissent l'enfant vulnérable pendant la période où il est le plus fragile. Si vous avez manqué un rendez-vous, inutile de tout recommencer : le pédiatre reprend simplement le calendrier là où il s'est arrêté." },
       { heading: "Fièvre après le vaccin : normal ?", body: "Une fièvre modérée, une rougeur ou une petite douleur au point d'injection dans les 48 heures sont des réactions banales qui témoignent que l'immunité travaille. Du paracétamol à dose adaptée au poids suffit généralement. En revanche, une fièvre très élevée, des pleurs inhabituels prolongés ou une réaction cutanée étendue justifient d'appeler le médecin." },
-      { heading: "Le carnet, un document précieux", body: "Le carnet de vaccination suit votre enfant toute sa vie : école, sport, voyages, études à l'étranger. Pensez à le numériser — vous pouvez photographier chaque page et la conserver dans votre dossier médical Tabibi pour l'avoir toujours sur vous et la partager avec le pédiatre." },
+      { heading: "Le carnet, un document précieux", body: "Le carnet de vaccination suit votre enfant toute sa vie : école, sport, voyages, études à l'étranger. Pensez à le numériser — vous pouvez photographier chaque page et la conserver dans votre dossier médical Seha pour l'avoir toujours sur vous et la partager avec le pédiatre." },
     ],
     sectionsAr: [
       { heading: "برنامج وطني مجاني", body: "تمتلك تونس برنامجًا وطنيًا للتلقيح يحمي الأطفال مجانًا من أمراض خطيرة: السل، التهاب الكبد ب، الخناق، الكزاز، السعال الديكي، شلل الأطفال، الحصبة والحصبة الألمانية… تُعطى الجرعات في مراكز الصحة الأساسية ولدى طبيب الأطفال وفق رزنامة دقيقة تبدأ منذ الولادة." },
       { heading: "لماذا احترام المواعيد؟", body: "كل جرعة تذكير محسوبة لتحفيز المناعة في الوقت المناسب. تأخير بضعة أيام ليس خطيرًا، لكن تأخير أشهر يترك الطفل دون حماية في الفترة التي يكون فيها أكثر هشاشة. إذا فاتكم موعد فلا داعي لإعادة كل شيء: يستأنف طبيب الأطفال الرزنامة من حيث توقفت." },
       { heading: "حمى بعد التلقيح: أمر طبيعي؟", body: "حمى معتدلة أو احمرار أو ألم بسيط في موضع الحقن خلال 48 ساعة هي ردود فعل عادية تدل على أن المناعة تعمل. يكفي عادةً باراسيتامول بجرعة مناسبة للوزن. أما الحمى الشديدة أو البكاء غير المعتاد المطوّل أو الطفح الجلدي الواسع فتستوجب الاتصال بالطبيب." },
-      { heading: "الدفتر وثيقة ثمينة", body: "يرافق دفتر التلقيح طفلك طوال حياته: المدرسة، الرياضة، الأسفار، الدراسة بالخارج. فكّروا في رقمنته — يمكنكم تصوير كل صفحة وحفظها في ملفكم الطبي على طبيبي لتكون معكم دائمًا ولمشاركتها مع طبيب الأطفال." },
+      { heading: "الدفتر وثيقة ثمينة", body: "يرافق دفتر التلقيح طفلك طوال حياته: المدرسة، الرياضة، الأسفار، الدراسة بالخارج. فكّروا في رقمنته — يمكنكم تصوير كل صفحة وحفظها في ملفكم الطبي على صحة لتكون معكم دائمًا ولمشاركتها مع طبيب الأطفال." },
     ],
   },
   {
@@ -131,7 +131,7 @@ export const ARTICLES: Article[] = [
     categoryAr: "الصحة العامة",
     specialtyId: "medecine-generale",
     emoji: "🩺",
-    gradient: ["#0a8f8c", "#0b6f6e"],
+    gradient: ["#1c4fdb", "#1a40b8"],
     readMinutes: 4,
     date: "2026-04-25",
     summary: "La Tunisie compte parmi les pays les plus touchés par le diabète. Une simple prise de sang peut changer la suite.",

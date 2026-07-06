@@ -20,7 +20,7 @@ const L = {
     notFound: "Ticket introuvable dans la file (ou déjà passé).",
     empty: "La file est vide pour le moment.",
     refresh: "Actualiser",
-    note: "Le praticien met la file à jour depuis son espace Tabibi Pro. En production : mise à jour en temps réel et notification quand votre tour approche.",
+    note: "Le praticien met la file à jour depuis son espace Seha Pro. En production : mise à jour en temps réel et notification quand votre tour approche.",
   },
   ar: {
     title: "طابور الانتظار في العيادة",

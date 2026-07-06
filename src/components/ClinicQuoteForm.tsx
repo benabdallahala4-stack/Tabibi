@@ -16,7 +16,7 @@ const L = {
     speciality: "Spécialité / intervention souhaitée",
     details: "Décrivez votre situation (antécédents, examens déjà faits, dates souhaitées…)",
     submit: "Envoyer la demande de devis",
-    ok: "✓ Demande envoyée (démo). La clinique vous recontactera par téléphone ou WhatsApp. Astuce : préparez votre dossier médical Tabibi pour accélérer la prise en charge.",
+    ok: "✓ Demande envoyée (démo). La clinique vous recontactera par téléphone ou WhatsApp. Astuce : préparez votre dossier médical Seha pour accélérer la prise en charge.",
   },
   ar: {
     title: "طلب تسعيرة",
@@ -28,7 +28,7 @@ const L = {
     speciality: "الاختصاص / التدخل المطلوب",
     details: "صف حالتك (السوابق، الفحوصات المنجزة، التواريخ المرغوبة…)",
     submit: "إرسال طلب التسعيرة",
-    ok: "✓ تم إرسال الطلب (تجريبي). ستتواصل معك المصحة هاتفيًا أو عبر واتساب. نصيحة: جهّز ملفك الطبي على طبيبي لتسريع التكفل.",
+    ok: "✓ تم إرسال الطلب (تجريبي). ستتواصل معك المصحة هاتفيًا أو عبر واتساب. نصيحة: جهّز ملفك الطبي على صحة لتسريع التكفل.",
   },
 };
 
@@ -43,9 +43,9 @@ export default function ClinicQuoteForm({ clinicName }: { clinicName: string }) 
     if (!form.name.trim() || !form.phone.trim()) return;
     // Démo : la demande est conservée localement. Production : envoi à la
     // clinique (e-mail/CRM) + accusé WhatsApp au patient.
-    const all = JSON.parse(window.localStorage.getItem("tabibi.quotes") ?? "[]");
+    const all = JSON.parse(window.localStorage.getItem("seha.quotes") ?? "[]");
     all.push({ ...form, clinicName, at: new Date().toISOString() });
-    window.localStorage.setItem("tabibi.quotes", JSON.stringify(all));
+    window.localStorage.setItem("seha.quotes", JSON.stringify(all));
     setSent(true);
   }
 

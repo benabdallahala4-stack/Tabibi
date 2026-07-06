@@ -1,4 +1,4 @@
-// Tabibi V1 — schéma PostgreSQL (Neon / Vercel Postgres / Supabase).
+// Seha V1 — schéma PostgreSQL (Neon / Vercel Postgres / Supabase).
 // Voir docs/ARCHITECTURE.md pour le schéma cible complet.
 
 generator client {

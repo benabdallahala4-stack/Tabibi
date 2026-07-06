@@ -1,6 +1,6 @@
 # Déploiement & exécution locale
 
-Tabibi fonctionne selon **deux modes**, avec bascule automatique :
+Seha fonctionne selon **deux modes**, avec bascule automatique :
 
 - **Mode local** — sans base de données. Rendez-vous et profil dans le
   `localStorage` du navigateur (mono-appareil). Idéal pour une démo rapide.
@@ -36,7 +36,7 @@ Ce que fait la commande :
 
 | Service | Rôle |
 |---------|------|
-| `db` | PostgreSQL 16, données persistées dans le volume `tabibi_pgdata`, `healthcheck` `pg_isready` |
+| `db` | PostgreSQL 16, données persistées dans le volume `seha_pgdata`, `healthcheck` `pg_isready` |
 | `web` | Build Next.js (multi-stage `Dockerfile`), puis au démarrage : `prisma migrate deploy` → `node prisma/seed.mjs` → `next start` |
 
 Le service `web` attend que la base soit *healthy* (`depends_on: condition:
@@ -46,7 +46,7 @@ service_healthy`) avant de démarrer.
 
 ```bash
 docker compose logs -f web        # suivre les logs de l'app
-docker compose exec db psql -U tabibi -d tabibi   # ouvrir psql
+docker compose exec db psql -U seha -d seha   # ouvrir psql
 docker compose down               # arrêter (garde les données)
 docker compose down -v            # arrêter ET effacer la base
 ```
@@ -98,6 +98,6 @@ Ce qui est **en place** :
 - [ ] **RGPD/protection des données de santé** : consentement, durée de
       conservation, chiffrement au repos, registre des traitements.
 - [ ] Intégration du **paiement d'abonnement** (passerelle tunisienne agréée)
-      pour Tabibi Pro / Plus.
+      pour Seha Pro / Plus.
 - [ ] Tests end-to-end sur les parcours critiques (réservation, annulation,
       accès pro refusé).

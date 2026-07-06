@@ -59,7 +59,7 @@ export const DOCTORS: Doctor[] = [
       instagram: "https://www.instagram.com/dr.aminebensalah",
       linkedin: "https://www.linkedin.com/in/amine-ben-salah-cardio",
     },
-    calendlyUrl: "https://calendly.com/tabibi-demo/consultation",
+    calendlyUrl: "https://calendly.com/seha-demo/consultation",
     googleReviews: [
       { author: "Sami K.", rating: 5, text: "Médecin très à l'écoute, explications claires et cabinet moderne.", date: "2026-05-14" },
       { author: "Mariem B.", rating: 5, text: "Ponctuel et professionnel, je recommande vivement.", date: "2026-04-02" },
@@ -231,7 +231,7 @@ export const DOCTORS: Doctor[] = [
     ],
     nextAvailability: "Aujourd'hui",
     socials: { linkedin: "https://www.linkedin.com/in/yosra-chaabane-psy" },
-    calendlyUrl: "https://calendly.com/tabibi-demo/teleconsultation",
+    calendlyUrl: "https://calendly.com/seha-demo/teleconsultation",
     googleReviews: [
       { author: "Anonyme", rating: 5, text: "La téléconsultation m'a beaucoup aidé, écoute exceptionnelle.", date: "2026-04-22" },
     ],

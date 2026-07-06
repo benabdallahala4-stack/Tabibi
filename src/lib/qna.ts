@@ -137,7 +137,7 @@ interface QnaLocalState {
   votes: Record<string, boolean>; // answerId → a voté
 }
 
-const KEY = "tabibi.qna.v1";
+const KEY = "seha.qna.v1";
 
 export function loadQnaLocal(): QnaLocalState {
   if (typeof window === "undefined") return { questions: [], extraAnswers: {}, votes: {} };

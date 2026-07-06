@@ -4,11 +4,11 @@
 import { createHmac, timingSafeEqual } from "crypto";
 import { cookies } from "next/headers";
 
-const COOKIE = "tabibi_session";
+const COOKIE = "seha_session";
 const MAX_AGE_S = 60 * 60 * 24 * 90; // 90 jours
 
 function secret(): string {
-  return process.env.SESSION_SECRET ?? process.env.NEXTAUTH_SECRET ?? "tabibi-demo-secret-change-me";
+  return process.env.SESSION_SECRET ?? process.env.NEXTAUTH_SECRET ?? "seha-demo-secret-change-me";
 }
 
 function sign(payload: string): string {

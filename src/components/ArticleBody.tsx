@@ -89,8 +89,8 @@ export default function ArticleBody({
 
       <p className="mt-6 rounded-xl bg-slate-50 p-3 text-xs text-slate-500">
         {fr
-          ? "⚕️ Contenu informatif rédigé pour Tabibi — il ne remplace pas une consultation médicale. En cas d'urgence, appelez le 190 (SAMU)."
-          : "⚕️ محتوى إعلامي أُعدّ لطبيبي — لا يعوّض الاستشارة الطبية. في الحالات الطارئة اتصل بالرقم 190 (الإسعاف)."}
+          ? "⚕️ Contenu informatif rédigé pour Seha — il ne remplace pas une consultation médicale. En cas d'urgence, appelez le 190 (SAMU)."
+          : "⚕️ محتوى إعلامي أُعدّ لصحة — لا يعوّض الاستشارة الطبية. في الحالات الطارئة اتصل بالرقم 190 (الإسعاف)."}
       </p>
 
       {/* Articles liés */}

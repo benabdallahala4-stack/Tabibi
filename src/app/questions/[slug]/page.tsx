@@ -12,7 +12,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const q = QNA_SEED.find((x) => x.slug === params.slug);
   return {
-    title: q ? `${q.title} — réponse de médecin | Tabibi` : "Question médicale | Tabibi",
+    title: q ? `${q.title} — réponse de médecin | Seha` : "Question médicale | Seha",
     description: q?.body.slice(0, 155),
   };
 }

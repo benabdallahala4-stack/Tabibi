@@ -1,11 +1,11 @@
 {
-  "name": "Tabibi — طبيبي",
-  "short_name": "Tabibi",
+  "name": "Seha — صحة",
+  "short_name": "Seha",
   "description": "Prise de rendez-vous médicaux en ligne en Tunisie",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0a8f8c",
+  "theme_color": "#1c4fdb",
   "lang": "fr",
   "dir": "ltr",
   "icons": [

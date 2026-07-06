@@ -1,9 +1,9 @@
-// Espace de travail Tabibi Pro (démonstration) : dossiers patients,
+// Espace de travail Seha Pro (démonstration) : dossiers patients,
 // consultations, ordonnances, certificats, caisse, messagerie et suivis.
 //
 // ⚖️ Cadre tunisien : pas de certificat médical « en ligne ». Le certificat
 // est établi APRÈS examen (au cabinet ou après téléconsultation de contrôle)
-// et remis EN MAIN PROPRE au patient. Tabibi n'en garde qu'une TRACE
+// et remis EN MAIN PROPRE au patient. Seha n'en garde qu'une TRACE
 // administrative (type, date, durée) dans le dossier — jamais de document
 // téléchargeable.
 //
@@ -62,7 +62,7 @@ export interface ProWorkspace {
   threads: MessageThread[];
 }
 
-const KEY = "tabibi.pro.workspace.v1";
+const KEY = "seha.pro.workspace.v1";
 
 const SEED: ProWorkspace = {
   patients: [

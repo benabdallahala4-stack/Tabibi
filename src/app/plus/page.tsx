@@ -1,6 +1,6 @@
 "use client";
 
-// Tabibi Plus — offre premium côté patient (démo).
+// Seha Plus — offre premium côté patient (démo).
 
 import Link from "next/link";
 import { useState } from "react";
@@ -48,15 +48,15 @@ export default function PlusPage() {
     <div className="mx-auto max-w-5xl px-4 py-12">
       <div className="text-center">
         <span className="rounded-full bg-amber-100 px-4 py-1 text-sm font-semibold text-amber-800">
-          ⭐ Tabibi Plus
+          ⭐ Seha Plus
         </span>
         <h1 className="mt-4 text-3xl font-bold text-slate-800">
           {fr ? "La santé de toute la famille, sans stress" : "صحة كل العائلة، دون عناء"}
         </h1>
         <p className="mx-auto mt-2 max-w-xl text-slate-500">
           {fr
-            ? "L'application reste gratuite. Tabibi Plus ajoute le confort : priorité, famille, coffre-fort santé."
-            : "يبقى التطبيق مجانيًا. طبيبي بلس يضيف الراحة: الأولوية، العائلة، الخزنة الصحية."}
+            ? "L'application reste gratuite. Seha Plus ajoute le confort : priorité, famille, coffre-fort santé."
+            : "يبقى التطبيق مجانيًا. صحة بلس يضيف الراحة: الأولوية، العائلة، الخزنة الصحية."}
         </p>
         <p className="mt-4 text-3xl font-bold text-slate-800">
           9 <span className="text-base font-normal text-slate-500">{fr ? "DT / mois" : "د.ت / شهر"}</span>
@@ -90,7 +90,7 @@ export default function PlusPage() {
               onClick={() => setSubscribed(true)}
               className="w-full rounded-xl bg-amber-500 px-8 py-4 font-semibold text-white shadow transition hover:bg-amber-600"
             >
-              {fr ? "S'abonner à Tabibi Plus (démo)" : "الاشتراك في طبيبي بلس (تجريبي)"}
+              {fr ? "S'abonner à Seha Plus (démo)" : "الاشتراك في صحة بلس (تجريبي)"}
             </button>
             <p className="mt-3 text-xs text-slate-400">
               {fr

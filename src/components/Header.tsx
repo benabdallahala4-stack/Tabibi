@@ -13,9 +13,9 @@ export default function Header() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-3">
         <Link href="/" className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/icon.svg" alt="Tabibi" className="h-9 w-9" />
+          <img src="/icon.svg" alt="Seha" className="h-9 w-9" />
           <span className="text-xl font-bold text-primary-700">
-            Tabibi <span className="text-sm font-normal text-primary-500">طبيبي</span>
+            Seha <span className="text-sm font-normal text-primary-500">صحة</span>
           </span>
         </Link>
         <nav className="flex items-center gap-1 text-sm sm:gap-3">

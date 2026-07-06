@@ -1,6 +1,6 @@
 "use client";
 
-// Assistant Tabibi — widget de chat flottant, FR/AR, à base de règles.
+// Assistant Seha — widget de chat flottant, FR/AR, à base de règles.
 
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "@/lib/i18n";
@@ -14,22 +14,22 @@ interface Msg {
 
 const UI = {
   fr: {
-    title: "Assistant Tabibi",
+    title: "Assistant Seha",
     sub: "Réponses instantanées, 24h/24",
     placeholder: "Posez votre question…",
     send: "Envoyer",
-    hello: "👋 Bonjour ! Je suis l'assistant Tabibi. Posez-moi une question ou choisissez un sujet :",
-    fallback: "Je n'ai pas encore la réponse à cette question 🙏. Voici les sujets que je maîtrise — ou écrivez à support@tabibi.tn :",
+    hello: "👋 Bonjour ! Je suis l'assistant Seha. Posez-moi une question ou choisissez un sujet :",
+    fallback: "Je n'ai pas encore la réponse à cette question 🙏. Voici les sujets que je maîtrise — ou écrivez à support@seha.tn :",
     open: "Ouvrir l'assistant",
     close: "Fermer",
   },
   ar: {
-    title: "مساعد طبيبي",
+    title: "مساعد صحة",
     sub: "إجابات فورية على مدار الساعة",
     placeholder: "اطرح سؤالك…",
     send: "إرسال",
-    hello: "👋 مرحبًا! أنا مساعد طبيبي. اطرح سؤالك أو اختر موضوعًا:",
-    fallback: "ليست لدي إجابة عن هذا السؤال بعد 🙏. هذه المواضيع التي أتقنها — أو راسل support@tabibi.tn:",
+    hello: "👋 مرحبًا! أنا مساعد صحة. اطرح سؤالك أو اختر موضوعًا:",
+    fallback: "ليست لدي إجابة عن هذا السؤال بعد 🙏. هذه المواضيع التي أتقنها — أو راسل support@seha.tn:",
     open: "فتح المساعد",
     close: "إغلاق",
   },

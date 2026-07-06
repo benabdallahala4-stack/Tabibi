@@ -9,11 +9,11 @@ import { useLocale } from "@/lib/i18n";
 const L = {
   fr: {
     title: "Laboratoires d'analyses",
-    sub: "Trouvez un laboratoire près de chez vous : familles d'analyses, horaires, prélèvement à domicile et résultats en ligne dans votre dossier Tabibi.",
+    sub: "Trouvez un laboratoire près de chez vous : familles d'analyses, horaires, prélèvement à domicile et résultats en ligne dans votre dossier Seha.",
     allCities: "Toutes les villes",
     allAnalyses: "Toutes les analyses",
     home: "🏠 Prélèvement à domicile",
-    online: "📲 Résultats dans Tabibi",
+    online: "📲 Résultats dans Seha",
     hours: "Horaires",
     call: "Appeler",
     map: "Itinéraire",
@@ -25,11 +25,11 @@ const L = {
   },
   ar: {
     title: "مخابر التحاليل",
-    sub: "اعثر على مخبر قريب منك: أنواع التحاليل، التوقيت، أخذ العينات في المنزل والنتائج مباشرة في ملفك على طبيبي.",
+    sub: "اعثر على مخبر قريب منك: أنواع التحاليل، التوقيت، أخذ العينات في المنزل والنتائج مباشرة في ملفك على صحة.",
     allCities: "كل المدن",
     allAnalyses: "كل التحاليل",
     home: "🏠 أخذ العينات في المنزل",
-    online: "📲 النتائج في طبيبي",
+    online: "📲 النتائج في صحة",
     hours: "التوقيت",
     call: "اتصال",
     map: "الاتجاهات",

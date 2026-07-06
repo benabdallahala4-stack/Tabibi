@@ -1,6 +1,6 @@
 # Rôles, accès & comptes de test
 
-Tabibi distingue **cinq rôles**. Les espaces professionnels (agenda praticien,
+Seha distingue **cinq rôles**. Les espaces professionnels (agenda praticien,
 back-office clinique, dépôt laboratoire, administration) ne sont **jamais**
 accessibles au grand public : ils sont protégés côté client par `RoleGuard`
 (démo) et devront l'être côté serveur en production (voir plus bas).
@@ -18,7 +18,7 @@ ces mêmes comptes sont semés en base par `prisma/seed.mjs` et se connectent pa
 | **Médecin** | Dr Amine Ben Salah | `+216 20 000 002` | `/pro/dashboard` | Agenda, dossiers patients, caisse, file d'attente, réponses aux questions publiques |
 | **Clinique** | Clinique Carthage Internationale | `+216 71 000 003` | `/clinique-admin` | Demandes de devis, praticiens rattachés, statistiques internationales |
 | **Laboratoire** | Laboratoire Ibn Sina | `+216 71 000 004` | `/labo` | Déposer les résultats d'analyses dans le dossier du patient |
-| **Administration** | Équipe Tabibi | `+216 20 000 009` | `/admin` | Vérifier les inscriptions, inviter des médecins, modérer |
+| **Administration** | Équipe Seha | `+216 20 000 009` | `/admin` | Vérifier les inscriptions, inviter des médecins, modérer |
 
 > Source de vérité des comptes : [`src/lib/roles.ts`](../src/lib/roles.ts)
 > (`MOCK_USERS`) et [`prisma/seed.mjs`](../prisma/seed.mjs).
@@ -48,7 +48,7 @@ il propose un unique point d'entrée **« 🔒 Connexion professionnels »**
 
 1. `/connexion` liste les comptes de test. Un clic appelle `loginAs(user)` :
    la session (`{ key, role, name, home }`) est écrite dans `localStorage`
-   (`tabibi.session`).
+   (`seha.session`).
 2. Chaque page protégée appelle `useRoleGate(allow: Role[])` **en tout premier
    hook**. Le hook :
    - affiche un écran de chargement le temps de lire la session ;

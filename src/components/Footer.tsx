@@ -11,8 +11,8 @@ export default function Footer() {
         <div>
           <div className="flex items-center gap-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/icon.svg" alt="Tabibi" className="h-8 w-8" />
-            <span className="font-bold text-primary-700">Tabibi</span>
+            <img src="/icon.svg" alt="Seha" className="h-8 w-8" />
+            <span className="font-bold text-primary-700">Seha</span>
           </div>
           <p className="mt-3 text-sm text-slate-500">
             {t("footer.tagline")}
@@ -32,7 +32,7 @@ export default function Footer() {
             <li><Link href="/dossier" className="hover:text-primary-600">{t("nav.dossier")}</Link></li>
             <li><Link href="/questions" className="hover:text-primary-600">{t("nav.qna")}</Link></li>
             <li><Link href="/sante" className="hover:text-primary-600">{t("nav.magazine")}</Link></li>
-            <li><Link href="/plus" className="hover:text-primary-600">Tabibi Plus</Link></li>
+            <li><Link href="/plus" className="hover:text-primary-600">Seha Plus</Link></li>
           </ul>
         </div>
 
@@ -65,7 +65,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-slate-100 py-4 text-center text-xs text-slate-400">
-        © {new Date().getFullYear()} Tabibi — {t("footer.disclaimer")}
+        © {new Date().getFullYear()} Seha — {t("footer.disclaimer")}
       </div>
     </footer>
   );

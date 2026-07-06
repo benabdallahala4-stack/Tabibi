@@ -5,18 +5,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Teal inspired by Mediterranean sea + Tunisian red accent
+        // Deep medical azure — trust & clarity, with Tunisian red accent
         primary: {
-          50: "#eefbfa",
-          100: "#d6f5f3",
-          200: "#b1eae8",
-          300: "#7cd9d7",
-          400: "#40c0bf",
-          500: "#24a5a5",
-          600: "#0a8f8c",
-          700: "#0b6f6e",
-          800: "#0d5958",
-          900: "#0f4a4a",
+          50: "#eff5ff",
+          100: "#dbe8fe",
+          200: "#bfd6fe",
+          300: "#93b8fd",
+          400: "#5b8ef8",
+          500: "#3068ef",
+          600: "#1c4fdb",
+          700: "#1a40b8",
+          800: "#1b3891",
+          900: "#1a3173",
         },
         accent: {
           500: "#e70013",

@@ -10,8 +10,8 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   const doctor = findDoctor(params.slug);
   return {
     title: doctor
-      ? `${doctor.fullName} — ${doctor.specialty} à ${doctor.city} | Tabibi`
-      : "Praticien introuvable | Tabibi",
+      ? `${doctor.fullName} — ${doctor.specialty} à ${doctor.city} | Seha`
+      : "Praticien introuvable | Seha",
   };
 }
 

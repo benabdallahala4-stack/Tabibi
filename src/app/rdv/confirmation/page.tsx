@@ -77,7 +77,7 @@ function ConfirmationContent() {
       </dl>
       <a
         href={`https://wa.me/?text=${encodeURIComponent(
-          `🩺 Tabibi — RDV confirmé\n${appt.doctorName} (${appt.specialty}, ${appt.city})\n📅 ${appt.dateIso} à ${appt.time}\n${appt.kind === "teleconsultation" ? "📹 Téléconsultation" : "🏥 Au cabinet"}`
+          `🩺 Seha — RDV confirmé\n${appt.doctorName} (${appt.specialty}, ${appt.city})\n📅 ${appt.dateIso} à ${appt.time}\n${appt.kind === "teleconsultation" ? "📹 Téléconsultation" : "🏥 Au cabinet"}`
         )}`}
         target="_blank"
         rel="noopener noreferrer"

@@ -24,7 +24,7 @@ export default function MyAppointmentsPage() {
       const byId = new Map(local.map((a) => [a.id, a]));
       for (const r of remote) byId.set(r.id, r); // le serveur fait foi
       const merged = [...byId.values()];
-      window.localStorage.setItem("tabibi.appointments", JSON.stringify(merged));
+      window.localStorage.setItem("seha.appointments", JSON.stringify(merged));
       setAppointments(merged);
       setCloudSynced(true);
     })();

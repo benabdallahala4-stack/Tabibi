@@ -5,19 +5,19 @@
       <stop offset="100%" stop-color="#d0efee"/>
     </linearGradient>
     <linearGradient id="screenGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0a8f8c"/>
-      <stop offset="100%" stop-color="#0b6f6e"/>
+      <stop offset="0%" stop-color="#1c4fdb"/>
+      <stop offset="100%" stop-color="#1a40b8"/>
     </linearGradient>
   </defs>
 
   <!-- Fond -->
   <circle cx="260" cy="200" r="185" fill="url(#bgGrad)"/>
-  <circle cx="430" cy="80" r="26" fill="#b1eae8" opacity="0.7"/>
-  <circle cx="80" cy="320" r="18" fill="#b1eae8" opacity="0.7"/>
-  <circle cx="70" cy="90" r="8" fill="#40c0bf" opacity="0.5"/>
+  <circle cx="430" cy="80" r="26" fill="#bfd6fe" opacity="0.7"/>
+  <circle cx="80" cy="320" r="18" fill="#bfd6fe" opacity="0.7"/>
+  <circle cx="70" cy="90" r="8" fill="#5b8ef8" opacity="0.5"/>
 
   <!-- Laptop -->
-  <rect x="120" y="110" width="280" height="185" rx="14" fill="#0f4a4a"/>
+  <rect x="120" y="110" width="280" height="185" rx="14" fill="#1a3173"/>
   <rect x="132" y="122" width="256" height="161" rx="8" fill="url(#screenGrad)"/>
   <path d="M95 295h330l-18 26a14 14 0 0 1-11 6H124a14 14 0 0 1-11-6l-18-26Z" fill="#123f3f"/>
 
@@ -26,10 +26,10 @@
   <path d="M200 186a30 30 0 0 1 60 0c0-8-4-30-14-34a22 22 0 0 0-32 0c-10 4-14 26-14 34Z" fill="#3f3d56"/>
   <path d="M182 262c4-26 24-40 48-40s44 14 48 40l2 21H180l2-21Z" fill="#ffffff"/>
   <path d="M214 224l16 18 16-18c-4-2-10-3-16-3s-12 1-16 3Z" fill="#e8f6f5"/>
-  <rect x="243" y="238" width="20" height="6" rx="3" fill="#0a8f8c"/>
+  <rect x="243" y="238" width="20" height="6" rx="3" fill="#1c4fdb"/>
   <!-- Stéthoscope -->
-  <path d="M212 236c0 16 8 26 18 26s18-10 18-26" fill="none" stroke="#0a8f8c" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="248" cy="266" r="6" fill="none" stroke="#0a8f8c" stroke-width="4"/>
+  <path d="M212 236c0 16 8 26 18 26s18-10 18-26" fill="none" stroke="#1c4fdb" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="248" cy="266" r="6" fill="none" stroke="#1c4fdb" stroke-width="4"/>
 
   <!-- Bandeau visio -->
   <rect x="146" y="134" width="82" height="18" rx="9" fill="rgba(255,255,255,0.2)"/>
@@ -37,38 +37,38 @@
   <rect x="166" y="140" width="54" height="6" rx="3" fill="rgba(255,255,255,0.55)"/>
 
   <!-- Vignette patient -->
-  <rect x="322" y="216" width="54" height="56" rx="8" fill="#0d5958" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
+  <rect x="322" y="216" width="54" height="56" rx="8" fill="#1b3891" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
   <circle cx="349" cy="236" r="10" fill="#f6d7bd"/>
   <path d="M349 224a10 10 0 0 0-10 10c0-3 1-11 5-12a8 8 0 0 1 10 0c4 1 5 9 5 12a10 10 0 0 0-10-10Z" fill="#6b4f3a"/>
   <path d="M333 268c2-10 8-16 16-16s14 6 16 16v4h-32v-4Z" fill="#e2e8f0"/>
 
   <!-- Bulles de discussion -->
   <g>
-    <rect x="52" y="150" width="96" height="34" rx="17" fill="#ffffff" stroke="#b1eae8" stroke-width="2"/>
-    <circle cx="72" cy="167" r="5" fill="#40c0bf"/>
+    <rect x="52" y="150" width="96" height="34" rx="17" fill="#ffffff" stroke="#bfd6fe" stroke-width="2"/>
+    <circle cx="72" cy="167" r="5" fill="#5b8ef8"/>
     <rect x="84" y="160" width="52" height="5" rx="2.5" fill="#94a3b8"/>
     <rect x="84" y="170" width="38" height="5" rx="2.5" fill="#cbd5e1"/>
   </g>
   <g>
-    <rect x="386" y="120" width="104" height="52" rx="14" fill="#ffffff" stroke="#b1eae8" stroke-width="2"/>
+    <rect x="386" y="120" width="104" height="52" rx="14" fill="#ffffff" stroke="#bfd6fe" stroke-width="2"/>
     <path d="M402 146h10l5-9 8 18 5-9h14" fill="none" stroke="#e70013" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
     <rect x="402" y="156" width="72" height="5" rx="2.5" fill="#cbd5e1"/>
   </g>
 
   <!-- Croix médicale -->
   <g transform="translate(404 300)">
-    <rect x="0" y="0" width="52" height="52" rx="14" fill="#0a8f8c"/>
+    <rect x="0" y="0" width="52" height="52" rx="14" fill="#1c4fdb"/>
     <rect x="21" y="10" width="10" height="32" rx="5" fill="#ffffff"/>
     <rect x="10" y="21" width="32" height="10" rx="5" fill="#ffffff"/>
   </g>
 
   <!-- Calendrier -->
   <g transform="translate(56 218)">
-    <rect x="0" y="0" width="58" height="56" rx="10" fill="#ffffff" stroke="#b1eae8" stroke-width="2"/>
-    <rect x="0" y="0" width="58" height="16" rx="8" fill="#0a8f8c"/>
+    <rect x="0" y="0" width="58" height="56" rx="10" fill="#ffffff" stroke="#bfd6fe" stroke-width="2"/>
+    <rect x="0" y="0" width="58" height="16" rx="8" fill="#1c4fdb"/>
     <rect x="10" y="24" width="10" height="9" rx="2" fill="#d0efee"/>
     <rect x="24" y="24" width="10" height="9" rx="2" fill="#d0efee"/>
-    <rect x="38" y="24" width="10" height="9" rx="2" fill="#40c0bf"/>
+    <rect x="38" y="24" width="10" height="9" rx="2" fill="#5b8ef8"/>
     <rect x="10" y="38" width="10" height="9" rx="2" fill="#d0efee"/>
     <rect x="24" y="38" width="10" height="9" rx="2" fill="#d0efee"/>
     <rect x="38" y="38" width="10" height="9" rx="2" fill="#d0efee"/>

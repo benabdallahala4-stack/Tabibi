@@ -11,7 +11,7 @@ const USERS = [
   { phone: "+21620000002", name: "Dr Amine Ben Salah", role: "medecin" },
   { phone: "+21671000003", name: "Clinique Carthage Internationale", role: "clinique" },
   { phone: "+21671000004", name: "Laboratoire Ibn Sina", role: "labo" },
-  { phone: "+21620000009", name: "Équipe Tabibi", role: "admin" },
+  { phone: "+21620000009", name: "Équipe Seha", role: "admin" },
 ];
 
 async function main() {
@@ -22,12 +22,12 @@ async function main() {
       update: { name: u.name, role: u.role },
     });
   }
-  console.log(`[tabibi] Seed : ${USERS.length} comptes de test prêts.`);
+  console.log(`[seha] Seed : ${USERS.length} comptes de test prêts.`);
 }
 
 main()
   .catch((e) => {
-    console.error("[tabibi] Échec du seed :", e);
+    console.error("[seha] Échec du seed :", e);
     process.exit(1);
   })
   .finally(() => db.$disconnect());

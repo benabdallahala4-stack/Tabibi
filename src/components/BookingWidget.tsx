@@ -62,7 +62,7 @@ export default function BookingWidget({ doctor }: { doctor: Doctor }) {
     }
     saveAppointment(appt);
     notifyUser(
-      "Tabibi — rendez-vous confirmé ✓",
+      "Seha — rendez-vous confirmé ✓",
       `${doctor.fullName} · ${selected.dateIso} à ${selected.time}`
     );
     router.push(`/rdv/confirmation?id=${id}`);

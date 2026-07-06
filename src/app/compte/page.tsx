@@ -27,7 +27,7 @@ function SmsOtpBlock() {
   const [otpError, setOtpError] = useState("");
 
   useEffect(() => {
-    setVerified(window.localStorage.getItem("tabibi.phoneVerified") === "1");
+    setVerified(window.localStorage.getItem("seha.phoneVerified") === "1");
     (async () => {
       const available = await cloudAvailable();
       setCloud(available);
@@ -68,13 +68,13 @@ function SmsOtpBlock() {
         setOtpError(fr ? "Code incorrect ou expiré." : "رمز خاطئ أو منتهي الصلاحية.");
         return;
       }
-      window.localStorage.setItem("tabibi.phoneVerified", "1");
+      window.localStorage.setItem("seha.phoneVerified", "1");
       setVerified(true);
       setCloudUser(r.user ?? null);
       return;
     }
     if (entered === sentCode) {
-      window.localStorage.setItem("tabibi.phoneVerified", "1");
+      window.localStorage.setItem("seha.phoneVerified", "1");
       setVerified(true);
     } else {
       setOtpError(fr ? "Code incorrect." : "رمز خاطئ.");
@@ -86,7 +86,7 @@ function SmsOtpBlock() {
     setCloudUser(null);
     setVerified(false);
     setAwaitingCode(false);
-    window.localStorage.removeItem("tabibi.phoneVerified");
+    window.localStorage.removeItem("seha.phoneVerified");
   }
 
   return (

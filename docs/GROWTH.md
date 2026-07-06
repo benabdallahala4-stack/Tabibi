@@ -1,8 +1,8 @@
-# Tabibi — Stratégie de croissance, position concurrentielle et cadre légal
+# Seha — Stratégie de croissance, position concurrentielle et cadre légal
 
 ## 1. Où sommes-nous meilleurs que med.tn ?
 
-| Domaine | Avantage Tabibi |
+| Domaine | Avantage Seha |
 |---|---|
 | Téléconsultation | Salle vidéo intégrée à chaque RDV (Jitsi) — med.tn ne l'affiche pas |
 | Dossier patient | Le patient possède son dossier, le partage par code, les labos y déposent les résultats |
@@ -29,8 +29,8 @@
 - ✅ **Notre exécution est propre** : nom, logo, code, textes, articles et données de démonstration sont 100 % originaux — aucune copie de leur design, de leurs textes ou de leurs images.
 - ⚠️ **À ne jamais faire** : scraper/copier leur base de praticiens ou leurs avis (concurrence déloyale + droit sui generis des bases de données), copier leurs articles, utiliser « med » dans notre marque d'une façon qui crée la confusion.
 - 🔒 **À faire pour NOUS protéger** :
-  1. **Déposer la marque « Tabibi » (+ logo)** à l'**INNORPI** (classes 35, 38, 42, 44) — priorité absolue avant tout marketing.
-  2. Réserver les domaines tabibi.tn / .com et les réseaux sociaux.
+  1. **Déposer la marque « Seha » (+ logo)** à l'**INNORPI** (classes 35, 38, 42, 44) — priorité absolue avant tout marketing.
+  2. Réserver les domaines seha.tn / .com et les réseaux sociaux.
   3. Rédiger CGU/CGV + politique de confidentialité + contrat praticien (avocat).
   4. **Déclaration INPDP** (loi 2004-63) avant de traiter de vraies données de santé.
   5. Vérifier le cadre de la **télémédecine** (décret 2020 et textes CNOM) et les règles déontologiques sur la communication des médecins (pas de publicité comparative, réponses Q&A informatives uniquement).
@@ -74,4 +74,4 @@ Chaque fiche amorcée est marquée « non revendiquée » → le praticien la **
 
 **Phase C — Effet réseau :**
 - Chaque question publique sans réponse dans une spécialité/région = e-mail d'invitation aux médecins concernés non inscrits (« Un patient de Sfax attend une réponse en cardiologie »).
-- Les patients invitent leur médecin (« Invitez votre médecin sur Tabibi » + lien de parrainage).
+- Les patients invitent leur médecin (« Invitez votre médecin sur Seha » + lien de parrainage).

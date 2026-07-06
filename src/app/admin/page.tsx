@@ -1,6 +1,6 @@
 "use client";
 
-// Back-office interne Tabibi (démonstration) : vérification des inscriptions
+// Back-office interne Seha (démonstration) : vérification des inscriptions
 // praticiens/cliniques/labos, invitations pilotées par la demande (questions
 // sans réponse) et vue d'ensemble de la plateforme.
 // Production : accès restreint (rôles ADMIN), journalisation, modération Q&A.
@@ -45,7 +45,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     try {
-      const raw = JSON.parse(window.localStorage.getItem("tabibi.pro.leads") ?? "[]") as Lead[];
+      const raw = JSON.parse(window.localStorage.getItem("seha.pro.leads") ?? "[]") as Lead[];
       setLeads(raw.map((l) => ({ status: "en_attente", ...l })));
     } catch {
       setLeads([]);
@@ -55,7 +55,7 @@ export default function AdminPage() {
 
   function persist(next: Lead[]) {
     setLeads(next);
-    window.localStorage.setItem("tabibi.pro.leads", JSON.stringify(next));
+    window.localStorage.setItem("seha.pro.leads", JSON.stringify(next));
   }
 
   function setStatus(index: number, status: Lead["status"]) {
@@ -67,20 +67,20 @@ export default function AdminPage() {
   const specialtyLabel = (id: string) => SPECIALTIES.find((s) => s.id === id)?.label ?? id;
 
   function invitationText(q: QnaQuestion): string {
-    return `Objet : Un patient attend une réponse en ${specialtyLabel(q.specialtyId).toLowerCase()} sur Tabibi
+    return `Objet : Un patient attend une réponse en ${specialtyLabel(q.specialtyId).toLowerCase()} sur Seha
 
 Bonjour Docteur,
 
-Un patient vient de poser anonymement cette question sur Tabibi :
+Un patient vient de poser anonymement cette question sur Seha :
 
 « ${q.title} »
 
 Aucun spécialiste en ${specialtyLabel(q.specialtyId).toLowerCase()} n'y a encore répondu. En y répondant avec votre profil vérifié, votre réponse sera publique, notée « utile » par les lecteurs, et affichera un bouton de prise de rendez-vous vers votre agenda.
 
-Créer votre profil gratuit (2 minutes) : https://tabibi-livid.vercel.app/pro/inscription
-Répondre à la question : https://tabibi-livid.vercel.app/questions/${q.slug}
+Créer votre profil gratuit (2 minutes) : https://seha.tn/pro/inscription
+Répondre à la question : https://seha.tn/questions/${q.slug}
 
-L'équipe Tabibi — le système d'exploitation de la santé tunisienne`;
+L'équipe Seha — le système d'exploitation de la santé tunisienne`;
   }
 
   async function copyInvitation(q: QnaQuestion) {
@@ -99,7 +99,7 @@ L'équipe Tabibi — le système d'exploitation de la santé tunisienne`;
     <>
     <SessionBar />
     <div className="mx-auto max-w-5xl px-4 py-8">
-      <h1 className="text-2xl font-bold text-slate-800">Back-office Tabibi</h1>
+      <h1 className="text-2xl font-bold text-slate-800">Back-office Seha</h1>
       <p className="text-sm text-slate-500">
         Outil interne{" "}
         <span className="rounded-full bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">
@@ -244,7 +244,7 @@ L'équipe Tabibi — le système d'exploitation de la santé tunisienne`;
                       </button>
                       <a
                         href={`mailto:?subject=${encodeURIComponent(
-                          `Un patient attend une réponse en ${specialtyLabel(q.specialtyId).toLowerCase()} sur Tabibi`
+                          `Un patient attend une réponse en ${specialtyLabel(q.specialtyId).toLowerCase()} sur Seha`
                         )}&body=${encodeURIComponent(invitationText(q))}`}
                         className="rounded-lg bg-slate-200 px-4 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-300"
                       >

@@ -4,8 +4,8 @@
 import { execSync } from "node:child_process";
 
 if (process.env.DATABASE_URL) {
-  console.log("[tabibi] DATABASE_URL détecté — prisma migrate deploy…");
+  console.log("[seha] DATABASE_URL détecté — prisma migrate deploy…");
   execSync("npx prisma migrate deploy", { stdio: "inherit" });
 } else {
-  console.log("[tabibi] Pas de DATABASE_URL — migrations ignorées (mode local).");
+  console.log("[seha] Pas de DATABASE_URL — migrations ignorées (mode local).");
 }

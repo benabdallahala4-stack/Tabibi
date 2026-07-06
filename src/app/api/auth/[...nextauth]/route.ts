@@ -18,7 +18,7 @@ const authOptions: AuthOptions = {
       ]
     : [],
   // À surcharger en production via la variable d'environnement NEXTAUTH_SECRET.
-  secret: process.env.NEXTAUTH_SECRET ?? "tabibi-demo-secret-change-me",
+  secret: process.env.NEXTAUTH_SECRET ?? "seha-demo-secret-change-me",
 };
 
 const handler = NextAuth(authOptions);

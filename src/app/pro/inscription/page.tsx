@@ -43,15 +43,15 @@ function InscriptionContent() {
   function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!form.name.trim() || !form.phone.trim()) return;
-    const leads = JSON.parse(window.localStorage.getItem("tabibi.pro.leads") ?? "[]");
+    const leads = JSON.parse(window.localStorage.getItem("seha.pro.leads") ?? "[]");
     leads.push({ type, ...form, claimSlug: claimSlug ?? null, at: new Date().toISOString() });
-    window.localStorage.setItem("tabibi.pro.leads", JSON.stringify(leads));
+    window.localStorage.setItem("seha.pro.leads", JSON.stringify(leads));
     setSent(true);
   }
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-10">
-      <h1 className="text-2xl font-bold text-slate-800">Rejoindre Tabibi — gratuit</h1>
+      <h1 className="text-2xl font-bold text-slate-800">Rejoindre Seha — gratuit</h1>
       <p className="mt-1 text-sm text-slate-500">
         Créez votre profil vérifié en 2 minutes. Le plan Gratuit inclut le profil public, l&apos;agenda en
         ligne et les questions publiques — passez au plan supérieur quand vous voulez.

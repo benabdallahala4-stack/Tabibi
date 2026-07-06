@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="public/logo.svg" alt="Tabibi — طبيبي" width="420" />
+  <img src="public/logo.svg" alt="Seha — صحة" width="420" />
 </p>
 
-# Tabibi — طبيبي
+# Seha — صحة
 
 **La plateforme tunisienne de prise de rendez-vous médicaux en ligne**, inspirée de Doctolib et adaptée au contexte tunisien (CNAM, dinar tunisien, bilinguisme français/arabe, 24 gouvernorats).
 
-> *Tabibi* signifie « mon médecin » en dialecte tunisien. Le logo combine une croix médicale aux pétales arrondis (clin d'œil au jasmin, fleur nationale) et un tracé d'électrocardiogramme rouge tunisien.
+> *Seha* (صحة) signifie tout simplement « santé » en arabe — un nom générique qui couvre toute la plateforme (patients, médecins, cliniques, laboratoires, pharmacies), pas seulement la prise de rendez-vous. Le logo combine une croix médicale aux pétales arrondis (clin d'œil au jasmin, fleur nationale) et un tracé d'électrocardiogramme rouge tunisien.
 
 ## ✨ Fonctionnalités
 
@@ -21,7 +21,7 @@
 - 🇹🇳 **Bilingue français / العربية** : bouton de langue dans l'en-tête, toute l'interface bascule en arabe **avec mise en page RTL**
 - 📱 **PWA installable** : « Ajouter à l'écran d'accueil » sur Android/iOS (manifest + service worker)
 
-**Côté praticien (vitrine Tabibi Pro) :**
+**Côté praticien (vitrine Seha Pro) :**
 - Présentation de l'offre : agenda intelligent, rappels SMS/e-mail, téléconsultation, dossier patient, statistiques
 
 La liste complète des fonctionnalités Doctolib analysées, **les paliers premium** et la feuille de route se trouvent dans [`docs/FEATURES.md`](docs/FEATURES.md).
@@ -66,7 +66,7 @@ Connectez-vous en démo sur **`/connexion`** en choisissant un rôle :
 | Médecin | Dr Amine Ben Salah | `+216 20 000 002` | `/pro/dashboard` |
 | Clinique | Clinique Carthage Internationale | `+216 71 000 003` | `/clinique-admin` |
 | Laboratoire | Laboratoire Ibn Sina | `+216 71 000 004` | `/labo` |
-| Administration | Équipe Tabibi | `+216 20 000 009` | `/admin` |
+| Administration | Équipe Seha | `+216 20 000 009` | `/admin` |
 
 Matrice d'accès complète et modèle de sécurité : [`docs/ROLES.md`](docs/ROLES.md).
 
@@ -104,13 +104,13 @@ Les questions publiques (`/questions`) peuvent recevoir une **réponse IA imméd
 
 ## 📱 Android
 
-Le site est une **PWA** : sur Android (Chrome), menu ⋮ → « Ajouter à l'écran d'accueil » → Tabibi s'installe comme une application (icône, plein écran).
+Le site est une **PWA** : sur Android (Chrome), menu ⋮ → « Ajouter à l'écran d'accueil » → Seha s'installe comme une application (icône, plein écran).
 Pour un **APK** distribuable : déployez le site, puis générez un package TWA sur [pwabuilder.com](https://www.pwabuilder.com) en entrant l'URL de production — il produit un APK/AAB signé prêt à tester ou à publier sur le Play Store.
 
 ## 📁 Structure
 
 ```
-tabibi/
+seha/
 ├── docs/FEATURES.md          # Analyse Doctolib + premium + feuille de route
 ├── public/                   # logo.svg, icon.svg, manifest.json, sw.js (PWA)
 └── src/
@@ -122,7 +122,7 @@ tabibi/
     │   ├── mes-rdv/              # Tableau de bord patient
     │   ├── visio/                # Téléconsultation vidéo (Jitsi)
     │   ├── compte/               # Profil local + connexion Google
-    │   ├── pro/                  # Vitrine Tabibi Pro (praticiens)
+    │   ├── pro/                  # Vitrine Seha Pro (praticiens)
     │   └── api/auth/[...nextauth]/ # Authentification NextAuth
     ├── components/               # Header, Footer, SearchBar, DoctorCard,
     │                             # DoctorProfile, BookingWidget, Providers

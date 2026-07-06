@@ -55,11 +55,11 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const parsed = parseSlug(params.slug);
-  if (!parsed) return { title: "Annuaire | Tabibi" };
+  if (!parsed) return { title: "Annuaire | Seha" };
   const where = parsed.city ?? "Tunisie";
   return {
-    title: `${parsed.specialty.label} à ${where} — Rendez-vous en ligne | Tabibi`,
-    description: `Trouvez un spécialiste en ${parsed.specialty.label.toLowerCase()} à ${where} et prenez rendez-vous en ligne gratuitement sur Tabibi : tarifs, CNAM, avis et téléconsultation.`,
+    title: `${parsed.specialty.label} à ${where} — Rendez-vous en ligne | Seha`,
+    description: `Trouvez un spécialiste en ${parsed.specialty.label.toLowerCase()} à ${where} et prenez rendez-vous en ligne gratuitement sur Seha : tarifs, CNAM, avis et téléconsultation.`,
   };
 }
 

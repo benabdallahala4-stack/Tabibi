@@ -16,23 +16,27 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ============ Hero — centré, sobre ============ */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-primary-800 to-primary-900 text-white">
-        {/* Anneaux décoratifs très discrets, non animés */}
-        <svg
-          className="pointer-events-none absolute right-0 top-0 h-full w-1/2 opacity-[0.06]"
-          viewBox="0 0 400 400"
-          preserveAspectRatio="xMaxYMin slice"
+      {/* ============ Hero — image de fond + recouvrement bleu ============ */}
+      <section className="relative overflow-hidden bg-primary-900 text-white">
+        {/* Illustration de fond (santé) — remplaçable par une photo /illustrations/hero.jpg */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/illustrations/hero-care.svg"
+          alt=""
           aria-hidden="true"
-        >
-          <g fill="none" stroke="white" strokeWidth="1.5">
-            <circle cx="340" cy="70" r="120" />
-            <circle cx="340" cy="70" r="180" />
-            <circle cx="340" cy="70" r="240" />
-          </g>
-        </svg>
+          className="pointer-events-none absolute inset-y-0 right-0 h-full w-full object-cover object-right opacity-90 sm:w-3/4 lg:w-1/2"
+        />
+        {/* Dégradé de lisibilité par-dessus l'image */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary-900 via-primary-900/95 to-primary-800/60"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary-900/80 via-transparent to-transparent sm:bg-none"
+          aria-hidden="true"
+        />
 
-        <div className="relative mx-auto flex max-w-3xl flex-col items-center px-4 py-20 text-center sm:py-24">
+        <div className="relative mx-auto flex max-w-3xl flex-col items-center px-4 py-20 text-center sm:py-24 lg:items-start lg:text-left">
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium tracking-wide text-primary-100 ring-1 ring-white/15">
               <Icon name="sparkle" className="h-3.5 w-3.5" />
@@ -62,7 +66,7 @@ export default function HomePage() {
             </div>
           </Reveal>
           <Reveal delay={400}>
-            <div className="mt-6 flex flex-wrap justify-center gap-2.5">
+            <div className="mt-6 flex flex-wrap justify-center gap-2.5 lg:justify-start">
               {SPECIALTIES.slice(0, 5).map((s) => (
                 <Link
                   key={s.id}
@@ -278,7 +282,7 @@ export default function HomePage() {
             <div>
               <Reveal>
                 <p className="text-xs font-semibold uppercase tracking-widest text-primary-600">
-                  Tabibi Pro · SaaS
+                  Seha Pro · SaaS
                 </p>
                 <h2 className="mt-2 text-3xl font-bold leading-tight text-slate-800">
                   {fr
@@ -287,8 +291,8 @@ export default function HomePage() {
                 </h2>
                 <p className="mt-3 max-w-lg text-slate-600">
                   {fr
-                    ? "Bien plus qu'un annuaire : Tabibi Pro est la solution complète des médecins et des cliniques pour digitaliser leur travail quotidien — sans installation, depuis n'importe quel appareil."
-                    : "أكثر بكثير من دليل: طبيبي برو هو الحل الكامل للأطباء والمصحات لرقمنة عملهم اليومي — دون تثبيت، ومن أي جهاز."}
+                    ? "Bien plus qu'un annuaire : Seha Pro est la solution complète des médecins et des cliniques pour digitaliser leur travail quotidien — sans installation, depuis n'importe quel appareil."
+                    : "أكثر بكثير من دليل: صحة برو هو الحل الكامل للأطباء والمصحات لرقمنة عملهم اليومي — دون تثبيت، ومن أي جهاز."}
                 </p>
               </Reveal>
               <div className="mt-7 grid gap-4 sm:grid-cols-2">
@@ -346,7 +350,7 @@ export default function HomePage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/illustrations/cabinet-software.svg"
-                  alt={fr ? "Tableau de bord Tabibi Pro" : "لوحة تحكم طبيبي برو"}
+                  alt={fr ? "Tableau de bord Seha Pro" : "لوحة تحكم صحة برو"}
                   className="float-anim mx-auto w-full max-w-lg drop-shadow-xl"
                 />
               </div>

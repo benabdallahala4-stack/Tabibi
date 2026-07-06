@@ -1,10 +1,10 @@
-# Tabibi — Analyse des fonctionnalités Doctolib & adaptation à la Tunisie
+# Seha — Analyse des fonctionnalités Doctolib & adaptation à la Tunisie
 
-Ce document recense les fonctionnalités de Doctolib (référence du marché français/européen), indique ce qui est couvert par le MVP Tabibi et trace la feuille de route, avec les adaptations propres au marché tunisien.
+Ce document recense les fonctionnalités de Doctolib (référence du marché français/européen), indique ce qui est couvert par le MVP Seha et trace la feuille de route, avec les adaptations propres au marché tunisien.
 
 ## 1. Fonctionnalités Doctolib — côté patient
 
-| Fonctionnalité Doctolib | Description | Statut Tabibi |
+| Fonctionnalité Doctolib | Description | Statut Seha |
 |---|---|---|
 | Recherche de praticiens | Par spécialité, nom, établissement et localisation | ✅ MVP (spécialité, nom, ville) |
 | Prise de RDV en ligne 24h/24 | Créneaux en temps réel, confirmation instantanée | ✅ MVP (créneaux de démo) |
@@ -21,7 +21,7 @@ Ce document recense les fonctionnalités de Doctolib (référence du marché fra
 
 ## 2. Fonctionnalités Doctolib — côté praticien (Doctolib Pro)
 
-| Fonctionnalité Doctolib | Description | Statut Tabibi |
+| Fonctionnalité Doctolib | Description | Statut Seha |
 |---|---|---|
 | Agenda en ligne | Gestion multi-praticiens, motifs de consultation, règles de créneaux | 🟡 Vitrine Pro — 🔜 vrai back-office |
 | Réduction des no-shows | Rappels automatiques, confirmation patient | 🔜 Roadmap |
@@ -45,11 +45,11 @@ Ce document recense les fonctionnalités de Doctolib (référence du marché fra
 
 ## 3 bis. Cadre légal tunisien — certificats et ordonnances
 
-**Pas de certificat médical « en ligne » en Tunisie.** Le positionnement de Tabibi :
+**Pas de certificat médical « en ligne » en Tunisie.** Le positionnement de Seha :
 
 - La **téléconsultation** sert au contrôle et au suivi du patient (résultats, renouvellement, avis rapide) — pas à délivrer des documents médicaux à distance.
 - Les **certificats** (repos, aptitude, sport…) et **ordonnances** sont établis après examen et **remis en main propre** au cabinet.
-- Tabibi n'émet **aucun document médical en ligne** : le dossier patient garde seulement une **trace administrative** (type de certificat, durée, date de remise ; texte de l'ordonnance) pour l'historique et les statistiques du praticien. C'est implémenté ainsi dans l'espace praticien (`/pro/dashboard`).
+- Seha n'émet **aucun document médical en ligne** : le dossier patient garde seulement une **trace administrative** (type de certificat, durée, date de remise ; texte de l'ordonnance) pour l'historique et les statistiques du praticien. C'est implémenté ainsi dans l'espace praticien (`/pro/dashboard`).
 
 ## 3 ter. Espace praticien `/pro/dashboard` (démo fonctionnelle)
 
@@ -67,7 +67,7 @@ Roadmap dossier praticien : imprimés d'ordonnance à en-tête, bulletins de soi
 
 ## 3 quater. Cliniques & tourisme médical (Libye)
 
-La Tunisie est la première destination de soins des patients **libyens** (dialyse, chirurgie, oncologie, check-up). Tabibi référence désormais des **cliniques** (`/cliniques`) :
+La Tunisie est la première destination de soins des patients **libyens** (dialyse, chirurgie, oncologie, check-up). Seha référence désormais des **cliniques** (`/cliniques`) :
 
 - Profil clinique : spécialités, lits, urgences 24h/24, praticiens rattachés, carte Google Maps.
 - **Guichet patients internationaux** : devis avant le départ, accueil en arabe, coordination hébergement/transport (y compris frontière de Ras Jedir), facturation internationale, **suivi à distance par téléconsultation après le retour** au pays.
@@ -81,25 +81,25 @@ Le patient constitue et **contrôle** son dossier :
 - **Documents** : téléversement de photos et PDF (ordonnances, analyses, radios, comptes rendus, vaccinations) — catégorisés, prévisualisés, supprimables. Démo : 1,5 Mo/document, 3,5 Mo au total (localStorage) ; production : stockage serveur chiffré sans ces limites.
 - **Partage par consentement** : le dossier n'est JAMAIS visible d'un praticien par défaut. Le patient active le partage et remet un **code d'accès à 6 caractères** à son médecin, qui le saisit dans son espace Pro (onglet « Dossier partagé »). Le patient coupe l'accès à tout moment (désactivation ou changement de code). Production : partage nominatif par praticien + **journal des accès** (audit trail), conformément à la loi n° 2004-63 / INPDP.
 
-## 3 sexies. Assistant Tabibi (chatbot FR/AR)
+## 3 sexies. Assistant Seha (chatbot FR/AR)
 
 Widget de chat flottant présent sur tout le site, à base de règles (aucune API externe, fonctionne hors backend) :
 
-- ~28 sujets couverts : réservation, annulation, rappels, téléconsultation, certificats/ordonnances (cadre légal), dossier médical et partage, sécurité des données, compte Google, CNAM, paiement, cliniques, patients libyens, urgences (190/198), pharmacies de garde, installation mobile, offre Pro (inscription, tarifs, paiement, dashboard), Tabibi Plus, contact humain.
+- ~28 sujets couverts : réservation, annulation, rappels, téléconsultation, certificats/ordonnances (cadre légal), dossier médical et partage, sécurité des données, compte Google, CNAM, paiement, cliniques, patients libyens, urgences (190/198), pharmacies de garde, installation mobile, offre Pro (inscription, tarifs, paiement, dashboard), Seha Plus, contact humain.
 - **Bilingue** : questions, réponses et suggestions suivent la langue du site (FR/AR, RTL inclus).
 - **Suggestions cliquables** à l'ouverture et après chaque réponse (sujets liés) ; réponse de repli avec redirection vers le support.
 - Évolution prévue : brancher un LLM (API Claude) avec ces contenus comme base de connaissances, + escalade vers un humain.
 
 ## 4. Fonctionnalités premium (monétisation)
 
-### Tabibi Plus (patients) — abonnement mensuel ou à l'acte
+### Seha Plus (patients) — abonnement mensuel ou à l'acte
 - **Alerte créneau prioritaire** : notification immédiate quand un créneau plus tôt se libère.
 - **Profils famille** : gérer les rendez-vous des enfants et des parents âgés depuis un seul compte.
 - **Coffre-fort santé** : stockage sécurisé d'ordonnances, analyses et carnets de vaccination.
 - **Téléconsultation illimitée** à tarif réduit avec un réseau de généralistes partenaires.
 - **Support prioritaire** et rappels multi-canaux (SMS + WhatsApp + e-mail).
 
-### Tabibi Pro (praticiens) — 3 paliers
+### Seha Pro (praticiens) — 3 paliers
 | | Essentiel | Avancé | Premium |
 |---|---|---|---|
 | Agenda + réservation en ligne | ✅ | ✅ | ✅ |
@@ -118,10 +118,10 @@ Modèle : gratuit pour les patients (hors Plus), abonnement praticien — même 
 
 État du marché (vérifié juillet 2026) :
 
-| Passerelle | Opérateur | Statut | Usage Tabibi |
+| Passerelle | Opérateur | Statut | Usage Seha |
 |---|---|---|---|
 | **ClicToPay** | Société Monétique Tunisie (SMT — l'opérateur monétique officiel interbancaire) | ✅ La plus répandue, toutes banques tunisiennes ; intégration API (pas de plugins officiels) | Paiement carte bancaire tunisienne des abonnements Pro |
-| **e-Dinar** | La Poste Tunisienne | ✅ Cartes e-Dinar / prépayées | Alternative grand public (Tabibi Plus) |
+| **e-Dinar** | La Poste Tunisienne | ✅ Cartes e-Dinar / prépayées | Alternative grand public (Seha Plus) |
 | **Konnect** | Fintech tunisienne | ✅ API moderne, cartes locales 1,3 %, internationales 2,9 %, e-Dinar | Agrégateur recommandé pour démarrer vite ; cartes internationales utiles pour les patients libyens |
 | **Paymee** | Fintech | ⚠️ Comptes gelés par la Banque Centrale — à éviter actuellement | — |
 | **Flouci** | Fintech | 🟡 Wallet mobile émergent | À évaluer |
@@ -130,7 +130,7 @@ Parcours implémenté (démo) : `/pro/tarifs` — choix du palier → choix de l
 
 ## 5. Intégrations tierces
 
-- **Jitsi Meet** (fait ✅) : salles vidéo gratuites et chiffrées pour la téléconsultation, sans compte ni clé API. Migration possible vers une instance auto-hébergée (`meet.tabibi.tn`) pour la confidentialité médicale.
+- **Jitsi Meet** (fait ✅) : salles vidéo gratuites et chiffrées pour la téléconsultation, sans compte ni clé API. Migration possible vers une instance auto-hébergée (`meet.seha.tn`) pour la confidentialité médicale.
 - **Calendly** (fait ✅) : chaque praticien peut renseigner `calendlyUrl` ; son agenda Calendly s'affiche alors en widget sur son profil. Une synchro bidirectionnelle (API Calendly v2) est prévue pour le palier Avancé.
 - **Google Maps** (fait ✅) : carte embarquée sans clé API + lien direct vers la fiche Google Maps du cabinet.
 - **Avis Google** (partiel 🟡) : avis de démonstration affichés ; la synchro en direct nécessite l'API **Google Places Details** (clé facturée par Google, ~17 $/1000 requêtes) — champ `googleReviews` prêt à brancher.

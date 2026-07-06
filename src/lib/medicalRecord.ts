@@ -37,7 +37,7 @@ export interface MedicalRecord {
   };
 }
 
-const KEY = "tabibi.medicalRecord.v1";
+const KEY = "seha.medicalRecord.v1";
 
 // localStorage ≈ 5 Mo : limites prudentes pour la démo.
 export const MAX_FILE_BYTES = 1_500_000; // 1,5 Mo par document

@@ -1,6 +1,6 @@
-// Service worker minimal : rend Tabibi installable (PWA) et sert un
+// Service worker minimal : rend Seha installable (PWA) et sert un
 // cache réseau-d'abord pour un rechargement plus rapide.
-const CACHE = "tabibi-v1";
+const CACHE = "seha-v1";
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();

@@ -1,4 +1,4 @@
-# Tabibi — image de production (Next.js 14 + Prisma).
+# Seha — image de production (Next.js 14 + Prisma).
 # Multi-stage : build puis image d'exécution allégée.
 
 FROM node:22-bookworm-slim AS base

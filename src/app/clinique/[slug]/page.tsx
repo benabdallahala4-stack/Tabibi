@@ -9,7 +9,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const clinic = findClinic(params.slug);
   return {
-    title: clinic ? `${clinic.name} — ${clinic.city} | Tabibi` : "Clinique introuvable | Tabibi",
+    title: clinic ? `${clinic.name} — ${clinic.city} | Seha` : "Clinique introuvable | Seha",
   };
 }
 

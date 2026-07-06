@@ -6,7 +6,7 @@ import { useLocale } from "@/lib/i18n";
 
 const L = {
   fr: {
-    title: "Avis vérifiés Tabibi",
+    title: "Avis vérifiés Seha",
     sub: "Seuls les patients ayant réservé chez ce praticien peuvent laisser un avis.",
     empty: "Pas encore d'avis vérifié — soyez le premier après votre consultation.",
     notEligible: "🔒 Réservez et honorez un rendez-vous chez ce praticien pour pouvoir laisser un avis.",
@@ -18,7 +18,7 @@ const L = {
     badge: "✓ Patient vérifié",
   },
   ar: {
-    title: "تقييمات موثّقة من طبيبي",
+    title: "تقييمات موثّقة من صحة",
     sub: "فقط المرضى الذين حجزوا لدى هذا الطبيب يمكنهم ترك تقييم.",
     empty: "لا توجد تقييمات موثقة بعد — كن الأول بعد استشارتك.",
     notEligible: "🔒 احجز موعدًا لدى هذا الطبيب لتتمكن من ترك تقييم.",

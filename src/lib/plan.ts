@@ -5,7 +5,7 @@
 
 export type Plan = "gratuit" | "essentiel" | "avance" | "premium";
 
-const KEY = "tabibi.pro.plan";
+const KEY = "seha.pro.plan";
 
 export const PLAN_LABELS: Record<Plan, string> = {
   gratuit: "Gratuit",

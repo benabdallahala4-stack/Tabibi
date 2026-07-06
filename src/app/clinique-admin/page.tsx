@@ -35,7 +35,7 @@ export default function ClinicAdminPage() {
 
   useEffect(() => {
     try {
-      const all = JSON.parse(window.localStorage.getItem("tabibi.quotes") ?? "[]") as QuoteRequest[];
+      const all = JSON.parse(window.localStorage.getItem("seha.quotes") ?? "[]") as QuoteRequest[];
       setQuotes(all.map((q) => ({ status: "nouveau", ...q })));
     } catch {
       setQuotes([]);
@@ -44,7 +44,7 @@ export default function ClinicAdminPage() {
 
   function persist(next: QuoteRequest[]) {
     setQuotes(next);
-    window.localStorage.setItem("tabibi.quotes", JSON.stringify(next));
+    window.localStorage.setItem("seha.quotes", JSON.stringify(next));
   }
 
   const clinicDoctors = DOCTORS.filter((d) => CLINIC.doctorSlugs.includes(d.slug));
@@ -98,7 +98,7 @@ export default function ClinicAdminPage() {
             <h2 className="font-bold text-slate-800">Demandes de devis reçues</h2>
             <p className="mt-1 text-sm text-slate-500">
               Les formulaires « Demander un devis » remplis sur les fiches cliniques arrivent ici.
-              Répondez sous 48 h ouvrées (engagement Tabibi).
+              Répondez sous 48 h ouvrées (engagement Seha).
             </p>
             {quotes === null ? (
               <p className="mt-4 text-slate-400">Chargement…</p>
@@ -146,7 +146,7 @@ export default function ClinicAdminPage() {
                       </a>
                       <a
                         href={`https://wa.me/${q.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
-                          `Bonjour ${q.name}, ${CLINIC.name} — suite à votre demande de devis sur Tabibi :`
+                          `Bonjour ${q.name}, ${CLINIC.name} — suite à votre demande de devis sur Seha :`
                         )}`}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -176,7 +176,7 @@ export default function ClinicAdminPage() {
           <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
             <h2 className="font-bold text-slate-800">Praticiens rattachés ({clinicDoctors.length})</h2>
             <p className="mt-1 text-sm text-slate-500">
-              Leurs agendas Tabibi alimentent la fiche publique de la clinique. (Ajout/retrait : V1 backend.)
+              Leurs agendas Seha alimentent la fiche publique de la clinique. (Ajout/retrait : V1 backend.)
             </p>
             <div className="mt-4 space-y-2">
               {clinicDoctors.map((d) => (

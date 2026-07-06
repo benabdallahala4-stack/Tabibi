@@ -37,7 +37,7 @@ function VisioContent() {
     );
   }
 
-  const roomName = `tabibi-${appt.id}`;
+  const roomName = `seha-${appt.id}`;
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-6">
@@ -52,7 +52,7 @@ function VisioContent() {
           src={`https://meet.jit.si/${roomName}#userInfo.displayName="${encodeURIComponent(appt.patientName)}"`}
           className="h-[70vh] w-full border-0"
           allow="camera; microphone; fullscreen; display-capture; autoplay"
-          title="Téléconsultation Tabibi"
+          title="Téléconsultation Seha"
         />
       </div>
       <div className="mt-4">

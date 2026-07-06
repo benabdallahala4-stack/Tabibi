@@ -11,7 +11,7 @@ export interface Clinic {
   phone: string;
   description: string;
   specialties: string[];
-  doctorSlugs: string[]; // praticiens Tabibi exerçant dans la clinique
+  doctorSlugs: string[]; // praticiens Seha exerçant dans la clinique
   beds: number;
   emergency24h: boolean;
   international: {
@@ -111,7 +111,7 @@ export const CLINICS: Clinic[] = [
       services: [
         "Forfaits soins + hôtel + transferts",
         "Bilans de santé complets en 48 h",
-        "Suivi à distance par téléconsultation Tabibi après le retour",
+        "Suivi à distance par téléconsultation Seha après le retour",
       ],
     },
   },

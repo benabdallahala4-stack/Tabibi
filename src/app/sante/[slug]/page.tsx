@@ -11,9 +11,9 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const article = findArticle(params.slug);
-  if (!article) return { title: "Article introuvable | Tabibi" };
+  if (!article) return { title: "Article introuvable | Seha" };
   return {
-    title: `${article.title} | Magazine Santé Tabibi`,
+    title: `${article.title} | Magazine Santé Seha`,
     description: article.summary,
   };
 }

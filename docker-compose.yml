@@ -1,4 +1,4 @@
-# Tabibi — stack complète locale : base de données + application (front + API).
+# Seha — stack complète locale : base de données + application (front + API).
 #
 #   cp .env.example .env      # ajustez si besoin
 #   docker compose up --build
@@ -12,15 +12,15 @@ services:
     image: postgres:16-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_USER: tabibi
-      POSTGRES_PASSWORD: tabibi
-      POSTGRES_DB: tabibi
+      POSTGRES_USER: seha
+      POSTGRES_PASSWORD: seha
+      POSTGRES_DB: seha
     ports:
       - "5432:5432"
     volumes:
-      - tabibi_pgdata:/var/lib/postgresql/data
+      - seha_pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U tabibi -d tabibi"]
+      test: ["CMD-SHELL", "pg_isready -U seha -d seha"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -32,7 +32,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql://tabibi:tabibi@db:5432/tabibi?schema=public
+      DATABASE_URL: postgresql://seha:seha@db:5432/seha?schema=public
       SESSION_SECRET: ${SESSION_SECRET:-change-me-in-production}
       NODE_ENV: production
       # Optionnels — décommentez pour activer :
@@ -47,4 +47,4 @@ services:
       - "3000:3000"
 
 volumes:
-  tabibi_pgdata:
+  seha_pgdata:

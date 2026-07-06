@@ -66,9 +66,9 @@ export const MOCK_USERS: MockUser[] = [
     desc: "Dépôt des résultats d'analyses dans le dossier du patient.",
   },
   {
-    key: "admin-tabibi",
+    key: "admin-seha",
     role: "admin",
-    name: "Équipe Tabibi",
+    name: "Équipe Seha",
     phone: "+216 20 000 009",
     home: "/admin",
     desc: "Vérification des inscriptions, invitations médecins, modération.",
@@ -82,7 +82,7 @@ export interface Session {
   home: string;
 }
 
-const KEY = "tabibi.session";
+const KEY = "seha.session";
 
 export function loadSession(): Session | null {
   if (typeof window === "undefined") return null;

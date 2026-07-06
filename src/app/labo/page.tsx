@@ -18,7 +18,7 @@ import { useRoleGate, SessionBar } from "@/components/RoleGuard";
 const L = {
   fr: {
     title: "Portail laboratoire",
-    sub: "Laboratoires et centres d'imagerie partenaires : déposez le résultat directement dans le dossier Tabibi du patient, avec son code d'accès.",
+    sub: "Laboratoires et centres d'imagerie partenaires : déposez le résultat directement dans le dossier Seha du patient, avec son code d'accès.",
     lab: "Nom du laboratoire",
     code: "Code d'accès du patient",
     file: "Choisir le fichier (PDF ou image)",
@@ -31,7 +31,7 @@ const L = {
   },
   ar: {
     title: "بوابة المخابر",
-    sub: "المخابر ومراكز التصوير الشريكة: أودعوا النتيجة مباشرة في ملف المريض على طبيبي باستعمال رمز الوصول الذي سلّمه لكم.",
+    sub: "المخابر ومراكز التصوير الشريكة: أودعوا النتيجة مباشرة في ملف المريض على صحة باستعمال رمز الوصول الذي سلّمه لكم.",
     lab: "اسم المخبر",
     code: "رمز وصول المريض",
     file: "اختر الملف (PDF أو صورة)",

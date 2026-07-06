@@ -31,8 +31,8 @@ const FEATURES = [
   },
   {
     emoji: "🤝",
-    fr: { title: "Visibilité en ligne", text: "Un profil public complet (CNAM, langues, tarifs, avis vérifiés) référencé dans la recherche Tabibi." },
-    ar: { title: "حضور رقمي", text: "ملف عمومي كامل (CNAM، اللغات، الأسعار، تقييمات موثوقة) ضمن نتائج بحث طبيبي." },
+    fr: { title: "Visibilité en ligne", text: "Un profil public complet (CNAM, langues, tarifs, avis vérifiés) référencé dans la recherche Seha." },
+    ar: { title: "حضور رقمي", text: "ملف عمومي كامل (CNAM، اللغات، الأسعار، تقييمات موثوقة) ضمن نتائج بحث صحة." },
   },
 ];
 
@@ -78,15 +78,15 @@ export default function ProPage() {
           <p className="mt-6 max-w-2xl rounded-xl bg-white/10 p-4 text-xs leading-relaxed text-primary-100">
             ⚖️{" "}
             {locale === "fr"
-              ? "Conforme à la pratique tunisienne : les certificats médicaux et ordonnances sont remis en main propre après examen — Tabibi n'émet aucun document médical en ligne, il en garde uniquement la trace dans le dossier. La téléconsultation sert au contrôle et au suivi."
-              : "مطابق للممارسة الطبية التونسية: الشهادات الطبية والوصفات تُسلَّم يدًا بيد بعد الفحص — طبيبي لا يُصدر أي وثيقة طبية عبر الإنترنت، بل يحتفظ فقط بأثرها في الملف. الاستشارة عن بُعد مخصصة للمراقبة والمتابعة."}
+              ? "Conforme à la pratique tunisienne : les certificats médicaux et ordonnances sont remis en main propre après examen — Seha n'émet aucun document médical en ligne, il en garde uniquement la trace dans le dossier. La téléconsultation sert au contrôle et au suivi."
+              : "مطابق للممارسة الطبية التونسية: الشهادات الطبية والوصفات تُسلَّم يدًا بيد بعد الفحص — صحة لا يُصدر أي وثيقة طبية عبر الإنترنت، بل يحتفظ فقط بأثرها في الملف. الاستشارة عن بُعد مخصصة للمراقبة والمتابعة."}
           </p>
         </div>
         <div className="hidden lg:block">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/illustrations/teleconsultation.svg"
-            alt={locale === "fr" ? "Téléconsultation avec Tabibi Pro" : "استشارة عن بُعد مع طبيبي برو"}
+            alt={locale === "fr" ? "Téléconsultation avec Seha Pro" : "استشارة عن بُعد مع صحة برو"}
             className="mx-auto w-full max-w-md drop-shadow-2xl"
           />
         </div>

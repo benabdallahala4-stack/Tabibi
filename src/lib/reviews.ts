@@ -1,4 +1,4 @@
-// Avis vérifiés Tabibi : seul un patient ayant un rendez-vous confirmé
+// Avis vérifiés Seha : seul un patient ayant un rendez-vous confirmé
 // avec le praticien peut déposer un avis (anti-faux-avis).
 
 import { listAppointments } from "./appointments";
@@ -12,7 +12,7 @@ export interface VerifiedReview {
   date: string;
 }
 
-const KEY = "tabibi.reviews.v1";
+const KEY = "seha.reviews.v1";
 
 export function listReviews(doctorSlug: string): VerifiedReview[] {
   if (typeof window === "undefined") return [];

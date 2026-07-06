@@ -78,7 +78,7 @@ export default function QuestionThread({ question }: { question: QnaQuestion }) 
       {question.aiAnswer && (
         <div className="mt-5 rounded-xl bg-violet-50 p-4 ring-1 ring-violet-100">
           <p className="flex items-center gap-2 text-sm font-bold text-violet-800">
-            🤖 {locale === "ar" ? "إجابة فورية من مساعد طبيبي الذكي" : "Réponse immédiate de l'assistant IA Tabibi"}
+            🤖 {locale === "ar" ? "إجابة فورية من مساعد صحة الذكي" : "Réponse immédiate de l'assistant IA Seha"}
           </p>
           <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-slate-700">{question.aiAnswer}</p>
         </div>

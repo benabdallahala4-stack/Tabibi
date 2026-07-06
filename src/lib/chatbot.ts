@@ -1,4 +1,4 @@
-// Assistant Tabibi — chatbot FAQ à base de règles (aucune API externe).
+// Assistant Seha — chatbot FAQ à base de règles (aucune API externe).
 // Couvre les parcours patient, praticien et clinique, en français et en arabe.
 
 import type { Locale } from "./i18n";
@@ -67,11 +67,11 @@ export const QAS: QA[] = [
   },
   {
     id: "rdv-gratuit",
-    keywords: ["gratuit", "payer tabibi", "prix service", "combien coute", "مجاني", "بلاش", "الخلاص"],
-    q: { fr: "Tabibi est-il gratuit ?", ar: "هل طبيبي مجاني؟" },
+    keywords: ["gratuit", "payer seha", "prix service", "combien coute", "مجاني", "بلاش", "الخلاص"],
+    q: { fr: "Seha est-il gratuit ?", ar: "هل صحة مجاني؟" },
     a: {
-      fr: "Oui, Tabibi est 100 % gratuit pour les patients. Vous réglez uniquement la consultation au praticien (tarif affiché sur son profil). La plateforme est financée par l'abonnement des praticiens (Tabibi Pro).",
-      ar: "نعم، طبيبي مجاني تمامًا للمرضى. تدفع فقط ثمن الاستشارة للطبيب (السعر معروض في ملفه). المنصة ممولة من اشتراك الأطباء (طبيبي برو).",
+      fr: "Oui, Seha est 100 % gratuit pour les patients. Vous réglez uniquement la consultation au praticien (tarif affiché sur son profil). La plateforme est financée par l'abonnement des praticiens (Seha Pro).",
+      ar: "نعم، صحة مجاني تمامًا للمرضى. تدفع فقط ثمن الاستشارة للطبيب (السعر معروض في ملفه). المنصة ممولة من اشتراك الأطباء (صحة برو).",
     },
     related: ["paiement-patient", "plus", "cnam"],
   },
@@ -220,8 +220,8 @@ export const QAS: QA[] = [
     keywords: ["urgence", "urgent", "samu", "grave", "douleur poitrine", "accident", "استعجالي", "طوارئ", "خطير", "حادث"],
     q: { fr: "C'est une urgence, que faire ?", ar: "حالة طارئة، ماذا أفعل؟" },
     a: {
-      fr: "⚠️ Tabibi ne gère pas les urgences. En cas d'urgence vitale, appelez immédiatement le SAMU au 190 (Protection civile : 198) ou rendez-vous aux urgences les plus proches. Les cliniques avec badge « Urgences 24h/24 » sont listées sur la page Cliniques.",
-      ar: "⚠️ طبيبي لا يعالج الحالات الطارئة. في الحالات الخطيرة اتصل فورًا بالإسعاف على الرقم 190 (الحماية المدنية: 198) أو توجّه لأقرب قسم استعجالي. المصحات ذات شارة « استعجالي 24/24 » مدرجة في صفحة المصحات.",
+      fr: "⚠️ Seha ne gère pas les urgences. En cas d'urgence vitale, appelez immédiatement le SAMU au 190 (Protection civile : 198) ou rendez-vous aux urgences les plus proches. Les cliniques avec badge « Urgences 24h/24 » sont listées sur la page Cliniques.",
+      ar: "⚠️ صحة لا يعالج الحالات الطارئة. في الحالات الخطيرة اتصل فورًا بالإسعاف على الرقم 190 (الحماية المدنية: 198) أو توجّه لأقرب قسم استعجالي. المصحات ذات شارة « استعجالي 24/24 » مدرجة في صفحة المصحات.",
     },
     related: ["cliniques"],
   },
@@ -240,15 +240,15 @@ export const QAS: QA[] = [
     keywords: ["application", "android", "apk", "installer", "telephone", "mobile", "تطبيق", "اندرويد", "تثبيت", "هاتف"],
     q: { fr: "Y a-t-il une application mobile ?", ar: "هل يوجد تطبيق للهاتف؟" },
     a: {
-      fr: "Oui : Tabibi s'installe comme une application. Sur Android (Chrome) : menu ⋮ → « Ajouter à l'écran d'accueil ». Sur iPhone (Safari) : Partager → « Sur l'écran d'accueil ». Une version Play Store est en préparation.",
-      ar: "نعم: يُثبَّت طبيبي كتطبيق. على أندرويد (كروم): قائمة ⋮ ← « إضافة إلى الشاشة الرئيسية ». على آيفون (سفاري): مشاركة ← « إضافة إلى الشاشة الرئيسية ». نسخة متجر بلاي قيد الإعداد.",
+      fr: "Oui : Seha s'installe comme une application. Sur Android (Chrome) : menu ⋮ → « Ajouter à l'écran d'accueil ». Sur iPhone (Safari) : Partager → « Sur l'écran d'accueil ». Une version Play Store est en préparation.",
+      ar: "نعم: يُثبَّت صحة كتطبيق. على أندرويد (كروم): قائمة ⋮ ← « إضافة إلى الشاشة الرئيسية ». على آيفون (سفاري): مشاركة ← « إضافة إلى الشاشة الرئيسية ». نسخة متجر بلاي قيد الإعداد.",
     },
     related: ["langue-arabe", "rdv-comment"],
   },
   {
     id: "pro-inscription",
     keywords: ["je suis medecin", "rejoindre", "inscrire praticien", "dentiste inscription", "referencer", "انا طبيب", "انضمام", "تسجيل طبيب"],
-    q: { fr: "Je suis praticien, comment rejoindre Tabibi ?", ar: "أنا طبيب، كيف أنضم إلى طبيبي؟" },
+    q: { fr: "Je suis praticien, comment rejoindre Seha ?", ar: "أنا طبيب، كيف أنضم إلى صحة؟" },
     a: {
       fr: "Bienvenue ! Ouvrez la page « Vous êtes soignant ? » : essayez l'espace praticien en démo, consultez les tarifs, puis laissez vos coordonnées via le formulaire — l'équipe vous recontacte sous 24 h ouvrées pour créer votre profil vérifié.",
       ar: "مرحبًا! افتح صفحة « هل أنت طبيب؟ »: جرّب الفضاء المهني التجريبي، اطّلع على الأسعار، ثم اترك بياناتك في الاستمارة — يتواصل معك الفريق خلال 24 ساعة عمل لإنشاء ملفك الموثّق.",
@@ -258,7 +258,7 @@ export const QAS: QA[] = [
   {
     id: "pro-tarifs",
     keywords: ["tarif pro", "abonnement", "prix praticien", "combien pro", "اشتراك", "سعر برو", "كم يكلف"],
-    q: { fr: "Combien coûte Tabibi Pro ?", ar: "كم يكلف طبيبي برو؟" },
+    q: { fr: "Combien coûte Seha Pro ?", ar: "كم يكلف صحة برو؟" },
     a: {
       fr: "Trois paliers sans engagement : Essentiel 89 DT/mois (agenda + réservation), Avancé 179 DT/mois (rappels SMS, visio, dossiers, caisse, messagerie), Premium 299 DT/mois (mise en avant, avis Google, widget, multi-assistants). Détails sur la page « Tarifs Pro ».",
       ar: "ثلاث صيغ دون التزام: أساسي 89 د.ت/شهر (جدول + حجز)، متقدم 179 د.ت/شهر (تذكيرات SMS، فيديو، ملفات، صندوق، مراسلة)، بريميوم 299 د.ت/شهر (إبراز في البحث، تقييمات جوجل، أداة الحجز، مساعدين متعددين). التفاصيل في صفحة « الأسعار ».",
@@ -287,8 +287,8 @@ export const QAS: QA[] = [
   },
   {
     id: "plus",
-    keywords: ["tabibi plus", "premium patient", "famille", "coffre fort", "بلس", "بريميوم", "عائله"],
-    q: { fr: "Qu'est-ce que Tabibi Plus ?", ar: "ما هو طبيبي بلس؟" },
+    keywords: ["seha plus", "premium patient", "famille", "coffre fort", "بلس", "بريميوم", "عائله"],
+    q: { fr: "Qu'est-ce que Seha Plus ?", ar: "ما هو صحة بلس؟" },
     a: {
       fr: "L'offre confort des patients à 9 DT/mois : alerte prioritaire quand un créneau se libère, profils famille (enfants, parents), coffre-fort santé, téléconsultations à tarif réduit, rappels WhatsApp et support prioritaire. L'application de base reste gratuite.",
       ar: "عرض الراحة للمرضى بـ9 د.ت/شهر: تنبيه أولوي عند توفر موعد أقرب، ملفات العائلة (الأبناء والوالدان)، خزنة صحية، استشارات عن بُعد بسعر مخفض، تذكير واتساب ودعم أولوي. التطبيق الأساسي يبقى مجانيًا.",
@@ -310,8 +310,8 @@ export const QAS: QA[] = [
     keywords: ["avis", "note", "noter", "commentaire", "evaluation", "تقييم", "راي", "نقيم"],
     q: { fr: "Comment laisser un avis sur un médecin ?", ar: "كيف أقيّم طبيبًا؟" },
     a: {
-      fr: "Sur le profil du praticien, section « Avis vérifiés Tabibi » : seuls les patients ayant réservé chez ce praticien peuvent publier un avis — c'est notre protection anti-faux-avis. Les avis Google de la fiche du cabinet sont affichés séparément.",
-      ar: "في ملف الطبيب، قسم « تقييمات موثّقة من طبيبي »: فقط المرضى الذين حجزوا لديه يمكنهم نشر تقييم — هذه حمايتنا من التقييمات المزيفة. تقييمات جوجل تُعرض على حدة.",
+      fr: "Sur le profil du praticien, section « Avis vérifiés Seha » : seuls les patients ayant réservé chez ce praticien peuvent publier un avis — c'est notre protection anti-faux-avis. Les avis Google de la fiche du cabinet sont affichés séparément.",
+      ar: "في ملف الطبيب، قسم « تقييمات موثّقة من صحة »: فقط المرضى الذين حجزوا لديه يمكنهم نشر تقييم — هذه حمايتنا من التقييمات المزيفة. تقييمات جوجل تُعرض على حدة.",
     },
     related: ["rdv-comment", "contact"],
   },
@@ -320,8 +320,8 @@ export const QAS: QA[] = [
     keywords: ["whatsapp", "watsap", "recap", "واتساب", "وتساب"],
     q: { fr: "Puis-je recevoir mon rendez-vous sur WhatsApp ?", ar: "هل يصلني موعدي على واتساب؟" },
     a: {
-      fr: "Oui : après la réservation, cliquez sur « Envoyer le récap sur WhatsApp » depuis la page de confirmation pour vous l'envoyer ou le partager à un proche. Les rappels automatiques WhatsApp arrivent avec Tabibi Plus.",
-      ar: "نعم: بعد الحجز، اضغط « إرسال الملخص عبر واتساب » من صفحة التأكيد لإرساله لنفسك أو لأحد أقاربك. التذكيرات التلقائية عبر واتساب قادمة مع طبيبي بلس.",
+      fr: "Oui : après la réservation, cliquez sur « Envoyer le récap sur WhatsApp » depuis la page de confirmation pour vous l'envoyer ou le partager à un proche. Les rappels automatiques WhatsApp arrivent avec Seha Plus.",
+      ar: "نعم: بعد الحجز، اضغط « إرسال الملخص عبر واتساب » من صفحة التأكيد لإرساله لنفسك أو لأحد أقاربك. التذكيرات التلقائية عبر واتساب قادمة مع صحة بلس.",
     },
     related: ["rdv-rappel", "plus"],
   },
@@ -330,8 +330,8 @@ export const QAS: QA[] = [
     keywords: ["laboratoire", "labo", "resultat analyse", "imagerie resultat", "مخبر", "نتيجه التحاليل"],
     q: { fr: "Comment recevoir mes résultats d'analyses ?", ar: "كيف أستقبل نتائج تحاليلي؟" },
     a: {
-      fr: "Donnez votre code d'accès Tabibi au laboratoire partenaire : il dépose le résultat directement dans « Mon dossier médical » via le Portail laboratoire. Vous pouvez ensuite le partager avec votre médecin.",
-      ar: "أعطِ رمز وصولك على طبيبي للمخبر الشريك: يودع النتيجة مباشرة في « ملفي الطبي » عبر بوابة المخابر. يمكنك بعدها مشاركتها مع طبيبك.",
+      fr: "Donnez votre code d'accès Seha au laboratoire partenaire : il dépose le résultat directement dans « Mon dossier médical » via le Portail laboratoire. Vous pouvez ensuite le partager avec votre médecin.",
+      ar: "أعطِ رمز وصولك على صحة للمخبر الشريك: يودع النتيجة مباشرة في « ملفي الطبي » عبر بوابة المخابر. يمكنك بعدها مشاركتها مع طبيبك.",
     },
     related: ["dossier-upload", "dossier-partage"],
   },
@@ -380,8 +380,8 @@ export const QAS: QA[] = [
     keywords: ["article", "magazine", "conseil sante", "blog", "lire", "مقال", "مجله", "نصائح صحيه"],
     q: { fr: "Où trouver des conseils santé fiables ?", ar: "أين أجد نصائح صحية موثوقة؟" },
     a: {
-      fr: "Le « Magazine Santé » de Tabibi publie des articles de prévention clairs (cœur, diabète, enfants, peau, grossesse…), classés par thème, avec un lien direct pour prendre rendez-vous avec le bon spécialiste. Lien en bas de page.",
-      ar: "تنشر « مجلة الصحة » على طبيبي مقالات وقاية واضحة (القلب، السكري، الأطفال، البشرة، الحمل…) مصنّفة حسب الموضوع، مع رابط مباشر لحجز موعد لدى المختص المناسب. الرابط أسفل الصفحة.",
+      fr: "Le « Magazine Santé » de Seha publie des articles de prévention clairs (cœur, diabète, enfants, peau, grossesse…), classés par thème, avec un lien direct pour prendre rendez-vous avec le bon spécialiste. Lien en bas de page.",
+      ar: "تنشر « مجلة الصحة » على صحة مقالات وقاية واضحة (القلب، السكري، الأطفال، البشرة، الحمل…) مصنّفة حسب الموضوع، مع رابط مباشر لحجز موعد لدى المختص المناسب. الرابط أسفل الصفحة.",
     },
     related: ["rdv-comment", "medicaments"],
   },
@@ -390,8 +390,8 @@ export const QAS: QA[] = [
     keywords: ["laboratoire proche", "analyses ou", "prise de sang", "prelevement domicile", "مخبر قريب", "تحاليل وين", "اخذ عينه"],
     q: { fr: "Comment trouver un laboratoire d'analyses ?", ar: "كيف أجد مخبر تحاليل؟" },
     a: {
-      fr: "Ouvrez la page « Laboratoires » : filtrez par ville et par type d'analyse (biochimie, hormonologie, bilan prénatal…). Les badges indiquent le prélèvement à domicile et la remise des résultats directement dans votre dossier Tabibi.",
-      ar: "افتح صفحة « المخابر »: صفِّ حسب المدينة ونوع التحليل. تشير الشارات إلى أخذ العينات في المنزل وإيداع النتائج مباشرة في ملفك على طبيبي.",
+      fr: "Ouvrez la page « Laboratoires » : filtrez par ville et par type d'analyse (biochimie, hormonologie, bilan prénatal…). Les badges indiquent le prélèvement à domicile et la remise des résultats directement dans votre dossier Seha.",
+      ar: "افتح صفحة « المخابر »: صفِّ حسب المدينة ونوع التحليل. تشير الشارات إلى أخذ العينات في المنزل وإيداع النتائج مباشرة في ملفك على صحة.",
     },
     related: ["labo", "dossier-upload"],
   },
@@ -400,8 +400,8 @@ export const QAS: QA[] = [
     keywords: ["contact", "aide", "humain", "support", "probleme", "reclamation", "تواصل", "مساعده", "مشكل", "شكوى"],
     q: { fr: "Comment contacter un humain ?", ar: "كيف أتواصل مع شخص حقيقي؟" },
     a: {
-      fr: "L'équipe support répond par e-mail à support@tabibi.tn (démo) sous 24 h ouvrées, et en priorité pour les abonnés Plus et Pro. Pour toute urgence médicale, appelez le 190 (SAMU).",
-      ar: "فريق الدعم يجيب عبر البريد support@tabibi.tn (تجريبي) خلال 24 ساعة عمل، وبأولوية لمشتركي بلس وبرو. في الحالات الطبية الطارئة اتصل بالرقم 190 (الإسعاف).",
+      fr: "L'équipe support répond par e-mail à support@seha.tn (démo) sous 24 h ouvrées, et en priorité pour les abonnés Plus et Pro. Pour toute urgence médicale, appelez le 190 (SAMU).",
+      ar: "فريق الدعم يجيب عبر البريد support@seha.tn (تجريبي) خلال 24 ساعة عمل، وبأولوية لمشتركي بلس وبرو. في الحالات الطبية الطارئة اتصل بالرقم 190 (الإسعاف).",
     },
     related: ["urgence", "rdv-comment"],
   },

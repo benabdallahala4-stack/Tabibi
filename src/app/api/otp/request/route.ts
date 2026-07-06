@@ -45,7 +45,7 @@ export async function POST(req: Request) {
   const smsConfigured = !!process.env.SMS_GATEWAY_URL;
   if (smsConfigured) {
     // Branchement passerelle SMS tunisienne (Orange/Ooredoo/TT ou agrégateur) :
-    // POST process.env.SMS_GATEWAY_URL avec { to: phone, text: `Code Tabibi : ${code}` }
+    // POST process.env.SMS_GATEWAY_URL avec { to: phone, text: `Code Seha : ${code}` }
     try {
       await fetch(process.env.SMS_GATEWAY_URL!, {
         method: "POST",
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
           "Content-Type": "application/json",
           Authorization: `Bearer ${process.env.SMS_GATEWAY_TOKEN ?? ""}`,
         },
-        body: JSON.stringify({ to: phone, text: `Votre code Tabibi : ${code}` }),
+        body: JSON.stringify({ to: phone, text: `Votre code Seha : ${code}` }),
       });
     } catch {
       return NextResponse.json({ error: "sms_failed" }, { status: 502 });

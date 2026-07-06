@@ -25,7 +25,7 @@ const DICT: Record<string, { fr: string; ar: string }> = {
   },
   "footer.searchDoctor": { fr: "Rechercher un médecin", ar: "البحث عن طبيب" },
   "footer.manageAppointments": { fr: "Gérer mes rendez-vous", ar: "إدارة مواعيدي" },
-  "footer.joinPro": { fr: "Rejoindre Tabibi Pro", ar: "انضم إلى طبيبي برو" },
+  "footer.joinPro": { fr: "Rejoindre Seha Pro", ar: "انضم إلى صحة برو" },
   "footer.disclaimer": {
     fr: "Projet de démonstration inspiré de Doctolib, adapté à la Tunisie.",
     ar: "مشروع تجريبي مستوحى من Doctolib ومكيَّف مع تونس.",
@@ -69,10 +69,10 @@ const DICT: Record<string, { fr: string; ar: string }> = {
     ar: "هل أنت طبيب أو طبيب أسنان أو أخصائي علاج طبيعي؟",
   },
   "home.proBanner.text": {
-    fr: "Réduisez les rendez-vous non honorés et remplissez votre agenda avec Tabibi Pro.",
-    ar: "قلّل المواعيد الملغاة واملأ جدولك مع طبيبي برو.",
+    fr: "Réduisez les rendez-vous non honorés et remplissez votre agenda avec Seha Pro.",
+    ar: "قلّل المواعيد الملغاة واملأ جدولك مع صحة برو.",
   },
-  "home.proBanner.cta": { fr: "Découvrir Tabibi Pro", ar: "اكتشف طبيبي برو" },
+  "home.proBanner.cta": { fr: "Découvrir Seha Pro", ar: "اكتشف صحة برو" },
 
   // Recherche
   "search.title": { fr: "Trouver un praticien", ar: "البحث عن طبيب" },
@@ -216,7 +216,7 @@ const DICT: Record<string, { fr: string; ar: string }> = {
   },
 
   // Pro
-  "pro.kicker": { fr: "Tabibi Pro", ar: "طبيبي برو" },
+  "pro.kicker": { fr: "Seha Pro", ar: "صحة برو" },
   "pro.title": {
     fr: "Développez votre patientèle et libérez du temps médical",
     ar: "طوّر قاعدة مرضاك ووفّر وقتًا طبيًا",
@@ -332,7 +332,7 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>("fr");
 
   useEffect(() => {
-    const saved = window.localStorage.getItem("tabibi.locale");
+    const saved = window.localStorage.getItem("seha.locale");
     if (saved === "ar" || saved === "fr") setLocaleState(saved);
   }, []);
 
@@ -345,7 +345,7 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     locale,
     setLocale: (l) => {
       setLocaleState(l);
-      window.localStorage.setItem("tabibi.locale", l);
+      window.localStorage.setItem("seha.locale", l);
     },
     t: (key) => DICT[key]?.[locale] ?? DICT[key]?.fr ?? key,
     city: (name) => (locale === "ar" ? CITY_AR[name] ?? name : name),

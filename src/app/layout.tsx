@@ -5,16 +5,16 @@ import Providers from "@/components/Providers";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Tabibi — طبيبي | Prenez rendez-vous avec un médecin en Tunisie",
+  title: "Seha — صحة | Prenez rendez-vous avec un médecin en Tunisie",
   description:
-    "Tabibi est la plateforme tunisienne de prise de rendez-vous médicaux en ligne : trouvez un médecin près de chez vous, réservez 24h/24 et consultez à distance.",
+    "Seha est la plateforme tunisienne de prise de rendez-vous médicaux en ligne : trouvez un médecin près de chez vous, réservez 24h/24 et consultez à distance.",
   icons: { icon: "/icon.svg" },
   manifest: "/manifest.json",
-  appleWebApp: { capable: true, title: "Tabibi", statusBarStyle: "default" },
+  appleWebApp: { capable: true, title: "Seha", statusBarStyle: "default" },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a8f8c",
+  themeColor: "#1c4fdb",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

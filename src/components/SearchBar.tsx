@@ -39,11 +39,11 @@ export default function SearchBar({
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder={t("search.placeholder")}
-        list="tabibi-specialties"
+        list="seha-specialties"
         className="flex-1 rounded-xl border-0 px-4 py-3 text-sm text-slate-700 outline-none placeholder:text-slate-400 focus:ring-2 focus:ring-primary-400"
         aria-label={t("search.placeholder")}
       />
-      <datalist id="tabibi-specialties">
+      <datalist id="seha-specialties">
         {SPECIALTIES.map((s) => (
           <option key={s.id} value={locale === "ar" ? s.labelAr : s.label} />
         ))}

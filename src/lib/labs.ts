@@ -12,7 +12,7 @@ export interface Lab {
   phone: string;
   hours: string;
   homeSampling: boolean; // prélèvement à domicile
-  resultsOnline: boolean; // résultats via Tabibi
+  resultsOnline: boolean; // résultats via Seha
   analyses: string[]; // familles d'analyses
 }
 

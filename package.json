@@ -1,8 +1,8 @@
 {
-  "name": "tabibi",
+  "name": "seha",
   "version": "0.1.0",
   "private": true,
-  "description": "Tabibi (طبيبي) — Plateforme tunisienne de prise de rendez-vous médicaux en ligne",
+  "description": "Seha (صحة) — Plateforme tunisienne de prise de rendez-vous médicaux en ligne",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && node scripts/migrate-if-db.mjs && next build",
