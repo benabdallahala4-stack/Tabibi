@@ -33,6 +33,7 @@ export default function Footer() {
             <li><Link href="/medicaments" className="hover:text-primary-600">{t("nav.medicines")}</Link></li>
             <li><Link href="/laboratoires" className="hover:text-primary-600">{t("nav.labs")}</Link></li>
             <li><Link href="/sante" className="hover:text-primary-600">{t("nav.magazine")}</Link></li>
+            <li><Link href="/questions" className="hover:text-primary-600">💬 {t("nav.qna")}</Link></li>
             <li><Link href="/attente" className="hover:text-primary-600">{t("nav.queue")}</Link></li>
             <li><Link href="/cliniques" className="hover:text-primary-600">{t("nav.clinics")}</Link></li>
             <li><Link href="/plus" className="hover:text-primary-600">⭐ Tabibi Plus</Link></li>

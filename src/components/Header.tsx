@@ -32,6 +32,12 @@ export default function Header() {
             {t("nav.clinics")}
           </Link>
           <Link
+            href="/questions"
+            className="hidden rounded-lg px-3 py-2 font-medium text-slate-600 hover:bg-slate-100 lg:block"
+          >
+            💬 {t("nav.qna")}
+          </Link>
+          <Link
             href="/mes-rdv"
             className="hidden rounded-lg px-3 py-2 font-medium text-slate-600 hover:bg-slate-100 sm:block"
           >

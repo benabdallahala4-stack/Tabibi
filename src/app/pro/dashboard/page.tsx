@@ -18,6 +18,8 @@ import {
 } from "@/lib/pro";
 import { accessRecordWithCode, type MedicalRecord } from "@/lib/medicalRecord";
 import { loadQueue, saveQueue, type QueueState } from "@/lib/queue";
+import { allQuestions, answerQuestion, type QnaQuestion } from "@/lib/qna";
+import { SPECIALTIES } from "@/lib/data";
 
 const TABS = [
   { id: "agenda", label: "📅 Agenda" },
@@ -26,6 +28,7 @@ const TABS = [
   { id: "messages", label: "💬 Messagerie" },
   { id: "suivis", label: "🔔 Suivis" },
   { id: "file", label: "⏳ File d'attente" },
+  { id: "qna", label: "💬 Questions publiques" },
   { id: "dossier", label: "🔐 Dossier partagé" },
   { id: "stats", label: "📊 Statistiques" },
 ] as const;
@@ -104,6 +107,7 @@ export default function ProDashboard() {
         {tab === "messages" && <MessagesTab ws={ws} update={update} />}
         {tab === "suivis" && <SuivisTab ws={ws} update={update} />}
         {tab === "file" && <QueueTab />}
+        {tab === "qna" && <QnaTab />}
         {tab === "dossier" && <SharedRecordTab />}
         {tab === "stats" && <StatsTab ws={ws} bookings={bookings} />}
       </div>
@@ -819,6 +823,105 @@ function QueueTab() {
           </div>
         ))}
       </div>
+    </section>
+  );
+}
+
+/* ---------------- Questions publiques (Q&A) ---------------- */
+
+const DEMO_DOCTOR_SLUG = "dr-amine-ben-salah-cardiologie-tunis";
+
+function QnaTab() {
+  const [questions, setQuestions] = useState<QnaQuestion[] | null>(null);
+  const [drafts, setDrafts] = useState<Record<string, string>>({});
+  const [onlyMine, setOnlyMine] = useState(true);
+
+  useEffect(() => {
+    setQuestions(allQuestions());
+  }, []);
+
+  function reply(q: QnaQuestion) {
+    const text = (drafts[q.id] ?? "").trim();
+    if (!text) return;
+    answerQuestion(q.id, DEMO_DOCTOR_SLUG, text);
+    setDrafts((d) => ({ ...d, [q.id]: "" }));
+    setQuestions(allQuestions());
+  }
+
+  const label = (id: string) => SPECIALTIES.find((s) => s.id === id)?.label ?? id;
+  const list = (questions ?? []).filter((q) => !onlyMine || q.specialtyId === "cardiologie");
+
+  return (
+    <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 className="text-lg font-bold text-slate-800">Questions publiques des patients</h2>
+          <p className="text-sm text-slate-500">
+            Répondez avec votre profil vérifié : chaque réponse est publique, notée « utile » par les
+            lecteurs, et affiche un bouton de prise de RDV vers votre agenda — un levier de visibilité.
+          </p>
+        </div>
+        <label className="flex items-center gap-2 text-sm text-slate-600">
+          <input
+            type="checkbox"
+            checked={onlyMine}
+            onChange={(e) => setOnlyMine(e.target.checked)}
+            className="h-4 w-4 accent-primary-600"
+          />
+          Ma spécialité uniquement
+        </label>
+      </div>
+
+      <div className="mt-4 space-y-4">
+        {questions === null && <p className="text-slate-400">Chargement…</p>}
+        {list.map((q) => {
+          const alreadyAnswered = q.answers.some((a) => a.doctorSlug === DEMO_DOCTOR_SLUG);
+          return (
+            <div key={q.id} className="rounded-xl bg-slate-50 p-4">
+              <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
+                <span className="rounded-full bg-primary-50 px-2 py-0.5 font-medium text-primary-700">
+                  {label(q.specialtyId)}
+                </span>
+                <span dir="ltr">{q.date}</span>
+                <span>
+                  {q.answers.length === 0 ? "🔴 Sans réponse" : `${q.answers.length} réponse(s)`}
+                </span>
+              </div>
+              <p className="mt-1 font-semibold text-slate-800">{q.title}</p>
+              <p className="mt-1 text-sm text-slate-600">{q.body}</p>
+              {alreadyAnswered ? (
+                <p className="mt-3 rounded-lg bg-emerald-50 px-3 py-2 text-xs font-medium text-emerald-700">
+                  ✓ Vous avez répondu à cette question
+                </p>
+              ) : (
+                <div className="mt-3 space-y-2">
+                  <textarea
+                    value={drafts[q.id] ?? ""}
+                    onChange={(e) => setDrafts((d) => ({ ...d, [q.id]: e.target.value }))}
+                    placeholder="Votre réponse publique (générale, sans diagnostic individuel ni ordonnance)…"
+                    rows={3}
+                    className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary-400"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => reply(q)}
+                    className="rounded-xl bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-700"
+                  >
+                    Publier la réponse (Dr Ben Salah)
+                  </button>
+                </div>
+              )}
+            </div>
+          );
+        })}
+        {questions !== null && list.length === 0 && (
+          <p className="text-sm text-slate-400">Aucune question dans votre spécialité pour l&apos;instant.</p>
+        )}
+      </div>
+      <p className="mt-4 rounded-xl bg-amber-50 p-3 text-xs text-amber-700">
+        ⚖️ Cadre déontologique : réponses d&apos;information générale uniquement — pas de diagnostic
+        individuel ni de prescription en ligne. En production, chaque réponse passe par la modération.
+      </p>
     </section>
   );
 }

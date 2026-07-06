@@ -366,6 +366,16 @@ export const QAS: QA[] = [
     related: ["rdv-comment", "cliniques"],
   },
   {
+    id: "qna",
+    keywords: ["poser une question", "question medecin", "question anonyme", "demander avis", "سؤال طبيب", "نسال", "سؤال مجهول"],
+    q: { fr: "Puis-je poser une question à un médecin gratuitement ?", ar: "هل يمكنني سؤال طبيب مجانًا؟" },
+    a: {
+      fr: "Oui : la page « Questions médicales » vous permet de poser votre question anonymement et publiquement. Des médecins vérifiés y répondent avec leur profil ; vous pouvez voter « utile », consulter le profil du médecin ou prendre rendez-vous directement. Attention : réponses d'information générale, jamais d'urgence (190).",
+      ar: "نعم: صفحة « أسئلة طبية » تتيح لك طرح سؤالك بشكل مجهول وعلني. يجيب أطباء موثّقون بملفاتهم؛ يمكنك التصويت « مفيد »، أو عرض ملف الطبيب أو حجز موعد مباشرة. تنبيه: إجابات عامة، وليست للحالات الطارئة (190).",
+    },
+    related: ["rdv-comment", "visio-comment", "urgence"],
+  },
+  {
     id: "magazine",
     keywords: ["article", "magazine", "conseil sante", "blog", "lire", "مقال", "مجله", "نصائح صحيه"],
     q: { fr: "Où trouver des conseils santé fiables ?", ar: "أين أجد نصائح صحية موثوقة؟" },
