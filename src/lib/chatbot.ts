@@ -366,6 +366,26 @@ export const QAS: QA[] = [
     related: ["rdv-comment", "cliniques"],
   },
   {
+    id: "magazine",
+    keywords: ["article", "magazine", "conseil sante", "blog", "lire", "مقال", "مجله", "نصائح صحيه"],
+    q: { fr: "Où trouver des conseils santé fiables ?", ar: "أين أجد نصائح صحية موثوقة؟" },
+    a: {
+      fr: "Le « Magazine Santé » de Tabibi publie des articles de prévention clairs (cœur, diabète, enfants, peau, grossesse…), classés par thème, avec un lien direct pour prendre rendez-vous avec le bon spécialiste. Lien en bas de page.",
+      ar: "تنشر « مجلة الصحة » على طبيبي مقالات وقاية واضحة (القلب، السكري، الأطفال، البشرة، الحمل…) مصنّفة حسب الموضوع، مع رابط مباشر لحجز موعد لدى المختص المناسب. الرابط أسفل الصفحة.",
+    },
+    related: ["rdv-comment", "medicaments"],
+  },
+  {
+    id: "laboratoires",
+    keywords: ["laboratoire proche", "analyses ou", "prise de sang", "prelevement domicile", "مخبر قريب", "تحاليل وين", "اخذ عينه"],
+    q: { fr: "Comment trouver un laboratoire d'analyses ?", ar: "كيف أجد مخبر تحاليل؟" },
+    a: {
+      fr: "Ouvrez la page « Laboratoires » : filtrez par ville et par type d'analyse (biochimie, hormonologie, bilan prénatal…). Les badges indiquent le prélèvement à domicile et la remise des résultats directement dans votre dossier Tabibi.",
+      ar: "افتح صفحة « المخابر »: صفِّ حسب المدينة ونوع التحليل. تشير الشارات إلى أخذ العينات في المنزل وإيداع النتائج مباشرة في ملفك على طبيبي.",
+    },
+    related: ["labo", "dossier-upload"],
+  },
+  {
     id: "contact",
     keywords: ["contact", "aide", "humain", "support", "probleme", "reclamation", "تواصل", "مساعده", "مشكل", "شكوى"],
     q: { fr: "Comment contacter un humain ?", ar: "كيف أتواصل مع شخص حقيقي؟" },

@@ -38,26 +38,62 @@ export default function PharmaciesPage() {
   const { locale, city } = useLocale();
   const t = L[locale];
   const [selectedCity, setSelectedCity] = useState("");
+  const [query, setQuery] = useState("");
+  const [garde, setGarde] = useState<"" | "jour" | "nuit" | "24h">("");
 
-  const list = PHARMACIES.filter((p) => !selectedCity || p.city === selectedCity);
+  const q = query.trim().toLowerCase();
+  const list = PHARMACIES.filter(
+    (p) =>
+      (!selectedCity || p.city === selectedCity) &&
+      (!garde || p.garde === garde) &&
+      (!q ||
+        p.name.toLowerCase().includes(q) ||
+        p.nameAr.includes(query.trim()) ||
+        p.address.toLowerCase().includes(q))
+  );
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
       <h1 className="text-2xl font-bold text-slate-800">💊 {t.title}</h1>
       <p className="mt-1 text-sm text-slate-500">{t.sub}</p>
 
-      <select
-        value={selectedCity}
-        onChange={(e) => setSelectedCity(e.target.value)}
-        className="mt-4 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary-400"
-      >
-        <option value="">{t.all}</option>
-        {CITIES.map((c) => (
-          <option key={c} value={c}>
-            {city(c)}
-          </option>
+      <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder={locale === "ar" ? "اسم الصيدلية أو الشارع…" : "Nom de pharmacie ou rue…"}
+          className="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary-400"
+        />
+        <select
+          value={selectedCity}
+          onChange={(e) => setSelectedCity(e.target.value)}
+          className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-primary-400 sm:w-52"
+        >
+          <option value="">{t.all}</option>
+          {CITIES.map((c) => (
+            <option key={c} value={c}>
+              {city(c)}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        {(["", "nuit", "jour", "24h"] as const).map((g) => (
+          <button
+            key={g || "all"}
+            type="button"
+            onClick={() => setGarde(g)}
+            className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
+              garde === g ? "bg-primary-600 text-white" : "bg-white text-slate-600 ring-1 ring-slate-200 hover:bg-slate-50"
+            }`}
+          >
+            {g === "" ? (locale === "ar" ? "الكل" : "Toutes") : t.garde[g]}
+          </button>
         ))}
-      </select>
+        <span className="text-sm text-slate-500">
+          {list.length} {locale === "ar" ? "صيدلية" : "pharmacie(s)"}
+        </span>
+      </div>
 
       <div className="mt-5 grid gap-4 sm:grid-cols-2">
         {list.map((p) => (

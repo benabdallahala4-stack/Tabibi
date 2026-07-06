@@ -56,7 +56,27 @@ Annuaire + réservation instantanée en ligne : horaires, **honoraires affichés
 | 🟡 P3 | Annuaire élargi : laboratoires et pharmacies **réservables** comme les médecins | Parité annuaire complet |
 | 🟢 P4 | Partenariat **assurance** (modèle med.tn : assureur investisseur) et extension Maghreb | Croissance |
 
-## 6. Positionnement recommandé
+## 6. Approfondissement med.tn (scan de juillet 2026)
+
+**Magazine médical** (`blog.med.tn` + `/magazine-medical/<catégorie>`) : articles illustrés classés par zone du corps (santé mentale, peau, cœur, yeux, reins, enfants, santé sexuelle…), signés par des praticiens (gériatre, nutritionniste, chirurgien pédiatre…). Chaque article = une page indexée + un lien vers la prise de RDV → c'est leur moteur SEO. **Réplique Tabibi : Magazine Santé (`/sante`), articles originaux liés à l'annuaire de chaque spécialité (fait ✅).**
+
+**Pharmacies** : arborescence `/pharmacie/garde/<ville>/<quartier>` avec variantes garde-jour, garde-24/24, ouvertes en journée. **Source des données : le Conseil National de l'Ordre des Pharmaciens (cnopt.tn)**, qui publie la liste officielle des gardes et a lancé sa propre plateforme de géolocalisation (medicapp.tn/cnoptLocalisation). Contact CNOPT : +216 71 795 722. **Réplique Tabibi : recherche + filtres jour/nuit/24h (fait ✅) ; brancher la liste CNOPT en production.**
+
+**Laboratoires** : entités réservables comme les médecins (`/medecin/laboratoire-danalyses-de-biologie-medicale/<ville>/<quartier>`), avec services, disponibilités en temps réel et consultation des résultats à distance. **Réplique Tabibi : annuaire `/laboratoires` avec filtres ville + famille d'analyses, badges prélèvement à domicile / résultats dans le dossier patient (fait ✅) ; réservation de créneaux labo à brancher en V2.**
+
+**Spécialités** : pages spécialité × ville × quartier (dermatologue, psychiatre, pédiatre, ORL, ophtalmo, gynéco, généraliste, gastro…). **Réplique Tabibi : contenu éditorial « que soigne / quand consulter » sur chaque page annuaire + article du magazine lié (fait ✅) ; granularité quartier à ajouter quand la densité de praticiens le justifie.**
+
+**Paiement** : la réservation est gratuite pour les patients — le modèle est l'abonnement praticien (pro.med.tn) ; pas de paiement en ligne patient visible. Tabibi va plus loin avec le checkout ClicToPay/Konnect/e-Dinar déjà maquetté.
+
+**Sources de données officielles à consommer (production Tabibi)** :
+| Donnée | Source officielle |
+|---|---|
+| Pharmacies de garde | CNOPT (cnopt.tn, medicapp.tn) — liste hebdomadaire |
+| Médicaments (prix, AMM) | Direction de la Pharmacie et du Médicament + Pharmacie Centrale de Tunisie |
+| Registre des médecins | Conseil National de l'Ordre des Médecins (CNOM) — vérification à l'inscription |
+| Conventionnement / APCI | CNAM (cnam.nat.tn) |
+
+## 7. Positionnement recommandé
 
 > med.tn = un **annuaire + Q&A** qui prend des rendez-vous.
 > **Tabibi = le système d'exploitation du soin tunisien** : le patient possède son dossier, le praticien gère tout son cabinet, la clinique reçoit le monde — en français **et en arabe**.

@@ -240,6 +240,8 @@ const DICT: Record<string, { fr: string; ar: string }> = {
   "nav.queue": { fr: "File d'attente", ar: "طابور الانتظار" },
   "nav.labo": { fr: "Portail laboratoire", ar: "بوابة المخابر" },
   "nav.medicines": { fr: "Base de médicaments", ar: "قاعدة الأدوية" },
+  "nav.magazine": { fr: "Magazine Santé", ar: "مجلة الصحة" },
+  "nav.labs": { fr: "Laboratoires", ar: "المخابر" },
   "footer.positioning": {
     fr: "Le système d'exploitation de la santé tunisienne.",
     ar: "نظام التشغيل للصحة التونسية.",

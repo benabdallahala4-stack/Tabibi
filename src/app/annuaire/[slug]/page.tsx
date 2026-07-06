@@ -5,6 +5,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import DoctorCard from "@/components/DoctorCard";
 import { CITIES, DOCTORS, SPECIALTIES } from "@/lib/data";
+import { SPECIALTY_INFO } from "@/lib/specialtyInfo";
+import { ARTICLES } from "@/lib/articles";
 
 function citySlug(city: string): string {
   return city
@@ -88,6 +90,24 @@ export default function AnnuairePage({ params }: { params: { slug: string } }) {
         au cabinet ou en téléconsultation. Service gratuit pour les patients.
       </p>
 
+      {/* Contenu éditorial spécialité (SEO) */}
+      {SPECIALTY_INFO[specialty.id] && (
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          <div className="rounded-2xl bg-white p-5 ring-1 ring-slate-200">
+            <h2 className="text-sm font-bold text-slate-800">Que soigne ce spécialiste ?</h2>
+            <p className="mt-1 text-sm leading-relaxed text-slate-600">
+              {SPECIALTY_INFO[specialty.id].treats}
+            </p>
+          </div>
+          <div className="rounded-2xl bg-white p-5 ring-1 ring-slate-200">
+            <h2 className="text-sm font-bold text-slate-800">Quand consulter ?</h2>
+            <p className="mt-1 text-sm leading-relaxed text-slate-600">
+              {SPECIALTY_INFO[specialty.id].whenToConsult}
+            </p>
+          </div>
+        </div>
+      )}
+
       <div className="mt-6 space-y-4">
         {doctors.map((d) => (
           <DoctorCard key={d.slug} doctor={d} />
@@ -101,6 +121,28 @@ export default function AnnuairePage({ params }: { params: { slug: string } }) {
           </div>
         )}
       </div>
+
+      {/* Article du magazine lié à la spécialité */}
+      {ARTICLES.filter((a) => a.specialtyId === specialty.id).map((a) => (
+        <Link
+          key={a.slug}
+          href={`/sante/${a.slug}`}
+          className="mt-8 flex items-center gap-4 rounded-2xl bg-white p-5 ring-1 ring-slate-200 transition hover:ring-primary-400"
+        >
+          <span
+            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl text-3xl"
+            style={{ background: `linear-gradient(135deg, ${a.gradient[0]}, ${a.gradient[1]})` }}
+          >
+            {a.emoji}
+          </span>
+          <span>
+            <span className="block text-xs font-semibold uppercase tracking-wide text-primary-600">
+              📰 Magazine Santé
+            </span>
+            <span className="block font-semibold text-slate-800">{a.title}</span>
+          </span>
+        </Link>
+      ))}
 
       {otherCities.length > 0 && (
         <section className="mt-10">

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import SearchBar from "@/components/SearchBar";
 import { DOCTORS, SPECIALTIES } from "@/lib/data";
+import { ARTICLES } from "@/lib/articles";
 import { useLocale } from "@/lib/i18n";
 
 export default function HomePage() {
@@ -107,6 +108,44 @@ export default function HomePage() {
                 </span>
               </Link>
             ))}
+        </div>
+      </section>
+
+      {/* Magazine Santé */}
+      <section className="bg-white py-12">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-bold text-slate-800">
+              📰 {locale === "ar" ? "مجلة الصحة" : "Magazine Santé"}
+            </h2>
+            <Link href="/sante" className="text-sm font-medium text-primary-600 hover:underline">
+              {locale === "ar" ? "← كل المقالات" : "Tous les articles →"}
+            </Link>
+          </div>
+          <div className="mt-5 grid gap-4 sm:grid-cols-3">
+            {ARTICLES.slice(0, 3).map((a) => (
+              <Link
+                key={a.slug}
+                href={`/sante/${a.slug}`}
+                className="group overflow-hidden rounded-2xl ring-1 ring-slate-200 transition hover:shadow-md"
+              >
+                <div
+                  className="flex h-24 items-center justify-center text-4xl"
+                  style={{ background: `linear-gradient(135deg, ${a.gradient[0]}, ${a.gradient[1]})` }}
+                >
+                  <span className="transition group-hover:scale-110">{a.emoji}</span>
+                </div>
+                <div className="p-4">
+                  <span className="text-xs font-medium text-primary-600">
+                    {locale === "ar" ? a.categoryAr : a.category}
+                  </span>
+                  <p className="mt-1 text-sm font-semibold leading-snug text-slate-800">
+                    {locale === "ar" ? a.titleAr : a.title}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
