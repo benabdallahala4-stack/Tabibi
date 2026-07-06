@@ -27,6 +27,8 @@ export default function Footer() {
             <li><Link href="/mes-rdv" className="hover:text-primary-600">{t("footer.manageAppointments")}</Link></li>
             <li><Link href="/compte" className="hover:text-primary-600">{t("nav.account")}</Link></li>
             <li><Link href="/dossier" className="hover:text-primary-600">{t("nav.dossier")}</Link></li>
+            <li><Link href="/pharmacies" className="hover:text-primary-600">{t("nav.pharmacies")}</Link></li>
+            <li><Link href="/attente" className="hover:text-primary-600">{t("nav.queue")}</Link></li>
             <li><Link href="/cliniques" className="hover:text-primary-600">{t("nav.clinics")}</Link></li>
             <li><Link href="/plus" className="hover:text-primary-600">⭐ Tabibi Plus</Link></li>
           </ul>
@@ -37,6 +39,7 @@ export default function Footer() {
             <li><Link href="/pro" className="hover:text-primary-600">{t("footer.joinPro")}</Link></li>
             <li><Link href="/pro/tarifs" className="hover:text-primary-600">Tarifs Pro</Link></li>
             <li><Link href="/pro/dashboard" className="hover:text-primary-600">Espace praticien (démo)</Link></li>
+            <li><Link href="/labo" className="hover:text-primary-600">{t("nav.labo")}</Link></li>
           </ul>
         </div>
       </div>

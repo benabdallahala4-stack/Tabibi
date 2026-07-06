@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import DoctorCard from "@/components/DoctorCard";
+import ClinicQuoteForm from "@/components/ClinicQuoteForm";
 import { DOCTORS } from "@/lib/data";
 import { clinicMapsEmbedUrl, type Clinic } from "@/lib/clinics";
 import { useLocale } from "@/lib/i18n";
@@ -49,10 +50,13 @@ export default function ClinicProfile({ clinic }: { clinic: Clinic }) {
         </div>
       </div>
 
-      {/* Patients internationaux */}
+      {/* Demande de devis — pour tous les patients */}
+      <ClinicQuoteForm clinicName={clinic.name} />
+
+      {/* Patients internationaux (dont Libye) */}
       {clinic.international.libyaDesk && (
         <section className="mt-6 rounded-2xl bg-violet-50 p-6 ring-1 ring-violet-100">
-          <h2 className="text-lg font-bold text-violet-900">🇱🇾 {t("clinics.libyaTitle")}</h2>
+          <h2 className="text-lg font-bold text-violet-900">🌍 {t("clinics.libyaTitle")}</h2>
           <ul className="mt-3 space-y-1.5 text-sm text-violet-800">
             {clinic.international.services.map((s) => (
               <li key={s}>✓ {s}</li>

@@ -13,18 +13,6 @@ export default function CliniquesPage() {
       <h1 className="text-2xl font-bold text-slate-800">{t("clinics.title")}</h1>
       <p className="mt-1 text-sm text-slate-500">{t("clinics.sub")}</p>
 
-      {/* Bandeau patients internationaux / Libye */}
-      <div className="mt-6 rounded-2xl bg-gradient-to-r from-violet-600 to-violet-800 p-6 text-white">
-        <h2 className="text-lg font-bold">🇱🇾 {t("clinics.libyaTitle")}</h2>
-        <p className="mt-1 max-w-2xl text-sm text-violet-100">{t("clinics.libyaText")}</p>
-        <div className="mt-3 flex flex-wrap gap-2 text-xs">
-          <span className="rounded-full bg-white/15 px-3 py-1">{fr ? "Devis avant le voyage" : "تسعيرة قبل السفر"}</span>
-          <span className="rounded-full bg-white/15 px-3 py-1">{fr ? "Guichet dédié en arabe" : "مكتب استقبال بالعربية"}</span>
-          <span className="rounded-full bg-white/15 px-3 py-1">{fr ? "Coordination séjour + transport" : "تنسيق الإقامة والنقل"}</span>
-          <span className="rounded-full bg-white/15 px-3 py-1">{fr ? "Suivi à distance après retour" : "متابعة عن بُعد بعد العودة"}</span>
-        </div>
-      </div>
-
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
         {CLINICS.map((c) => (
           <Link
@@ -50,7 +38,7 @@ export default function CliniquesPage() {
               )}
               {c.international.libyaDesk && (
                 <span className="rounded-full bg-violet-50 px-2 py-0.5 font-medium text-violet-700">
-                  {fr ? "Guichet patients libyens" : "مكتب المرضى الليبيين"}
+                  {fr ? "Guichet international" : "مكتب دولي"}
                 </span>
               )}
               {c.specialties.slice(0, 3).map((s) => (
@@ -61,6 +49,18 @@ export default function CliniquesPage() {
             </div>
           </Link>
         ))}
+      </div>
+
+      {/* Petite section patients internationaux (dont Libye) */}
+      <div className="mt-8 rounded-2xl border border-violet-100 bg-violet-50 p-5">
+        <h2 className="text-sm font-bold text-violet-900">🌍 {t("clinics.libyaTitle")}</h2>
+        <p className="mt-1 text-sm text-violet-800">{t("clinics.libyaText")}</p>
+        <div className="mt-2 flex flex-wrap gap-2 text-xs text-violet-700">
+          <span className="rounded-full bg-white px-3 py-1">{fr ? "Devis avant le voyage" : "تسعيرة قبل السفر"}</span>
+          <span className="rounded-full bg-white px-3 py-1">{fr ? "Accueil en arabe" : "استقبال بالعربية"}</span>
+          <span className="rounded-full bg-white px-3 py-1">{fr ? "Coordination séjour + transport" : "تنسيق الإقامة والنقل"}</span>
+          <span className="rounded-full bg-white px-3 py-1">{fr ? "Suivi à distance après retour" : "متابعة عن بُعد بعد العودة"}</span>
+        </div>
       </div>
 
       <p className="mt-6 text-center text-xs text-slate-400">{t("clinics.disclaimer")}</p>

@@ -75,7 +75,18 @@ function ConfirmationContent() {
           </div>
         )}
       </dl>
-      <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+      <a
+        href={`https://wa.me/?text=${encodeURIComponent(
+          `🩺 Tabibi — RDV confirmé\n${appt.doctorName} (${appt.specialty}, ${appt.city})\n📅 ${appt.dateIso} à ${appt.time}\n${appt.kind === "teleconsultation" ? "📹 Téléconsultation" : "🏥 Au cabinet"}`
+        )}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-6 flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+      >
+        💬 {t("confirm.title") === "Rendez-vous confirmé !" ? "Envoyer le récap sur WhatsApp" : "إرسال الملخص عبر واتساب"}
+      </a>
+
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row">
         {appt.kind === "teleconsultation" && (
           <Link
             href={`/visio?rdv=${appt.id}`}

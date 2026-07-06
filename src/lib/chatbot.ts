@@ -230,8 +230,8 @@ export const QAS: QA[] = [
     keywords: ["pharmacie", "garde", "nuit", "medicaments acheter", "صيدليه", "حراسه", "ليل"],
     q: { fr: "Où trouver une pharmacie de garde ?", ar: "أين أجد صيدلية الحراسة؟" },
     a: {
-      fr: "L'annuaire des pharmacies de garde par gouvernorat est prévu dans une prochaine version de Tabibi. En attendant, la liste officielle est publiée par le Conseil de l'Ordre des Pharmaciens et affichée sur la vitrine de chaque pharmacie.",
-      ar: "دليل صيدليات الحراسة حسب الولايات مبرمج في نسخة قادمة من طبيبي. حاليًا تُنشر القائمة الرسمية من طرف عمادة الصيادلة وتُعلَّق على واجهة كل صيدلية.",
+      fr: "Ouvrez la page « Pharmacies de garde » (lien en bas de page) : filtrez par ville pour trouver une pharmacie de nuit, de dimanche ou ouverte 24h/24, avec appel et itinéraire en un clic.",
+      ar: "افتح صفحة « صيدليات الحراسة » (الرابط أسفل الصفحة): صفِّ حسب المدينة لتجد صيدلية ليلية أو مفتوحة 24/24، مع الاتصال والاتجاهات بنقرة.",
     },
     related: ["urgence", "cliniques"],
   },
@@ -294,6 +294,56 @@ export const QAS: QA[] = [
       ar: "عرض الراحة للمرضى بـ9 د.ت/شهر: تنبيه أولوي عند توفر موعد أقرب، ملفات العائلة (الأبناء والوالدان)، خزنة صحية، استشارات عن بُعد بسعر مخفض، تذكير واتساب ودعم أولوي. التطبيق الأساسي يبقى مجانيًا.",
     },
     related: ["rdv-gratuit", "dossier-upload"],
+  },
+  {
+    id: "attente",
+    keywords: ["file attente", "attente cabinet", "mon tour", "queue", "combien attendre", "طابور", "الانتظار", "دوري", "قداش نستنى"],
+    q: { fr: "Comment suivre la file d'attente du cabinet ?", ar: "كيف أتابع طابور الانتظار؟" },
+    a: {
+      fr: "Ouvrez la page « File d'attente » : entrez votre numéro de ticket (remis à l'accueil) pour voir votre position et votre heure de passage estimée en temps réel — et arrivez juste à l'heure.",
+      ar: "افتح صفحة « طابور الانتظار »: أدخل رقم تذكرتك (المسلَّمة في الاستقبال) لترى ترتيبك ووقت دخولك المتوقع في الوقت الحقيقي — وتعال في الوقت المناسب.",
+    },
+    related: ["rdv-comment", "contact"],
+  },
+  {
+    id: "avis",
+    keywords: ["avis", "note", "noter", "commentaire", "evaluation", "تقييم", "راي", "نقيم"],
+    q: { fr: "Comment laisser un avis sur un médecin ?", ar: "كيف أقيّم طبيبًا؟" },
+    a: {
+      fr: "Sur le profil du praticien, section « Avis vérifiés Tabibi » : seuls les patients ayant réservé chez ce praticien peuvent publier un avis — c'est notre protection anti-faux-avis. Les avis Google de la fiche du cabinet sont affichés séparément.",
+      ar: "في ملف الطبيب، قسم « تقييمات موثّقة من طبيبي »: فقط المرضى الذين حجزوا لديه يمكنهم نشر تقييم — هذه حمايتنا من التقييمات المزيفة. تقييمات جوجل تُعرض على حدة.",
+    },
+    related: ["rdv-comment", "contact"],
+  },
+  {
+    id: "whatsapp",
+    keywords: ["whatsapp", "watsap", "recap", "واتساب", "وتساب"],
+    q: { fr: "Puis-je recevoir mon rendez-vous sur WhatsApp ?", ar: "هل يصلني موعدي على واتساب؟" },
+    a: {
+      fr: "Oui : après la réservation, cliquez sur « Envoyer le récap sur WhatsApp » depuis la page de confirmation pour vous l'envoyer ou le partager à un proche. Les rappels automatiques WhatsApp arrivent avec Tabibi Plus.",
+      ar: "نعم: بعد الحجز، اضغط « إرسال الملخص عبر واتساب » من صفحة التأكيد لإرساله لنفسك أو لأحد أقاربك. التذكيرات التلقائية عبر واتساب قادمة مع طبيبي بلس.",
+    },
+    related: ["rdv-rappel", "plus"],
+  },
+  {
+    id: "labo",
+    keywords: ["laboratoire", "labo", "resultat analyse", "imagerie resultat", "مخبر", "نتيجه التحاليل"],
+    q: { fr: "Comment recevoir mes résultats d'analyses ?", ar: "كيف أستقبل نتائج تحاليلي؟" },
+    a: {
+      fr: "Donnez votre code d'accès Tabibi au laboratoire partenaire : il dépose le résultat directement dans « Mon dossier médical » via le Portail laboratoire. Vous pouvez ensuite le partager avec votre médecin.",
+      ar: "أعطِ رمز وصولك على طبيبي للمخبر الشريك: يودع النتيجة مباشرة في « ملفي الطبي » عبر بوابة المخابر. يمكنك بعدها مشاركتها مع طبيبك.",
+    },
+    related: ["dossier-upload", "dossier-partage"],
+  },
+  {
+    id: "devis-clinique",
+    keywords: ["devis", "clinique prix", "intervention cout", "operation prix", "تسعيره", "ثمن العمليه", "تكلفه"],
+    q: { fr: "Comment demander un devis à une clinique ?", ar: "كيف أطلب تسعيرة من مصحة؟" },
+    a: {
+      fr: "Ouvrez la fiche de la clinique et remplissez le formulaire « Demander un devis » (besoin, téléphone/WhatsApp, pays) : la clinique vous répond sous 48 h ouvrées avec le devis et les étapes de prise en charge — y compris pour les patients venant de l'étranger.",
+      ar: "افتح صفحة المصحة واملأ استمارة « طلب تسعيرة » (الحاجة، الهاتف/واتساب، البلد): تجيبك المصحة خلال 48 ساعة عمل بالتسعيرة وخطوات التكفل — بما في ذلك للمرضى القادمين من الخارج.",
+    },
+    related: ["cliniques", "libye"],
   },
   {
     id: "contact",

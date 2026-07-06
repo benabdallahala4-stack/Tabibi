@@ -5,6 +5,89 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { loadProfile, saveProfile } from "@/lib/profile";
 import { useLocale } from "@/lib/i18n";
 
+function SmsOtpBlock() {
+  const { t } = useLocale();
+  const fr = t("account.whereTitle") === "Où sont enregistrés mes rendez-vous ?";
+  const [phone, setPhone] = useState("");
+  const [sentCode, setSentCode] = useState("");
+  const [entered, setEntered] = useState("");
+  const [verified, setVerified] = useState(false);
+
+  useEffect(() => {
+    setVerified(window.localStorage.getItem("tabibi.phoneVerified") === "1");
+  }, []);
+
+  function send(e: React.FormEvent) {
+    e.preventDefault();
+    if (phone.trim().length < 8) return;
+    // Démo : le code est affiché à l'écran. Production : envoi via passerelle
+    // SMS tunisienne (Orange / Ooredoo / Tunisie Télécom ou agrégateur).
+    setSentCode(String(Math.floor(1000 + Math.random() * 9000)));
+    setEntered("");
+  }
+
+  function check(e: React.FormEvent) {
+    e.preventDefault();
+    if (entered === sentCode) {
+      window.localStorage.setItem("tabibi.phoneVerified", "1");
+      setVerified(true);
+    }
+  }
+
+  return (
+    <section className="mt-6 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      <h2 className="text-lg font-bold text-slate-800">
+        📲 {fr ? "Vérifier mon numéro par SMS" : "التحقق من رقمي عبر SMS"}
+      </h2>
+      <p className="mt-1 text-sm text-slate-500">
+        {fr
+          ? "Un numéro vérifié fiabilise vos réservations et prépare la connexion par SMS (OTP)."
+          : "الرقم الموثّق يعزز موثوقية حجوزاتك ويمهد لتسجيل الدخول عبر SMS."}
+      </p>
+      {verified ? (
+        <p className="mt-4 rounded-xl bg-emerald-50 p-3 text-sm font-medium text-emerald-700">
+          ✓ {fr ? "Numéro vérifié" : "الرقم موثّق"}
+        </p>
+      ) : sentCode ? (
+        <form onSubmit={check} className="mt-4 space-y-2">
+          <p className="rounded-xl bg-amber-50 p-3 text-xs text-amber-700">
+            {fr
+              ? `Démo (pas d'envoi SMS réel) — votre code : ${sentCode}. En production, il arriverait par SMS via Orange/Ooredoo/Tunisie Télécom.`
+              : `تجريبي (دون إرسال فعلي) — رمزك: ${sentCode}. في الإنتاج يصلك عبر SMS من Orange/Ooredoo/اتصالات تونس.`}
+          </p>
+          <div className="flex gap-2">
+            <input
+              value={entered}
+              onChange={(e) => setEntered(e.target.value)}
+              placeholder={fr ? "Code à 4 chiffres" : "رمز من 4 أرقام"}
+              maxLength={4}
+              className="w-40 rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary-400"
+              dir="ltr"
+            />
+            <button className="rounded-xl bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-700">
+              {fr ? "Vérifier" : "تحقق"}
+            </button>
+          </div>
+        </form>
+      ) : (
+        <form onSubmit={send} className="mt-4 flex gap-2">
+          <input
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder={fr ? "Ex. 22 123 456" : "مثال: 22 123 456"}
+            className="flex-1 rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary-400"
+            dir="ltr"
+          />
+          <button className="rounded-xl bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-700">
+            {fr ? "Recevoir le code" : "أرسل الرمز"}
+          </button>
+        </form>
+      )}
+    </section>
+  );
+}
+
 export default function AccountPage() {
   const { t } = useLocale();
   const { data: session, status } = useSession();
@@ -76,6 +159,9 @@ export default function AccountPage() {
           </p>
         )}
       </section>
+
+      {/* Vérification SMS (démo) */}
+      <SmsOtpBlock />
 
       {/* Profil local */}
       <section className="mt-6 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">

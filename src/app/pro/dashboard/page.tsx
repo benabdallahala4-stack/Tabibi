@@ -17,6 +17,7 @@ import {
   type ProWorkspace,
 } from "@/lib/pro";
 import { accessRecordWithCode, type MedicalRecord } from "@/lib/medicalRecord";
+import { loadQueue, saveQueue, type QueueState } from "@/lib/queue";
 
 const TABS = [
   { id: "agenda", label: "📅 Agenda" },
@@ -24,6 +25,7 @@ const TABS = [
   { id: "caisse", label: "💰 Caisse" },
   { id: "messages", label: "💬 Messagerie" },
   { id: "suivis", label: "🔔 Suivis" },
+  { id: "file", label: "⏳ File d'attente" },
   { id: "dossier", label: "🔐 Dossier partagé" },
 ] as const;
 
@@ -100,6 +102,7 @@ export default function ProDashboard() {
         {tab === "caisse" && <CaisseTab ws={ws} update={update} />}
         {tab === "messages" && <MessagesTab ws={ws} update={update} />}
         {tab === "suivis" && <SuivisTab ws={ws} update={update} />}
+        {tab === "file" && <QueueTab />}
         {tab === "dossier" && <SharedRecordTab />}
       </div>
     </div>
@@ -582,6 +585,148 @@ function MessagesTab({ ws, update }: { ws: ProWorkspace; update: (w: ProWorkspac
         )}
       </section>
     </div>
+  );
+}
+
+/* ---------------- File d'attente ---------------- */
+
+function QueueTab() {
+  const [queue, setQueue] = useState<QueueState | null>(null);
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    setQueue(loadQueue());
+  }, []);
+
+  if (!queue) return <p className="text-slate-400">Chargement…</p>;
+
+  function update(next: QueueState) {
+    setQueue(next);
+    saveQueue(next);
+  }
+
+  function add(e: React.FormEvent) {
+    e.preventDefault();
+    if (!name.trim() || !queue) return;
+    update({
+      ...queue,
+      nextTicket: queue.nextTicket + 1,
+      entries: [...queue.entries, { ticket: queue.nextTicket, name: name.trim(), status: "waiting" }],
+    });
+    setName("");
+  }
+
+  function call(ticket: number) {
+    if (!queue) return;
+    update({
+      ...queue,
+      entries: queue.entries.map((e) =>
+        e.ticket === ticket
+          ? { ...e, status: "current" as const }
+          : e.status === "current"
+            ? { ...e, status: "done" as const }
+            : e
+      ),
+    });
+  }
+
+  function finish(ticket: number) {
+    if (!queue) return;
+    update({ ...queue, entries: queue.entries.map((e) => (e.ticket === ticket ? { ...e, status: "done" as const } : e)) });
+  }
+
+  function remove(ticket: number) {
+    if (!queue) return;
+    update({ ...queue, entries: queue.entries.filter((e) => e.ticket !== ticket) });
+  }
+
+  const active = queue.entries.filter((e) => e.status !== "done").sort((a, b) => a.ticket - b.ticket);
+
+  return (
+    <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 className="text-lg font-bold text-slate-800">File d&apos;attente du jour</h2>
+          <p className="text-sm text-slate-500">
+            Les patients suivent leur position en temps réel sur la page publique « File d&apos;attente » (/attente).
+          </p>
+        </div>
+        <label className="flex items-center gap-2 text-sm text-slate-600">
+          Durée moyenne :
+          <input
+            type="number"
+            min={5}
+            value={queue.avgMinutes}
+            onChange={(e) => update({ ...queue, avgMinutes: Number(e.target.value) || 20 })}
+            className="w-16 rounded-lg border border-slate-200 px-2 py-1.5 text-sm"
+          />
+          min
+        </label>
+      </div>
+
+      <form onSubmit={add} className="mt-4 flex gap-2">
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Nom du patient (ex. Ali B.)"
+          className="flex-1 rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary-400"
+        />
+        <button className="rounded-xl bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-700">
+          + Ticket n°{queue.nextTicket}
+        </button>
+      </form>
+
+      <div className="mt-4 space-y-2">
+        {active.length === 0 && <p className="text-sm text-slate-400">File vide.</p>}
+        {active.map((e) => (
+          <div
+            key={e.ticket}
+            className={`flex flex-wrap items-center justify-between gap-2 rounded-xl p-3 text-sm ${
+              e.status === "current" ? "bg-emerald-50 ring-1 ring-emerald-200" : "bg-slate-50"
+            }`}
+          >
+            <span className="flex items-center gap-3">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white font-bold ring-1 ring-slate-200">
+                {e.ticket}
+              </span>
+              <span className="font-medium">{e.name}</span>
+              {e.status === "current" && (
+                <span className="rounded-full bg-emerald-600 px-2 py-0.5 text-xs font-semibold text-white">
+                  En consultation
+                </span>
+              )}
+            </span>
+            <span className="flex gap-2">
+              {e.status === "waiting" && (
+                <button
+                  type="button"
+                  onClick={() => call(e.ticket)}
+                  className="rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700"
+                >
+                  Appeler
+                </button>
+              )}
+              {e.status === "current" && (
+                <button
+                  type="button"
+                  onClick={() => finish(e.ticket)}
+                  className="rounded-lg bg-slate-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-600"
+                >
+                  Terminer
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => remove(e.ticket)}
+                className="rounded-lg bg-red-50 px-3 py-1.5 text-xs font-semibold text-accent-600 hover:bg-red-100"
+              >
+                Retirer
+              </button>
+            </span>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 

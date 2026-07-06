@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import BookingWidget from "@/components/BookingWidget";
+import VerifiedReviews from "@/components/VerifiedReviews";
 import type { Doctor } from "@/lib/types";
 import { mapsEmbedUrl, mapsUrl } from "@/lib/data";
 import { useLocale } from "@/lib/i18n";
@@ -169,6 +170,8 @@ export default function DoctorProfile({ doctor }: { doctor: Doctor }) {
         {/* Colonne réservation */}
         <div className="space-y-6 lg:col-span-3">
           <BookingWidget doctor={doctor} />
+
+          <VerifiedReviews doctorSlug={doctor.slug} />
 
           {/* Calendly optionnel */}
           {doctor.calendlyUrl && (

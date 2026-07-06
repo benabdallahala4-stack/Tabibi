@@ -229,31 +229,34 @@ const DICT: Record<string, { fr: string; ar: string }> = {
   "pro.explore": { fr: "Ou explorez la plateforme côté patient :", ar: "أو استكشف المنصة من جهة المريض:" },
 
   "nav.dossier": { fr: "Mon dossier médical", ar: "ملفي الطبي" },
+  "nav.pharmacies": { fr: "Pharmacies de garde", ar: "صيدليات الحراسة" },
+  "nav.queue": { fr: "File d'attente", ar: "طابور الانتظار" },
+  "nav.labo": { fr: "Portail laboratoire", ar: "بوابة المخابر" },
 
   // Cliniques
   "nav.clinics": { fr: "Cliniques", ar: "المصحات" },
   "clinics.title": { fr: "Cliniques partenaires", ar: "المصحات الشريكة" },
   "clinics.sub": {
-    fr: "Établissements privés pluridisciplinaires référencés sur Tabibi (données de démonstration).",
-    ar: "مصحات خاصة متعددة الاختصاصات مدرجة على طبيبي (بيانات تجريبية).",
+    fr: "Chirurgie, dialyse, maternité, check-up : des établissements privés pour tous les patients — comparez, demandez un devis et réservez leurs praticiens en ligne (données de démonstration).",
+    ar: "جراحة، تصفية الدم، ولادة، فحوصات: مصحات خاصة لكل المرضى — قارن، اطلب تسعيرة واحجز لدى أطبائها عبر الإنترنت (بيانات تجريبية).",
   },
   "clinics.libyaTitle": {
-    fr: "Patients venant de Libye et de l'étranger",
-    ar: "المرضى القادمون من ليبيا والخارج",
+    fr: "Patients internationaux",
+    ar: "المرضى الدوليون",
   },
   "clinics.libyaText": {
-    fr: "La Tunisie est la première destination de soins des patients libyens. Les cliniques partenaires proposent un guichet dédié : devis avant le départ, accueil en arabe, coordination du séjour et suivi à distance par téléconsultation après le retour.",
-    ar: "تونس هي الوجهة الأولى لعلاج المرضى الليبيين. توفر المصحات الشريكة مكتبًا مخصصًا: تسعيرة قبل السفر، استقبال بالعربية، تنسيق الإقامة ومتابعة عن بُعد بعد العودة.",
+    fr: "Les cliniques accueillent aussi les patients venant de l'étranger — notamment de Libye 🇱🇾 et d'Algérie : devis avant le départ, accueil en arabe, coordination du séjour et suivi à distance par téléconsultation après le retour.",
+    ar: "تستقبل المصحات أيضًا المرضى القادمين من الخارج — خاصة من ليبيا 🇱🇾 والجزائر: تسعيرة قبل السفر، استقبال بالعربية، تنسيق الإقامة ومتابعة عن بُعد بعد العودة.",
   },
   "clinics.doctors": { fr: "Praticiens de la clinique", ar: "أطباء المصحة" },
   "clinics.disclaimer": {
     fr: "Cliniques fictives présentées à titre de démonstration.",
     ar: "مصحات وهمية معروضة للتوضيح فقط.",
   },
-  "home.clinicsTitle": { fr: "Cliniques & patients internationaux", ar: "المصحات والمرضى الدوليون" },
+  "home.clinicsTitle": { fr: "Cliniques privées", ar: "المصحات الخاصة" },
   "home.clinicsText": {
-    fr: "Chirurgie, dialyse, check-up : découvrez les cliniques partenaires et leur guichet dédié aux patients venant de Libye.",
-    ar: "جراحة، تصفية الدم، فحوصات شاملة: اكتشف المصحات الشريكة ومكتبها المخصص للمرضى القادمين من ليبيا.",
+    fr: "Chirurgie, dialyse, maternité, check-up : comparez les cliniques, demandez un devis et réservez leurs praticiens. Guichet dédié pour les patients venant de l'étranger.",
+    ar: "جراحة، تصفية الدم، ولادة، فحوصات: قارن المصحات، اطلب تسعيرة واحجز لدى أطبائها. مكتب مخصص للمرضى القادمين من الخارج.",
   },
   "home.clinicsCta": { fr: "Voir les cliniques →", ar: "← عرض المصحات" },
 
