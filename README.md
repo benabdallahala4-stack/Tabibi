@@ -69,6 +69,10 @@ Une fois connecté : les réservations sont poussées au serveur (409 si le cré
    - `NEXTAUTH_URL` = `https://<votre-domaine>`
 4. Redéployez : le bouton « Se connecter avec Google » apparaît automatiquement sur `/compte`.
 
+## 🤖 Activer la réponse IA aux questions médicales
+
+Les questions publiques (`/questions`) peuvent recevoir une **réponse IA immédiate** (information générale, avec garde-fous et disclaimer) en attendant la réponse d'un médecin vérifié. Pour l'activer : ajoutez `ANTHROPIC_API_KEY` dans les variables d'environnement Vercel (clé sur [platform.claude.com](https://platform.claude.com)) et redéployez. Sans la clé, la fonctionnalité se désactive proprement.
+
 ## 📱 Android
 
 Le site est une **PWA** : sur Android (Chrome), menu ⋮ → « Ajouter à l'écran d'accueil » → Tabibi s'installe comme une application (icône, plein écran).

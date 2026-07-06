@@ -47,6 +47,7 @@ export default function Footer() {
             <li><Link href="/pro/dashboard" className="hover:text-primary-600">Espace praticien (démo)</Link></li>
             <li><Link href="/labo" className="hover:text-primary-600">{t("nav.labo")}</Link></li>
             <li><Link href="/clinique-admin" className="hover:text-primary-600">Espace clinique (démo)</Link></li>
+            <li><Link href="/admin" className="hover:text-primary-600">Back-office (démo)</Link></li>
           </ul>
         </div>
       </div>

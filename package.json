@@ -12,6 +12,7 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.110.0",
     "@prisma/client": "^6.19.3",
     "next": "14.2.35",
     "next-auth": "^4.24.11",

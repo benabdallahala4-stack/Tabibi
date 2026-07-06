@@ -74,9 +74,19 @@ export default function QuestionThread({ question }: { question: QnaQuestion }) 
         </div>
       </div>
 
+      {/* Réponse IA immédiate (en attendant un médecin) */}
+      {question.aiAnswer && (
+        <div className="mt-5 rounded-xl bg-violet-50 p-4 ring-1 ring-violet-100">
+          <p className="flex items-center gap-2 text-sm font-bold text-violet-800">
+            🤖 {locale === "ar" ? "إجابة فورية من مساعد طبيبي الذكي" : "Réponse immédiate de l'assistant IA Tabibi"}
+          </p>
+          <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-slate-700">{question.aiAnswer}</p>
+        </div>
+      )}
+
       {/* Réponses */}
       <div className="mt-5 space-y-4 border-t border-slate-100 pt-4">
-        {question.answers.length === 0 && (
+        {question.answers.length === 0 && !question.aiAnswer && (
           <p className="rounded-xl bg-slate-50 p-3 text-sm text-slate-500">⏳ {t.waiting}</p>
         )}
         {question.answers.map((a) => {

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import QuestionThread from "@/components/QuestionThread";
 import { SPECIALTIES } from "@/lib/data";
-import { allQuestions, askQuestion, type QnaQuestion } from "@/lib/qna";
+import { allQuestions, askQuestion, setAiAnswer, type QnaQuestion } from "@/lib/qna";
 import { useLocale } from "@/lib/i18n";
 
 const L = {
@@ -55,15 +55,33 @@ export default function QuestionsPage() {
     setQuestions(allQuestions());
   }, []);
 
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!form.title.trim() || !form.body.trim()) return;
-    askQuestion(form.specialtyId, form.title, form.body);
+    const question = askQuestion(form.specialtyId, form.title, form.body);
     setQuestions(allQuestions());
     setForm({ ...form, title: "", body: "" });
     setShowForm(false);
     setPublished(true);
     setTimeout(() => setPublished(false), 6000);
+    // Réponse IA immédiate en attendant un médecin (si configurée côté serveur).
+    try {
+      const specialty = SPECIALTIES.find((s) => s.id === question.specialtyId);
+      const r = await fetch("/api/qna-ai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: question.title, body: question.body, specialty: specialty?.label }),
+      });
+      if (r.ok) {
+        const j = (await r.json()) as { answer?: string };
+        if (j.answer) {
+          setAiAnswer(question.id, j.answer);
+          setQuestions(allQuestions());
+        }
+      }
+    } catch {
+      // IA indisponible : la question reste simplement en attente d'un médecin.
+    }
   }
 
   const list = (questions ?? []).filter((q) => !filter || q.specialtyId === filter);

@@ -21,6 +21,7 @@ export interface QnaQuestion {
   body: string;
   date: string;
   answers: QnaAnswer[];
+  aiAnswer?: string; // réponse IA immédiate, en attendant un médecin
 }
 
 export const QNA_SEED: QnaQuestion[] = [
@@ -185,6 +186,16 @@ export function askQuestion(specialtyId: string, title: string, body: string): Q
   local.questions.unshift(question);
   saveQnaLocal(local);
   return question;
+}
+
+/** Attache la réponse IA à une question posée depuis cet appareil. */
+export function setAiAnswer(questionId: string, text: string): void {
+  const local = loadQnaLocal();
+  const own = local.questions.find((q) => q.id === questionId);
+  if (own) {
+    own.aiAnswer = text;
+    saveQnaLocal(local);
+  }
 }
 
 export function answerQuestion(questionId: string, doctorSlug: string, text: string): void {
