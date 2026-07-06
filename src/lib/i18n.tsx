@@ -228,6 +228,33 @@ const DICT: Record<string, { fr: string; ar: string }> = {
   "pro.submit": { fr: "Être recontacté(e)", ar: "اتصلوا بي" },
   "pro.explore": { fr: "Ou explorez la plateforme côté patient :", ar: "أو استكشف المنصة من جهة المريض:" },
 
+  // Cliniques
+  "nav.clinics": { fr: "Cliniques", ar: "المصحات" },
+  "clinics.title": { fr: "Cliniques partenaires", ar: "المصحات الشريكة" },
+  "clinics.sub": {
+    fr: "Établissements privés pluridisciplinaires référencés sur Tabibi (données de démonstration).",
+    ar: "مصحات خاصة متعددة الاختصاصات مدرجة على طبيبي (بيانات تجريبية).",
+  },
+  "clinics.libyaTitle": {
+    fr: "Patients venant de Libye et de l'étranger",
+    ar: "المرضى القادمون من ليبيا والخارج",
+  },
+  "clinics.libyaText": {
+    fr: "La Tunisie est la première destination de soins des patients libyens. Les cliniques partenaires proposent un guichet dédié : devis avant le départ, accueil en arabe, coordination du séjour et suivi à distance par téléconsultation après le retour.",
+    ar: "تونس هي الوجهة الأولى لعلاج المرضى الليبيين. توفر المصحات الشريكة مكتبًا مخصصًا: تسعيرة قبل السفر، استقبال بالعربية، تنسيق الإقامة ومتابعة عن بُعد بعد العودة.",
+  },
+  "clinics.doctors": { fr: "Praticiens de la clinique", ar: "أطباء المصحة" },
+  "clinics.disclaimer": {
+    fr: "Cliniques fictives présentées à titre de démonstration.",
+    ar: "مصحات وهمية معروضة للتوضيح فقط.",
+  },
+  "home.clinicsTitle": { fr: "Cliniques & patients internationaux", ar: "المصحات والمرضى الدوليون" },
+  "home.clinicsText": {
+    fr: "Chirurgie, dialyse, check-up : découvrez les cliniques partenaires et leur guichet dédié aux patients venant de Libye.",
+    ar: "جراحة، تصفية الدم، فحوصات شاملة: اكتشف المصحات الشريكة ومكتبها المخصص للمرضى القادمين من ليبيا.",
+  },
+  "home.clinicsCta": { fr: "Voir les cliniques →", ar: "← عرض المصحات" },
+
   "common.loading": { fr: "Chargement…", ar: "جاري التحميل…" },
 };
 

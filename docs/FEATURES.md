@@ -43,6 +43,36 @@ Ce document recense les fonctionnalités de Doctolib (référence du marché fra
 - **Diaspora** : les Tunisiens à l'étranger peuvent réserver pour leurs proches ou pour leurs séjours au pays (fuseaux horaires, paiement international).
 - **Cadre réglementaire** : conformité loi tunisienne n° 2004-63 sur la protection des données personnelles + INPDP ; hébergement des données de santé à définir avec les autorités (à instruire avant tout lancement réel).
 
+## 3 bis. Cadre légal tunisien — certificats et ordonnances
+
+**Pas de certificat médical « en ligne » en Tunisie.** Le positionnement de Tabibi :
+
+- La **téléconsultation** sert au contrôle et au suivi du patient (résultats, renouvellement, avis rapide) — pas à délivrer des documents médicaux à distance.
+- Les **certificats** (repos, aptitude, sport…) et **ordonnances** sont établis après examen et **remis en main propre** au cabinet.
+- Tabibi n'émet **aucun document médical en ligne** : le dossier patient garde seulement une **trace administrative** (type de certificat, durée, date de remise ; texte de l'ordonnance) pour l'historique et les statistiques du praticien. C'est implémenté ainsi dans l'espace praticien (`/pro/dashboard`).
+
+## 3 ter. Espace praticien `/pro/dashboard` (démo fonctionnelle)
+
+Le quotidien d'un médecin libéral tunisien, dans un seul écran :
+
+| Onglet | Contenu |
+|---|---|
+| 📅 Agenda | Réservations en ligne (les RDV pris côté patient y apparaissent), lancement direct de la visio |
+| 🗂️ Patients | Dossiers : allergies, maladies chroniques, historique des consultations, saisie d'une consultation (motif, notes, ordonnance-trace, certificat remis en main propre, montant, mode de paiement) — y compris **patients de passage venus de Libye** |
+| 💰 Caisse | Encaissé du mois, total, répartition espèces/carte/CNAM, liste des **impayés** avec encaissement en un clic |
+| 💬 Messagerie | Fils de discussion sécurisés patient-praticien (non urgent) |
+| 🔔 Suivis | Relances : renouvellements, résultats d'analyses, contrôles post-op |
+
+Roadmap dossier praticien : imprimés d'ordonnance à en-tête, bulletins de soins CNAM pré-remplis (AP2/AP3), export comptable annuel (déclaration d'impôts du médecin libéral), gestion salle d'attente (file du jour), multi-cabinets.
+
+## 3 quater. Cliniques & tourisme médical (Libye)
+
+La Tunisie est la première destination de soins des patients **libyens** (dialyse, chirurgie, oncologie, check-up). Tabibi référence désormais des **cliniques** (`/cliniques`) :
+
+- Profil clinique : spécialités, lits, urgences 24h/24, praticiens rattachés, carte Google Maps.
+- **Guichet patients internationaux** : devis avant le départ, accueil en arabe, coordination hébergement/transport (y compris frontière de Ras Jedir), facturation internationale, **suivi à distance par téléconsultation après le retour** au pays.
+- Roadmap : demande de devis en ligne, parcours multilingue libyen, partenariats assurances libyennes, forfaits soins + séjour.
+
 ## 4. Fonctionnalités premium (monétisation)
 
 ### Tabibi Plus (patients) — abonnement mensuel ou à l'acte
@@ -66,6 +96,20 @@ Ce document recense les fonctionnalités de Doctolib (référence du marché fra
 | Multi-assistants / secrétariat | — | — | ✅ |
 
 Modèle : gratuit pour les patients (hors Plus), abonnement praticien — même logique que Doctolib (~139 €/mois en France, à adapter au pouvoir d'achat tunisien, ex. 89–299 DT/mois).
+
+## 4 bis. Paiement en ligne en Tunisie (abonnements Pro / Plus)
+
+État du marché (vérifié juillet 2026) :
+
+| Passerelle | Opérateur | Statut | Usage Tabibi |
+|---|---|---|---|
+| **ClicToPay** | Société Monétique Tunisie (SMT — l'opérateur monétique officiel interbancaire) | ✅ La plus répandue, toutes banques tunisiennes ; intégration API (pas de plugins officiels) | Paiement carte bancaire tunisienne des abonnements Pro |
+| **e-Dinar** | La Poste Tunisienne | ✅ Cartes e-Dinar / prépayées | Alternative grand public (Tabibi Plus) |
+| **Konnect** | Fintech tunisienne | ✅ API moderne, cartes locales 1,3 %, internationales 2,9 %, e-Dinar | Agrégateur recommandé pour démarrer vite ; cartes internationales utiles pour les patients libyens |
+| **Paymee** | Fintech | ⚠️ Comptes gelés par la Banque Centrale — à éviter actuellement | — |
+| **Flouci** | Fintech | 🟡 Wallet mobile émergent | À évaluer |
+
+Parcours implémenté (démo) : `/pro/tarifs` — choix du palier → choix de la passerelle → paiement simulé → activation. En production : création de la transaction via l'API de la passerelle, redirection 3-D Secure, activation de l'abonnement à la réception du webhook de confirmation, factures PDF.
 
 ## 5. Intégrations tierces
 

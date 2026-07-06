@@ -110,6 +110,22 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Cliniques & international */}
+      <section className="mx-auto max-w-6xl px-4 pb-12">
+        <div className="flex flex-col items-start justify-between gap-4 rounded-2xl bg-gradient-to-r from-violet-600 to-violet-800 p-8 text-white sm:flex-row sm:items-center">
+          <div>
+            <h2 className="text-xl font-bold">🏥 {t("home.clinicsTitle")}</h2>
+            <p className="mt-1 max-w-xl text-sm text-violet-100">{t("home.clinicsText")}</p>
+          </div>
+          <Link
+            href="/cliniques"
+            className="shrink-0 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-violet-700 transition hover:bg-violet-50"
+          >
+            {t("home.clinicsCta")}
+          </Link>
+        </div>
+      </section>
+
       {/* Bandeau pro */}
       <section className="mx-auto max-w-6xl px-4 pb-4">
         <div className="flex flex-col items-start justify-between gap-4 rounded-2xl bg-gradient-to-r from-primary-700 to-primary-600 p-8 text-white sm:flex-row sm:items-center">

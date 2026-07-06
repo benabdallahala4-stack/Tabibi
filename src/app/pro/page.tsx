@@ -48,12 +48,32 @@ export default function ProPage() {
           </p>
           <h1 className="mt-2 max-w-2xl text-3xl font-bold sm:text-4xl">{t("pro.title")}</h1>
           <p className="mt-4 max-w-xl text-primary-100">{t("pro.text")}</p>
-          <a
-            href="#contact"
-            className="mt-8 inline-block rounded-xl bg-white px-8 py-3 font-semibold text-primary-800 transition hover:bg-primary-50"
-          >
-            {t("pro.demo")}
-          </a>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              href="/pro/dashboard"
+              className="rounded-xl bg-white px-8 py-3 font-semibold text-primary-800 transition hover:bg-primary-50"
+            >
+              {locale === "fr" ? "🖥️ Essayer l'espace praticien (démo)" : "🖥️ جرّب فضاء الطبيب (تجريبي)"}
+            </Link>
+            <Link
+              href="/pro/tarifs"
+              className="rounded-xl border border-white/40 px-8 py-3 font-semibold text-white transition hover:bg-white/10"
+            >
+              {locale === "fr" ? "Voir les tarifs" : "الأسعار"}
+            </Link>
+            <a
+              href="#contact"
+              className="rounded-xl border border-white/40 px-8 py-3 font-semibold text-white transition hover:bg-white/10"
+            >
+              {t("pro.demo")}
+            </a>
+          </div>
+          <p className="mt-6 max-w-2xl rounded-xl bg-white/10 p-4 text-xs leading-relaxed text-primary-100">
+            ⚖️{" "}
+            {locale === "fr"
+              ? "Conforme à la pratique tunisienne : les certificats médicaux et ordonnances sont remis en main propre après examen — Tabibi n'émet aucun document médical en ligne, il en garde uniquement la trace dans le dossier. La téléconsultation sert au contrôle et au suivi."
+              : "مطابق للممارسة الطبية التونسية: الشهادات الطبية والوصفات تُسلَّم يدًا بيد بعد الفحص — طبيبي لا يُصدر أي وثيقة طبية عبر الإنترنت، بل يحتفظ فقط بأثرها في الملف. الاستشارة عن بُعد مخصصة للمراقبة والمتابعة."}
+          </p>
         </div>
       </section>
 
