@@ -5,6 +5,7 @@ import BookingWidget from "@/components/BookingWidget";
 import VerifiedReviews from "@/components/VerifiedReviews";
 import type { Doctor } from "@/lib/types";
 import { mapsEmbedUrl, mapsUrl } from "@/lib/data";
+import { FacebookIcon, InstagramIcon, LinkedInIcon, GlobeIcon } from "@/components/Icons";
 import { useLocale } from "@/lib/i18n";
 
 function Stars({ rating }: { rating: number }) {
@@ -16,11 +17,11 @@ function Stars({ rating }: { rating: number }) {
   );
 }
 
-const SOCIAL_META: Record<string, { label: string; emoji: string }> = {
-  facebook: { label: "Facebook", emoji: "📘" },
-  instagram: { label: "Instagram", emoji: "📸" },
-  linkedin: { label: "LinkedIn", emoji: "💼" },
-  website: { label: "Site web", emoji: "🌐" },
+const SOCIAL_META: Record<string, { label: string; className: string; Icon: React.ComponentType<{ className?: string }> }> = {
+  facebook: { label: "Facebook", className: "bg-[#1877F2]/10 text-[#1877F2] hover:bg-[#1877F2] hover:text-white", Icon: FacebookIcon },
+  instagram: { label: "Instagram", className: "bg-[#E4405F]/10 text-[#E4405F] hover:bg-[#E4405F] hover:text-white", Icon: InstagramIcon },
+  linkedin: { label: "LinkedIn", className: "bg-[#0A66C2]/10 text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white", Icon: LinkedInIcon },
+  website: { label: "Site web", className: "bg-slate-100 text-slate-600 hover:bg-slate-700 hover:text-white", Icon: GlobeIcon },
 };
 
 export default function DoctorProfile({ doctor }: { doctor: Doctor }) {
@@ -61,18 +62,26 @@ export default function DoctorProfile({ doctor }: { doctor: Doctor }) {
             </span>
           </div>
           {socials.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-2 text-xs">
-              {socials.map(([key, url]) => (
-                <a
-                  key={key}
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-600 transition hover:bg-slate-200"
-                >
-                  {SOCIAL_META[key]?.emoji} {SOCIAL_META[key]?.label ?? key}
-                </a>
-              ))}
+            <div className="mt-3 flex flex-wrap gap-2">
+              {socials.map(([key, url]) => {
+                const meta = SOCIAL_META[key];
+                if (!meta) return null;
+                const SocialSvg = meta.Icon;
+                return (
+                  <a
+                    key={key}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={meta.label}
+                    aria-label={meta.label}
+                    className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition ${meta.className}`}
+                  >
+                    <SocialSvg className="h-3.5 w-3.5" />
+                    {meta.label}
+                  </a>
+                );
+              })}
             </div>
           )}
         </div>

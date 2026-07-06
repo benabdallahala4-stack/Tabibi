@@ -5,3 +5,51 @@
 body {
   @apply bg-slate-50 text-slate-800 antialiased;
 }
+
+/* ---- Animations (désactivées si prefers-reduced-motion) ---- */
+.reveal {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .float-anim {
+    animation: floaty 6s ease-in-out infinite;
+  }
+  .float-anim-slow {
+    animation: floaty 8s ease-in-out infinite reverse;
+  }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .blob {
+    animation: blobmove 20s ease-in-out infinite;
+  }
+  @keyframes blobmove {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(36px, -28px) scale(1.08); }
+    66% { transform: translate(-24px, 30px) scale(0.94); }
+  }
+
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px -12px rgb(15 74 74 / 0.18);
+  }
+}

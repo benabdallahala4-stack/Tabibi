@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ARTICLES, ARTICLE_CATEGORIES } from "@/lib/articles";
+import ArticleCover from "@/components/ArticleCover";
+import { Reveal } from "@/components/Reveal";
+import { Icon } from "@/components/Icons";
 import { useLocale } from "@/lib/i18n";
 
 export default function MagazinePage() {
@@ -14,8 +17,11 @@ export default function MagazinePage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
-      <h1 className="text-2xl font-bold text-slate-800">
-        📰 {fr ? "Magazine Santé" : "مجلة الصحة"}
+      <p className="text-xs font-semibold uppercase tracking-widest text-primary-600">
+        {fr ? "Prévention & conseils" : "وقاية ونصائح"}
+      </p>
+      <h1 className="mt-1 text-3xl font-bold text-slate-800">
+        {fr ? "Magazine Santé" : "مجلة الصحة"}
       </h1>
       <p className="mt-1 text-sm text-slate-500">
         {fr
@@ -48,34 +54,28 @@ export default function MagazinePage() {
       </div>
 
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
-        {list.map((a) => (
-          <Link
-            key={a.slug}
-            href={`/sante/${a.slug}`}
-            className="group overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition hover:shadow-md"
-          >
-            {/* Couverture générative */}
-            <div
-              className="flex h-36 items-center justify-center text-6xl"
-              style={{ background: `linear-gradient(135deg, ${a.gradient[0]}, ${a.gradient[1]})` }}
+        {list.map((a, i) => (
+          <Reveal key={a.slug} delay={Math.min(i * 80, 320)}>
+            <Link
+              href={`/sante/${a.slug}`}
+              className="hover-lift group block overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200"
             >
-              <span className="drop-shadow-lg transition group-hover:scale-110">{a.emoji}</span>
-            </div>
-            <div className="p-5">
-              <div className="flex items-center gap-2 text-xs">
-                <span className="rounded-full bg-primary-50 px-2 py-0.5 font-medium text-primary-700">
-                  {fr ? a.category : a.categoryAr}
-                </span>
-                <span className="text-slate-400">
+              <ArticleCover article={a} className="h-40" />
+              <div className="p-5">
+                <p className="flex items-center gap-2 text-xs text-slate-400">
+                  <Icon name="clock" className="h-3.5 w-3.5" />
                   {a.readMinutes} min · <span dir="ltr">{a.date}</span>
-                </span>
+                  <span className="ms-auto rounded-full bg-primary-50 px-2 py-0.5 font-medium text-primary-700">
+                    {fr ? a.category : a.categoryAr}
+                  </span>
+                </p>
+                <h2 className="mt-2 font-bold leading-snug text-slate-800 group-hover:text-primary-700">
+                  {fr ? a.title : a.titleAr}
+                </h2>
+                <p className="mt-1 line-clamp-2 text-sm text-slate-500">{fr ? a.summary : a.summaryAr}</p>
               </div>
-              <h2 className="mt-2 font-bold leading-snug text-slate-800 group-hover:text-primary-700">
-                {fr ? a.title : a.titleAr}
-              </h2>
-              <p className="mt-1 line-clamp-2 text-sm text-slate-500">{fr ? a.summary : a.summaryAr}</p>
-            </div>
-          </Link>
+            </Link>
+          </Reveal>
         ))}
       </div>
 

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ARTICLES, findArticle } from "@/lib/articles";
 import { SPECIALTIES } from "@/lib/data";
+import ArticleCover from "@/components/ArticleCover";
 
 export function generateStaticParams() {
   return ARTICLES.map((a) => ({ slug: a.slug }));
@@ -36,12 +37,9 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
       </nav>
 
       {/* Couverture */}
-      <div
-        className="mt-4 flex h-44 items-center justify-center rounded-2xl text-7xl"
-        style={{ background: `linear-gradient(135deg, ${article.gradient[0]}, ${article.gradient[1]})` }}
-      >
-        <span className="drop-shadow-lg">{article.emoji}</span>
-      </div>
+      <ArticleCover article={article} className="mt-4 h-48 rounded-2xl" />
+      {/* Pour une vraie photo : placez le fichier dans /public/photos et
+          remplacez ArticleCover par <Image src="/photos/…" fill …/>. */}
 
       <div className="mt-5 flex flex-wrap items-center gap-2 text-xs">
         <span className="rounded-full bg-primary-50 px-2.5 py-1 font-medium text-primary-700">{article.category}</span>
@@ -96,10 +94,10 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
             <Link
               key={a.slug}
               href={`/sante/${a.slug}`}
-              className="rounded-xl bg-white p-4 ring-1 ring-slate-200 transition hover:ring-primary-400"
+              className="overflow-hidden rounded-xl bg-white ring-1 ring-slate-200 transition hover:ring-primary-400"
             >
-              <span className="text-2xl">{a.emoji}</span>
-              <p className="mt-1 text-sm font-semibold leading-snug text-slate-700">{a.title}</p>
+              <ArticleCover article={a} className="h-16" compact />
+              <p className="p-3 text-sm font-semibold leading-snug text-slate-700">{a.title}</p>
             </Link>
           ))}
         </div>
