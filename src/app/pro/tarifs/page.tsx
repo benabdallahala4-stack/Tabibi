@@ -4,10 +4,26 @@
 // Démo : le parcours est complet mais aucun paiement réel n'est effectué.
 // Production : API ClicToPay (SMT), Konnect ou e-Dinar (voir docs/FEATURES.md).
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { loadPlan, savePlan, PLAN_LABELS, type Plan } from "@/lib/plan";
 
 const TIERS = [
+  {
+    id: "gratuit",
+    name: "Gratuit",
+    price: 0,
+    tagline: "Pour être visible dès aujourd'hui",
+    features: [
+      "Profil public vérifié (CNAM, tarifs, langues)",
+      "Agenda en ligne + rendez-vous (20/mois)",
+      "Répondre aux questions publiques (visibilité)",
+      "Dossiers patients (jusqu'à 50)",
+      "🔒 Rappels SMS — plan Avancé",
+      "🔒 Caisse, messagerie, suivis — plan Avancé",
+      "🔒 Statistiques — plan Avancé",
+    ],
+  },
   {
     id: "essentiel",
     name: "Essentiel",
@@ -85,17 +101,36 @@ export default function TarifsPage() {
   const [tier, setTier] = useState<string | null>(null);
   const [gateway, setGateway] = useState("clictopay");
   const [paid, setPaid] = useState(false);
+  const [currentPlan, setCurrentPlan] = useState<Plan>("gratuit");
   const selected = TIERS.find((t) => t.id === tier);
+
+  useEffect(() => {
+    setCurrentPlan(loadPlan());
+  }, []);
+
+  function activateFree() {
+    savePlan("gratuit");
+    setCurrentPlan("gratuit");
+  }
+
+  function confirmPaid(id: string) {
+    savePlan(id as Plan);
+    setCurrentPlan(id as Plan);
+    setPaid(true);
+  }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <h1 className="text-center text-3xl font-bold text-slate-800">Tarifs Tabibi Pro</h1>
       <p className="mx-auto mt-2 max-w-xl text-center text-slate-500">
-        Sans engagement, résiliable à tout moment. Gratuit pour les patients — l&apos;abonnement praticien
-        finance la plateforme, comme chez Doctolib.
+        <span className="font-semibold text-primary-700">Commencez gratuitement</span> — passez à un plan
+        payant quand votre cabinet est prêt. Sans engagement, résiliable à tout moment.
+      </p>
+      <p className="mt-2 text-center text-xs text-slate-400">
+        Votre plan actuel : <span className="font-semibold text-slate-600">{PLAN_LABELS[currentPlan]}</span>
       </p>
 
-      <div className="mt-10 grid gap-6 lg:grid-cols-3">
+      <div className="mt-10 grid gap-6 lg:grid-cols-4">
         {TIERS.map((t) => (
           <div
             key={t.id}
@@ -111,29 +146,49 @@ export default function TarifsPage() {
             <h2 className="text-lg font-bold text-slate-800">{t.name}</h2>
             <p className="text-sm text-slate-500">{t.tagline}</p>
             <p className="mt-4 text-3xl font-bold text-slate-800">
-              {t.price} <span className="text-base font-normal text-slate-500">DT / mois HT</span>
+              {t.price === 0 ? "0 DT" : t.price}{" "}
+              {t.price > 0 && <span className="text-base font-normal text-slate-500">DT / mois HT</span>}
             </p>
             <ul className="mt-4 flex-1 space-y-2 text-sm text-slate-600">
               {t.features.map((f) => (
-                <li key={f} className={f.startsWith("Tout ") ? "font-semibold text-slate-800" : ""}>
-                  {f.startsWith("Tout ") ? f : `✓ ${f}`}
+                <li
+                  key={f}
+                  className={
+                    f.startsWith("Tout ")
+                      ? "font-semibold text-slate-800"
+                      : f.startsWith("🔒")
+                        ? "text-slate-400"
+                        : ""
+                  }
+                >
+                  {f.startsWith("Tout ") || f.startsWith("🔒") ? f : `✓ ${f}`}
                 </li>
               ))}
             </ul>
-            <button
-              type="button"
-              onClick={() => {
-                setTier(t.id);
-                setPaid(false);
-              }}
-              className={`mt-6 rounded-xl px-6 py-3 text-sm font-semibold transition ${
-                tier === t.id
-                  ? "bg-primary-600 text-white"
-                  : "bg-primary-50 text-primary-700 hover:bg-primary-100"
-              }`}
-            >
-              {tier === t.id ? "Sélectionné ✓" : "Choisir " + t.name}
-            </button>
+            {t.price === 0 ? (
+              <Link
+                href="/pro/inscription"
+                onClick={activateFree}
+                className="mt-6 rounded-xl bg-slate-800 px-6 py-3 text-center text-sm font-semibold text-white transition hover:bg-slate-700"
+              >
+                Commencer gratuitement
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  setTier(t.id);
+                  setPaid(false);
+                }}
+                className={`mt-6 rounded-xl px-6 py-3 text-sm font-semibold transition ${
+                  tier === t.id
+                    ? "bg-primary-600 text-white"
+                    : "bg-primary-50 text-primary-700 hover:bg-primary-100"
+                }`}
+              >
+                {tier === t.id ? "Sélectionné ✓" : "Choisir " + t.name}
+              </button>
+            )}
           </div>
         ))}
       </div>
@@ -190,7 +245,7 @@ export default function TarifsPage() {
               </div>
               <button
                 type="button"
-                onClick={() => setPaid(true)}
+                onClick={() => confirmPaid(selected.id)}
                 className="mt-6 w-full rounded-xl bg-primary-600 px-6 py-3.5 font-semibold text-white transition hover:bg-primary-700"
               >
                 Payer {selected.price} DT (démo)

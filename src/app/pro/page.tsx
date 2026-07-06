@@ -50,10 +50,16 @@ export default function ProPage() {
           <p className="mt-4 max-w-xl text-primary-100">{t("pro.text")}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
-              href="/pro/dashboard"
+              href="/pro/inscription"
               className="rounded-xl bg-white px-8 py-3 font-semibold text-primary-800 transition hover:bg-primary-50"
             >
-              {locale === "fr" ? "🖥️ Essayer l'espace praticien (démo)" : "🖥️ جرّب فضاء الطبيب (تجريبي)"}
+              {locale === "fr" ? "🚀 Commencer gratuitement" : "🚀 ابدأ مجانًا"}
+            </Link>
+            <Link
+              href="/pro/dashboard"
+              className="rounded-xl border border-white/40 px-8 py-3 font-semibold text-white transition hover:bg-white/10"
+            >
+              {locale === "fr" ? "🖥️ Essayer la démo" : "🖥️ جرّب التجربة"}
             </Link>
             <Link
               href="/pro/tarifs"

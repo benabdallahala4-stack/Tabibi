@@ -20,6 +20,7 @@ import { accessRecordWithCode, type MedicalRecord } from "@/lib/medicalRecord";
 import { loadQueue, saveQueue, type QueueState } from "@/lib/queue";
 import { allQuestions, answerQuestion, type QnaQuestion } from "@/lib/qna";
 import { SPECIALTIES } from "@/lib/data";
+import { loadPlan, planAllows, PLAN_LABELS, TAB_MIN_PLAN, type Plan } from "@/lib/plan";
 
 const TABS = [
   { id: "agenda", label: "📅 Agenda" },
@@ -46,8 +47,10 @@ export default function ProDashboard() {
   const [tab, setTab] = useState<TabId>("agenda");
   const [ws, setWs] = useState<ProWorkspace | null>(null);
   const [bookings, setBookings] = useState<Appointment[]>([]);
+  const [plan, setPlan] = useState<Plan>("gratuit");
 
   useEffect(() => {
+    setPlan(loadPlan());
     setWs(loadWorkspace());
     setBookings(
       listAppointments().filter(
@@ -55,6 +58,8 @@ export default function ProDashboard() {
       )
     );
   }, []);
+
+  const unlocked = planAllows(plan, tab);
 
   function update(next: ProWorkspace) {
     setWs(next);
@@ -72,6 +77,13 @@ export default function ProDashboard() {
             Dr Amine Ben Salah — Cardiologie, Tunis ·{" "}
             <span className="rounded-full bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">
               Démo interactive (données sur cet appareil)
+            </span>{" "}
+            <span
+              className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
+                plan === "gratuit" ? "bg-slate-100 text-slate-600" : "bg-primary-50 text-primary-700"
+              }`}
+            >
+              Plan : {PLAN_LABELS[plan]}
             </span>
           </p>
         </div>
@@ -84,34 +96,83 @@ export default function ProDashboard() {
       </div>
 
       <div className="mt-6 flex flex-wrap gap-2">
-        {TABS.map((tItem) => (
-          <button
-            key={tItem.id}
-            type="button"
-            onClick={() => setTab(tItem.id)}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-              tab === tItem.id
-                ? "bg-primary-600 text-white"
-                : "bg-white text-slate-600 ring-1 ring-slate-200 hover:bg-slate-50"
-            }`}
-          >
-            {tItem.label}
-          </button>
-        ))}
+        {TABS.map((tItem) => {
+          const locked = !planAllows(plan, tItem.id);
+          return (
+            <button
+              key={tItem.id}
+              type="button"
+              onClick={() => setTab(tItem.id)}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                tab === tItem.id
+                  ? "bg-primary-600 text-white"
+                  : locked
+                    ? "bg-slate-50 text-slate-400 ring-1 ring-slate-200 hover:bg-slate-100"
+                    : "bg-white text-slate-600 ring-1 ring-slate-200 hover:bg-slate-50"
+              }`}
+            >
+              {locked ? "🔒 " : ""}
+              {tItem.label}
+            </button>
+          );
+        })}
       </div>
 
       <div className="mt-6">
-        {tab === "agenda" && <AgendaTab bookings={bookings} />}
-        {tab === "patients" && <PatientsTab ws={ws} update={update} />}
-        {tab === "caisse" && <CaisseTab ws={ws} update={update} />}
-        {tab === "messages" && <MessagesTab ws={ws} update={update} />}
-        {tab === "suivis" && <SuivisTab ws={ws} update={update} />}
-        {tab === "file" && <QueueTab />}
-        {tab === "qna" && <QnaTab />}
-        {tab === "dossier" && <SharedRecordTab />}
-        {tab === "stats" && <StatsTab ws={ws} bookings={bookings} />}
+        {!unlocked ? (
+          <LockedPanel tab={tab} plan={plan} />
+        ) : (
+          <>
+            {tab === "agenda" && <AgendaTab bookings={bookings} />}
+            {tab === "patients" && <PatientsTab ws={ws} update={update} />}
+            {tab === "caisse" && <CaisseTab ws={ws} update={update} />}
+            {tab === "messages" && <MessagesTab ws={ws} update={update} />}
+            {tab === "suivis" && <SuivisTab ws={ws} update={update} />}
+            {tab === "file" && <QueueTab />}
+            {tab === "qna" && <QnaTab />}
+            {tab === "dossier" && <SharedRecordTab />}
+            {tab === "stats" && <StatsTab ws={ws} bookings={bookings} />}
+          </>
+        )}
       </div>
     </div>
+  );
+}
+
+/* ---------------- Fonctionnalité verrouillée (freemium) ---------------- */
+
+const LOCKED_PITCH: Record<string, string> = {
+  file: "Vos patients suivent leur tour en temps réel et arrivent à l'heure — fini la salle d'attente bondée.",
+  caisse: "Encaissements, impayés, répartition espèces/carte/CNAM : votre comptabilité du cabinet en un coup d'œil.",
+  messages: "Messagerie sécurisée avec vos patients pour le suivi non urgent, sans donner votre numéro personnel.",
+  suivis: "Relances automatiques : renouvellements, résultats, contrôles post-opératoires — aucun patient perdu de vue.",
+  dossier: "Consultez le dossier médical que le patient choisit de partager avec vous (antécédents, analyses, radios).",
+  stats: "Chiffre d'affaires, motifs fréquents, origine des patients : pilotez votre activité avec des données.",
+};
+
+function LockedPanel({ tab, plan }: { tab: string; plan: Plan }) {
+  const tabInfo = TABS.find((t) => t.id === tab);
+  const requiredPlan = TAB_MIN_PLAN[tab] ?? "essentiel";
+  return (
+    <section className="relative overflow-hidden rounded-2xl bg-white p-10 text-center shadow-sm ring-1 ring-slate-200">
+      <div className="mx-auto max-w-md">
+        <span className="text-5xl">🔒</span>
+        <h2 className="mt-3 text-xl font-bold text-slate-800">{tabInfo?.label.replace(/^\S+\s/, "")}</h2>
+        <p className="mt-2 text-sm text-slate-500">{LOCKED_PITCH[tab]}</p>
+        <p className="mt-4 text-sm text-slate-600">
+          Inclus à partir du plan{" "}
+          <span className="font-bold text-primary-700">{PLAN_LABELS[requiredPlan]}</span>
+          {" — "}votre plan actuel : <span className="font-semibold">{PLAN_LABELS[plan]}</span>.
+        </p>
+        <Link
+          href="/pro/tarifs"
+          className="mt-5 inline-block rounded-xl bg-primary-600 px-8 py-3 text-sm font-semibold text-white transition hover:bg-primary-700"
+        >
+          ⭐ Débloquer avec {PLAN_LABELS[requiredPlan]}
+        </Link>
+        <p className="mt-3 text-xs text-slate-400">Sans engagement — activation immédiate.</p>
+      </div>
+    </section>
   );
 }
 

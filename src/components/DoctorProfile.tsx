@@ -84,6 +84,25 @@ export default function DoctorProfile({ doctor }: { doctor: Doctor }) {
         </div>
       </div>
 
+      {/* Revendication du profil par le praticien */}
+      <p className="mt-3 text-center text-xs text-slate-400">
+        {locale === "ar" ? (
+          <>
+            هل أنت {doctor.fullNameAr}؟{" "}
+            <a href={`/pro/inscription?claim=${doctor.slug}`} className="font-medium text-primary-600 hover:underline">
+              استرجع ملفك مجانًا
+            </a>
+          </>
+        ) : (
+          <>
+            Vous êtes {doctor.fullName} ?{" "}
+            <a href={`/pro/inscription?claim=${doctor.slug}`} className="font-medium text-primary-600 hover:underline">
+              Revendiquez ce profil gratuitement
+            </a>
+          </>
+        )}
+      </p>
+
       <div className="mt-6 grid gap-6 lg:grid-cols-5">
         {/* Colonne infos */}
         <div className="space-y-6 lg:col-span-2">
