@@ -73,6 +73,23 @@ La Tunisie est la première destination de soins des patients **libyens** (dialy
 - **Guichet patients internationaux** : devis avant le départ, accueil en arabe, coordination hébergement/transport (y compris frontière de Ras Jedir), facturation internationale, **suivi à distance par téléconsultation après le retour** au pays.
 - Roadmap : demande de devis en ligne, parcours multilingue libyen, partenariats assurances libyennes, forfaits soins + séjour.
 
+## 3 quinquies. Dossier médical du patient (`/dossier`)
+
+Le patient constitue et **contrôle** son dossier :
+
+- **Saisie** : groupe sanguin, taille/poids, allergies, maladies chroniques, traitements en cours, antécédents chirurgicaux et familiaux.
+- **Documents** : téléversement de photos et PDF (ordonnances, analyses, radios, comptes rendus, vaccinations) — catégorisés, prévisualisés, supprimables. Démo : 1,5 Mo/document, 3,5 Mo au total (localStorage) ; production : stockage serveur chiffré sans ces limites.
+- **Partage par consentement** : le dossier n'est JAMAIS visible d'un praticien par défaut. Le patient active le partage et remet un **code d'accès à 6 caractères** à son médecin, qui le saisit dans son espace Pro (onglet « Dossier partagé »). Le patient coupe l'accès à tout moment (désactivation ou changement de code). Production : partage nominatif par praticien + **journal des accès** (audit trail), conformément à la loi n° 2004-63 / INPDP.
+
+## 3 sexies. Assistant Tabibi (chatbot FR/AR)
+
+Widget de chat flottant présent sur tout le site, à base de règles (aucune API externe, fonctionne hors backend) :
+
+- ~28 sujets couverts : réservation, annulation, rappels, téléconsultation, certificats/ordonnances (cadre légal), dossier médical et partage, sécurité des données, compte Google, CNAM, paiement, cliniques, patients libyens, urgences (190/198), pharmacies de garde, installation mobile, offre Pro (inscription, tarifs, paiement, dashboard), Tabibi Plus, contact humain.
+- **Bilingue** : questions, réponses et suggestions suivent la langue du site (FR/AR, RTL inclus).
+- **Suggestions cliquables** à l'ouverture et après chaque réponse (sujets liés) ; réponse de repli avec redirection vers le support.
+- Évolution prévue : brancher un LLM (API Claude) avec ces contenus comme base de connaissances, + escalade vers un humain.
+
 ## 4. Fonctionnalités premium (monétisation)
 
 ### Tabibi Plus (patients) — abonnement mensuel ou à l'acte

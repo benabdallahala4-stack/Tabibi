@@ -228,6 +228,8 @@ const DICT: Record<string, { fr: string; ar: string }> = {
   "pro.submit": { fr: "Être recontacté(e)", ar: "اتصلوا بي" },
   "pro.explore": { fr: "Ou explorez la plateforme côté patient :", ar: "أو استكشف المنصة من جهة المريض:" },
 
+  "nav.dossier": { fr: "Mon dossier médical", ar: "ملفي الطبي" },
+
   // Cliniques
   "nav.clinics": { fr: "Cliniques", ar: "المصحات" },
   "clinics.title": { fr: "Cliniques partenaires", ar: "المصحات الشريكة" },

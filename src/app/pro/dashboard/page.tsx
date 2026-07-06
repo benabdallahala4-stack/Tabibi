@@ -16,6 +16,7 @@ import {
   type PaymentMethod,
   type ProWorkspace,
 } from "@/lib/pro";
+import { accessRecordWithCode, type MedicalRecord } from "@/lib/medicalRecord";
 
 const TABS = [
   { id: "agenda", label: "📅 Agenda" },
@@ -23,6 +24,7 @@ const TABS = [
   { id: "caisse", label: "💰 Caisse" },
   { id: "messages", label: "💬 Messagerie" },
   { id: "suivis", label: "🔔 Suivis" },
+  { id: "dossier", label: "🔐 Dossier partagé" },
 ] as const;
 
 type TabId = (typeof TABS)[number]["id"];
@@ -98,6 +100,7 @@ export default function ProDashboard() {
         {tab === "caisse" && <CaisseTab ws={ws} update={update} />}
         {tab === "messages" && <MessagesTab ws={ws} update={update} />}
         {tab === "suivis" && <SuivisTab ws={ws} update={update} />}
+        {tab === "dossier" && <SharedRecordTab />}
       </div>
     </div>
   );
@@ -579,6 +582,99 @@ function MessagesTab({ ws, update }: { ws: ProWorkspace; update: (w: ProWorkspac
         )}
       </section>
     </div>
+  );
+}
+
+/* ---------------- Dossier partagé par le patient ---------------- */
+
+function SharedRecordTab() {
+  const [code, setCode] = useState("");
+  const [result, setResult] = useState<MedicalRecord | null | undefined>(undefined);
+
+  function open(e: React.FormEvent) {
+    e.preventDefault();
+    setResult(accessRecordWithCode(code));
+  }
+
+  const row = (label: string, value: string) =>
+    value ? (
+      <div className="rounded-lg bg-slate-50 px-3 py-2 text-sm">
+        <span className="font-semibold text-slate-700">{label} : </span>
+        <span className="text-slate-600">{value}</span>
+      </div>
+    ) : null;
+
+  return (
+    <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      <h2 className="text-lg font-bold text-slate-800">Consulter un dossier partagé par le patient</h2>
+      <p className="mt-1 text-sm text-slate-500">
+        Le patient remplit son dossier sur Tabibi (<span className="font-medium">Mon dossier médical</span>) et
+        vous remet son code d&apos;accès à 6 caractères. Sans code — ou si le patient coupe le partage — le
+        dossier est inaccessible. <span className="text-slate-400">(Démo : patient et praticien sur le même appareil.)</span>
+      </p>
+      <form onSubmit={open} className="mt-4 flex flex-wrap gap-2">
+        <input
+          value={code}
+          onChange={(e) => setCode(e.target.value.toUpperCase())}
+          placeholder="Code d'accès (ex. A3K7ZP)"
+          maxLength={6}
+          className="rounded-xl border border-slate-200 px-4 py-2.5 font-mono text-sm uppercase tracking-widest outline-none focus:ring-2 focus:ring-primary-400"
+          dir="ltr"
+        />
+        <button className="rounded-xl bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-700">
+          Ouvrir le dossier
+        </button>
+      </form>
+
+      {result === null && (
+        <p className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-accent-600">
+          Code invalide ou partage désactivé par le patient.
+        </p>
+      )}
+
+      {result && (
+        <div className="mt-5 space-y-2">
+          <p className="rounded-xl bg-emerald-50 p-3 text-sm font-medium text-emerald-800">
+            ✓ Accès autorisé par le patient — chaque consultation du dossier sera journalisée en production.
+          </p>
+          <div className="grid gap-2 sm:grid-cols-3">
+            {row("Groupe sanguin", result.bloodType)}
+            {row("Taille", result.heightCm && `${result.heightCm} cm`)}
+            {row("Poids", result.weightKg && `${result.weightKg} kg`)}
+          </div>
+          {row("Allergies", result.allergies)}
+          {row("Maladies chroniques", result.chronic)}
+          {row("Traitements en cours", result.medications)}
+          {row("Antécédents chirurgicaux", result.surgeries)}
+          {row("Antécédents familiaux", result.familyHistory)}
+
+          <h3 className="pt-2 font-semibold text-slate-700">Documents ({result.documents.length})</h3>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {result.documents.map((d) => (
+              <a
+                key={d.id}
+                href={d.dataUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3 transition hover:ring-1 hover:ring-primary-300"
+              >
+                {d.mimeType.startsWith("image/") ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={d.dataUrl} alt={d.name} className="h-12 w-12 rounded-lg object-cover" />
+                ) : (
+                  <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-red-100 text-xl">📄</span>
+                )}
+                <span className="min-w-0">
+                  <span className="block truncate text-sm font-medium text-slate-700">{d.name}</span>
+                  <span className="text-xs text-slate-400">{d.category} · {d.addedAt}</span>
+                </span>
+              </a>
+            ))}
+            {result.documents.length === 0 && <p className="text-sm text-slate-400">Aucun document.</p>}
+          </div>
+        </div>
+      )}
+    </section>
   );
 }
 

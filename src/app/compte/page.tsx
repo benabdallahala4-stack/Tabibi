@@ -112,6 +112,22 @@ export default function AccountPage() {
         </form>
       </section>
 
+      {/* Dossier médical */}
+      <a
+        href="/dossier"
+        className="mt-6 flex items-center justify-between rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition hover:ring-primary-400"
+      >
+        <span>
+          <span className="block font-semibold text-slate-800">🗄️ {t("nav.dossier")}</span>
+          <span className="mt-0.5 block text-sm text-slate-500">
+            {t("account.whereTitle") === "Où sont enregistrés mes rendez-vous ?"
+              ? "Allergies, traitements, documents (photos/PDF) et partage sécurisé avec votre médecin."
+              : "الحساسية، الأدوية، الوثائق (صور/PDF) والمشاركة الآمنة مع طبيبك."}
+          </span>
+        </span>
+        <span className="text-2xl text-slate-300">›</span>
+      </a>
+
       {/* Où sont mes données ? */}
       <section className="mt-6 rounded-2xl bg-primary-50 p-6 ring-1 ring-primary-100">
         <h2 className="font-semibold text-primary-900">💡 {t("account.whereTitle")}</h2>

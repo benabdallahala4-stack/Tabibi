@@ -26,6 +26,7 @@ export default function Footer() {
             <li><Link href="/recherche" className="hover:text-primary-600">{t("footer.searchDoctor")}</Link></li>
             <li><Link href="/mes-rdv" className="hover:text-primary-600">{t("footer.manageAppointments")}</Link></li>
             <li><Link href="/compte" className="hover:text-primary-600">{t("nav.account")}</Link></li>
+            <li><Link href="/dossier" className="hover:text-primary-600">{t("nav.dossier")}</Link></li>
             <li><Link href="/cliniques" className="hover:text-primary-600">{t("nav.clinics")}</Link></li>
             <li><Link href="/plus" className="hover:text-primary-600">⭐ Tabibi Plus</Link></li>
           </ul>
