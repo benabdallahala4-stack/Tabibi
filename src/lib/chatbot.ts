@@ -346,6 +346,26 @@ export const QAS: QA[] = [
     related: ["cliniques", "libye"],
   },
   {
+    id: "medicaments",
+    keywords: ["medicament", "prix medicament", "dci", "generique", "doliprane", "دواء", "ثمن الدواء", "جنيس"],
+    q: { fr: "Où trouver le prix d'un médicament ?", ar: "أين أجد ثمن دواء؟" },
+    a: {
+      fr: "Ouvrez la « Base de médicaments » (lien en bas de page) : cherchez par nom, molécule (DCI) ou classe pour voir le prix public en dinars, si une ordonnance est requise, le remboursement CNAM et l'existence d'un générique.",
+      ar: "افتح « قاعدة الأدوية » (الرابط أسفل الصفحة): ابحث بالاسم أو المادة الفعالة أو الفئة لتعرف السعر العمومي بالدينار، وهل تلزم وصفة، وتعويض CNAM ووجود دواء جنيس.",
+    },
+    related: ["pharmacie-garde", "ordonnance"],
+  },
+  {
+    id: "proche",
+    keywords: ["proche", "pres de moi", "autour de moi", "geolocalisation", "قريب مني", "بالقرب"],
+    q: { fr: "Comment trouver un médecin près de moi ?", ar: "كيف أجد طبيبًا قريبًا مني؟" },
+    a: {
+      fr: "Sur la page de recherche, touchez « 📍 Autour de moi » et autorisez la localisation : les praticiens sont triés par distance avec les kilomètres affichés.",
+      ar: "في صفحة البحث، اضغط « 📍 بالقرب مني » واسمح بتحديد الموقع: يُرتَّب الأطباء حسب المسافة مع عرض الكيلومترات.",
+    },
+    related: ["rdv-comment", "cliniques"],
+  },
+  {
     id: "contact",
     keywords: ["contact", "aide", "humain", "support", "probleme", "reclamation", "تواصل", "مساعده", "مشكل", "شكوى"],
     q: { fr: "Comment contacter un humain ?", ar: "كيف أتواصل مع شخص حقيقي؟" },

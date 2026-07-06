@@ -19,7 +19,12 @@ export default function MyAppointmentsPage() {
     setAppointments(listAppointments());
   }
 
-  const upcoming = (appointments ?? []).filter((a) => a.status === "confirme");
+  const todayIso = new Date().toISOString().slice(0, 10);
+  const confirmed = (appointments ?? []).filter((a) => a.status === "confirme");
+  const upcoming = confirmed.filter((a) => a.dateIso >= todayIso);
+  const past = confirmed
+    .filter((a) => a.dateIso < todayIso)
+    .sort((a, b) => b.dateIso.localeCompare(a.dateIso));
   const cancelled = (appointments ?? []).filter((a) => a.status === "annule");
 
   return (
@@ -84,6 +89,48 @@ export default function MyAppointmentsPage() {
               <p className="text-sm text-slate-500">{t("mine.upcomingNone")}</p>
             )}
           </section>
+
+          {past.length > 0 && (
+            <section className="mt-10">
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
+                {t("mine.past")}
+              </h2>
+              <div className="mt-3 space-y-3">
+                {past.map((a) => (
+                  <div
+                    key={a.id}
+                    className="flex flex-col justify-between gap-3 rounded-2xl bg-white p-4 ring-1 ring-slate-200 sm:flex-row sm:items-center"
+                  >
+                    <div>
+                      <p className="font-semibold text-slate-700">
+                        <Link href={`/medecin/${a.doctorSlug}`} className="hover:underline">
+                          {a.doctorName}
+                        </Link>
+                      </p>
+                      <p className="text-sm text-slate-500">
+                        {a.specialty} · {city(a.city)} ·{" "}
+                        <span dir="ltr">{a.dateIso} {a.time}</span>
+                      </p>
+                    </div>
+                    <div className="flex gap-2 text-sm">
+                      <Link
+                        href={`/medecin/${a.doctorSlug}`}
+                        className="rounded-xl bg-amber-50 px-4 py-2 font-medium text-amber-700 transition hover:bg-amber-100"
+                      >
+                        {t("mine.review")}
+                      </Link>
+                      <Link
+                        href={`/medecin/${a.doctorSlug}`}
+                        className="rounded-xl bg-primary-50 px-4 py-2 font-medium text-primary-700 transition hover:bg-primary-100"
+                      >
+                        {t("mine.rebook")}
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
           {cancelled.length > 0 && (
             <section className="mt-10">

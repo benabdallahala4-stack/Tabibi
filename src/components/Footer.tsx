@@ -17,6 +17,8 @@ export default function Footer() {
           <p className="mt-3 text-sm text-slate-500">
             {t("footer.tagline")}
             <br />
+            <span className="font-medium text-primary-700">{t("footer.positioning")}</span>
+            <br />
             <span dir="rtl">صحتك أولويتنا</span>
           </p>
         </div>
@@ -28,6 +30,7 @@ export default function Footer() {
             <li><Link href="/compte" className="hover:text-primary-600">{t("nav.account")}</Link></li>
             <li><Link href="/dossier" className="hover:text-primary-600">{t("nav.dossier")}</Link></li>
             <li><Link href="/pharmacies" className="hover:text-primary-600">{t("nav.pharmacies")}</Link></li>
+            <li><Link href="/medicaments" className="hover:text-primary-600">{t("nav.medicines")}</Link></li>
             <li><Link href="/attente" className="hover:text-primary-600">{t("nav.queue")}</Link></li>
             <li><Link href="/cliniques" className="hover:text-primary-600">{t("nav.clinics")}</Link></li>
             <li><Link href="/plus" className="hover:text-primary-600">⭐ Tabibi Plus</Link></li>
@@ -40,6 +43,7 @@ export default function Footer() {
             <li><Link href="/pro/tarifs" className="hover:text-primary-600">Tarifs Pro</Link></li>
             <li><Link href="/pro/dashboard" className="hover:text-primary-600">Espace praticien (démo)</Link></li>
             <li><Link href="/labo" className="hover:text-primary-600">{t("nav.labo")}</Link></li>
+            <li><Link href="/clinique-admin" className="hover:text-primary-600">Espace clinique (démo)</Link></li>
           </ul>
         </div>
       </div>

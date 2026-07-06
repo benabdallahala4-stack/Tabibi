@@ -168,6 +168,9 @@ const DICT: Record<string, { fr: string; ar: string }> = {
   "mine.cancel": { fr: "Annuler", ar: "إلغاء" },
   "mine.cancelled": { fr: "Annulés", ar: "الملغاة" },
   "mine.cancelledBadge": { fr: "Annulé", ar: "ملغى" },
+  "mine.past": { fr: "Historique (rendez-vous passés)", ar: "السجل (المواعيد السابقة)" },
+  "mine.review": { fr: "⭐ Laisser un avis vérifié", ar: "⭐ اترك تقييمًا موثّقًا" },
+  "mine.rebook": { fr: "Reprendre RDV", ar: "حجز موعد جديد" },
   "mine.join": { fr: "📹 Rejoindre la consultation vidéo", ar: "📹 الانضمام إلى استشارة الفيديو" },
 
   // Visio
@@ -232,6 +235,11 @@ const DICT: Record<string, { fr: string; ar: string }> = {
   "nav.pharmacies": { fr: "Pharmacies de garde", ar: "صيدليات الحراسة" },
   "nav.queue": { fr: "File d'attente", ar: "طابور الانتظار" },
   "nav.labo": { fr: "Portail laboratoire", ar: "بوابة المخابر" },
+  "nav.medicines": { fr: "Base de médicaments", ar: "قاعدة الأدوية" },
+  "footer.positioning": {
+    fr: "Le système d'exploitation de la santé tunisienne.",
+    ar: "نظام التشغيل للصحة التونسية.",
+  },
 
   // Cliniques
   "nav.clinics": { fr: "Cliniques", ar: "المصحات" },

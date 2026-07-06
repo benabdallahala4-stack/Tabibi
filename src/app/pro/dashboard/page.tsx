@@ -27,6 +27,7 @@ const TABS = [
   { id: "suivis", label: "🔔 Suivis" },
   { id: "file", label: "⏳ File d'attente" },
   { id: "dossier", label: "🔐 Dossier partagé" },
+  { id: "stats", label: "📊 Statistiques" },
 ] as const;
 
 type TabId = (typeof TABS)[number]["id"];
@@ -104,6 +105,7 @@ export default function ProDashboard() {
         {tab === "suivis" && <SuivisTab ws={ws} update={update} />}
         {tab === "file" && <QueueTab />}
         {tab === "dossier" && <SharedRecordTab />}
+        {tab === "stats" && <StatsTab ws={ws} bookings={bookings} />}
       </div>
     </div>
   );
@@ -584,6 +586,97 @@ function MessagesTab({ ws, update }: { ws: ProWorkspace; update: (w: ProWorkspac
           </>
         )}
       </section>
+    </div>
+  );
+}
+
+/* ---------------- Statistiques ---------------- */
+
+function StatsTab({ ws, bookings }: { ws: ProWorkspace; bookings: Appointment[] }) {
+  const byMonth = new Map<string, { count: number; revenue: number }>();
+  for (const c of ws.consultations) {
+    const m = c.date.slice(0, 7);
+    const cur = byMonth.get(m) ?? { count: 0, revenue: 0 };
+    cur.count += 1;
+    if (c.paid) cur.revenue += c.amount;
+    byMonth.set(m, cur);
+  }
+  const months = [...byMonth.entries()].sort((a, b) => a[0].localeCompare(b[0])).slice(-6);
+  const maxRevenue = Math.max(1, ...months.map(([, v]) => v.revenue));
+
+  const motifs = new Map<string, number>();
+  for (const c of ws.consultations) motifs.set(c.motif, (motifs.get(c.motif) ?? 0) + 1);
+  const topMotifs = [...motifs.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+
+  const origins = new Map<string, number>();
+  for (const p of ws.patients) origins.set(p.origin, (origins.get(p.origin) ?? 0) + 1);
+
+  const teleShare = ws.consultations.length
+    ? Math.round((ws.consultations.filter((c) => c.kind === "teleconsultation").length / ws.consultations.length) * 100)
+    : 0;
+
+  return (
+    <div className="space-y-6">
+      <div className="grid gap-4 sm:grid-cols-4">
+        {[
+          { label: "Patients", value: ws.patients.length },
+          { label: "Consultations", value: ws.consultations.length },
+          { label: "RDV en ligne", value: bookings.length },
+          { label: "Part téléconsultation", value: `${teleShare} %` },
+        ].map((s) => (
+          <div key={s.label} className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
+            <p className="text-xs uppercase tracking-wide text-slate-400">{s.label}</p>
+            <p className="mt-1 text-2xl font-bold text-slate-800">{s.value}</p>
+          </div>
+        ))}
+      </div>
+
+      <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <h2 className="font-bold text-slate-800">Chiffre d&apos;affaires encaissé (6 derniers mois)</h2>
+        <div className="mt-4 flex items-end gap-3" style={{ height: 140 }}>
+          {months.length === 0 && <p className="text-sm text-slate-400">Pas encore de données.</p>}
+          {months.map(([m, v]) => (
+            <div key={m} className="flex flex-1 flex-col items-center gap-1">
+              <span className="text-xs font-semibold text-slate-600">{v.revenue} DT</span>
+              <div
+                className="w-full rounded-t-lg bg-primary-500"
+                style={{ height: `${Math.max(6, (v.revenue / maxRevenue) * 100)}px` }}
+                title={`${v.count} consultations`}
+              />
+              <span className="text-[10px] text-slate-400" dir="ltr">{m}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div className="grid gap-6 sm:grid-cols-2">
+        <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+          <h2 className="font-bold text-slate-800">Motifs les plus fréquents</h2>
+          <ul className="mt-3 space-y-2 text-sm">
+            {topMotifs.map(([m, n]) => (
+              <li key={m} className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2">
+                <span className="text-slate-700">{m}</span>
+                <span className="font-semibold text-slate-500">{n}</span>
+              </li>
+            ))}
+            {topMotifs.length === 0 && <li className="text-slate-400">—</li>}
+          </ul>
+        </section>
+        <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+          <h2 className="font-bold text-slate-800">Origine des patients</h2>
+          <ul className="mt-3 space-y-2 text-sm">
+            {[...origins.entries()].map(([o, n]) => (
+              <li key={o} className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2">
+                <span className="text-slate-700">{o}</span>
+                <span className="font-semibold text-slate-500">{n}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-3 text-xs text-slate-400">
+            Les patients internationaux (Libye…) sont suivis pour votre reporting clinique et fiscal.
+          </p>
+        </section>
+      </div>
     </div>
   );
 }

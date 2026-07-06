@@ -6,6 +6,7 @@ import type { Doctor } from "@/lib/types";
 import { upcomingSlots, type DaySlots } from "@/lib/slots";
 import { saveAppointment } from "@/lib/appointments";
 import { loadProfile } from "@/lib/profile";
+import { notifyUser } from "@/lib/notify";
 import { useLocale, WEEKDAYS, MONTHS } from "@/lib/i18n";
 
 export default function BookingWidget({ doctor }: { doctor: Doctor }) {
@@ -49,6 +50,10 @@ export default function BookingWidget({ doctor }: { doctor: Doctor }) {
       createdAt: new Date().toISOString(),
       status: "confirme",
     });
+    notifyUser(
+      "Tabibi — rendez-vous confirmé ✓",
+      `${doctor.fullName} · ${selected.dateIso} à ${selected.time}`
+    );
     router.push(`/rdv/confirmation?id=${id}`);
   }
 

@@ -10,7 +10,7 @@ const AVAIL_AR: Record<string, string> = {
   "Cette semaine": "هذا الأسبوع",
 };
 
-export default function DoctorCard({ doctor }: { doctor: Doctor }) {
+export default function DoctorCard({ doctor, distanceKm }: { doctor: Doctor; distanceKm?: number }) {
   const { t, locale, city } = useLocale();
   return (
     <div className="flex flex-col justify-between gap-4 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200 transition hover:shadow-md sm:flex-row sm:items-center">
@@ -27,6 +27,11 @@ export default function DoctorCard({ doctor }: { doctor: Doctor }) {
           </Link>
           <p className="text-sm text-slate-500">
             {locale === "ar" ? doctor.specialtyAr : doctor.specialty} · {city(doctor.city)}
+            {distanceKm !== undefined && (
+              <span className="ms-2 rounded-full bg-primary-50 px-2 py-0.5 text-xs font-medium text-primary-700" dir="ltr">
+                📍 {distanceKm < 1 ? "<1" : Math.round(distanceKm)} km
+              </span>
+            )}
           </p>
           <p className="mt-1 text-xs text-slate-400" dir="ltr">{doctor.address}</p>
           <div className="mt-2 flex flex-wrap gap-1.5 text-xs">
