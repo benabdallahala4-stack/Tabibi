@@ -33,6 +33,15 @@ const config: Config = {
           "Arial",
           "sans-serif",
         ],
+        // Serif de titre (polices système — élégant, sans téléchargement).
+        serif: [
+          "Iowan Old Style",
+          "Palatino Linotype",
+          "Palatino",
+          "Book Antiqua",
+          "Georgia",
+          "serif",
+        ],
       },
     },
   },

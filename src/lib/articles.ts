@@ -17,6 +17,7 @@ export interface Article {
   summary: string;
   summaryAr: string;
   sections: { heading: string; body: string }[];
+  sectionsAr: { heading: string; body: string }[];
 }
 
 export const ARTICLES: Article[] = [
@@ -39,6 +40,12 @@ export const ARTICLES: Article[] = [
       { heading: "L'hygiène de vie d'abord", body: "Réduire le sel (attention au pain, aux conserves et au harissa industriel), bouger 30 minutes par jour, perdre quelques kilos si nécessaire, limiter le café et arrêter le tabac : ces mesures font baisser la tension de manière mesurable. Elles restent indispensables même lorsque des médicaments sont prescrits." },
       { heading: "Un suivi régulier, à vie", body: "Le traitement antihypertenseur ne se s'arrête jamais sans avis médical, même quand les chiffres redeviennent normaux — c'est justement le signe qu'il fonctionne. Un contrôle chez le cardiologue ou le médecin de famille tous les 3 à 6 mois permet d'ajuster le traitement, de vérifier les reins et de dépister les complications à temps." },
     ],
+    sectionsAr: [
+      { heading: "لماذا « صامت »؟", body: "ارتفاع ضغط الدم لا يسبب ألمًا في الغالب: معظم المصابين يشعرون بصحة جيدة لسنوات، بينما يُتلف الضغط المرتفع الشرايين ويرفع خطر الجلطة القلبية والسكتة الدماغية والقصور الكلوي. لذلك فإن الوسيلة الوحيدة الموثوقة لاكتشافه هي قياس الضغط بانتظام ابتداءً من سن الأربعين — أو قبل ذلك عند وجود سوابق عائلية أو زيادة وزن أو سكري." },
+      { heading: "ما هي الأرقام المهمة؟", body: "نتحدث عن ارتفاع ضغط الدم عندما يتجاوز الضغط 14/9 (140/90) بشكل مستمر في العيادة. قياس واحد مرتفع لا يكفي: توتر الزيارة قد يزيّف النتيجة (« تأثير المئزر الأبيض »). قد يطلب منك الطبيب قياسات ذاتية في المنزل، صباحًا ومساءً لمدة ثلاثة أيام، لتأكيد التشخيص." },
+      { heading: "نمط الحياة أولًا", body: "التقليل من الملح (انتبه للخبز والمعلبات والهريسة الصناعية)، والمشي 30 دقيقة يوميًا، وإنقاص بعض الكيلوغرامات عند الحاجة، والحد من القهوة، والإقلاع عن التدخين: كلها إجراءات تخفض الضغط بشكل ملموس، وتبقى ضرورية حتى مع وصف الأدوية." },
+      { heading: "متابعة منتظمة مدى الحياة", body: "لا يُوقف علاج الضغط أبدًا دون رأي طبي، حتى عندما تعود الأرقام إلى المعدل الطبيعي — فذلك دليل على نجاعته. مراقبة لدى طبيب القلب أو طبيب العائلة كل 3 إلى 6 أشهر تسمح بتعديل العلاج وفحص الكلى واكتشاف المضاعفات في الوقت المناسب." },
+    ],
   },
   {
     slug: "vaccination-enfant-calendrier-tunisie",
@@ -58,6 +65,12 @@ export const ARTICLES: Article[] = [
       { heading: "Pourquoi respecter les dates ?", body: "Chaque rappel est calculé pour stimuler l'immunité au bon moment. Un retard de quelques jours n'est pas grave, mais des mois de retard laissent l'enfant vulnérable pendant la période où il est le plus fragile. Si vous avez manqué un rendez-vous, inutile de tout recommencer : le pédiatre reprend simplement le calendrier là où il s'est arrêté." },
       { heading: "Fièvre après le vaccin : normal ?", body: "Une fièvre modérée, une rougeur ou une petite douleur au point d'injection dans les 48 heures sont des réactions banales qui témoignent que l'immunité travaille. Du paracétamol à dose adaptée au poids suffit généralement. En revanche, une fièvre très élevée, des pleurs inhabituels prolongés ou une réaction cutanée étendue justifient d'appeler le médecin." },
       { heading: "Le carnet, un document précieux", body: "Le carnet de vaccination suit votre enfant toute sa vie : école, sport, voyages, études à l'étranger. Pensez à le numériser — vous pouvez photographier chaque page et la conserver dans votre dossier médical Tabibi pour l'avoir toujours sur vous et la partager avec le pédiatre." },
+    ],
+    sectionsAr: [
+      { heading: "برنامج وطني مجاني", body: "تمتلك تونس برنامجًا وطنيًا للتلقيح يحمي الأطفال مجانًا من أمراض خطيرة: السل، التهاب الكبد ب، الخناق، الكزاز، السعال الديكي، شلل الأطفال، الحصبة والحصبة الألمانية… تُعطى الجرعات في مراكز الصحة الأساسية ولدى طبيب الأطفال وفق رزنامة دقيقة تبدأ منذ الولادة." },
+      { heading: "لماذا احترام المواعيد؟", body: "كل جرعة تذكير محسوبة لتحفيز المناعة في الوقت المناسب. تأخير بضعة أيام ليس خطيرًا، لكن تأخير أشهر يترك الطفل دون حماية في الفترة التي يكون فيها أكثر هشاشة. إذا فاتكم موعد فلا داعي لإعادة كل شيء: يستأنف طبيب الأطفال الرزنامة من حيث توقفت." },
+      { heading: "حمى بعد التلقيح: أمر طبيعي؟", body: "حمى معتدلة أو احمرار أو ألم بسيط في موضع الحقن خلال 48 ساعة هي ردود فعل عادية تدل على أن المناعة تعمل. يكفي عادةً باراسيتامول بجرعة مناسبة للوزن. أما الحمى الشديدة أو البكاء غير المعتاد المطوّل أو الطفح الجلدي الواسع فتستوجب الاتصال بالطبيب." },
+      { heading: "الدفتر وثيقة ثمينة", body: "يرافق دفتر التلقيح طفلك طوال حياته: المدرسة، الرياضة، الأسفار، الدراسة بالخارج. فكّروا في رقمنته — يمكنكم تصوير كل صفحة وحفظها في ملفكم الطبي على طبيبي لتكون معكم دائمًا ولمشاركتها مع طبيب الأطفال." },
     ],
   },
   {
@@ -79,6 +92,12 @@ export const ARTICLES: Article[] = [
       { heading: "Le premier rendez-vous, souvent le plus dur", body: "En Tunisie, consulter « un psy » reste entouré de tabous. La téléconsultation change la donne : parler depuis chez soi, en toute confidentialité, abaisse considérablement la barrière du premier contact. De nombreux psychiatres proposent désormais ce format pour les premières évaluations comme pour le suivi." },
       { heading: "Urgence : ne restez pas seul", body: "Des idées noires ou suicidaires ne sont jamais à banaliser. Parlez-en immédiatement à un proche et consultez en urgence — SAMU au 190. Demander de l'aide n'est pas une faiblesse : c'est la décision la plus courageuse et la plus efficace." },
     ],
+    sectionsAr: [
+      { heading: "القلق المفيد… والآخر", body: "القلق قبل امتحان أو مقابلة أمر طبيعي: إنه آلية تكيّف. يصبح القلق مشكلة عندما يكون مبالغًا فيه وشبه يومي منذ أكثر من ستة أشهر، ويؤثر على النوم والتركيز والشهية والحياة الاجتماعية. الخفقان، ضيق الصدر، الغصة في الحلق والأفكار الكارثية المتكررة هي أكثر مظاهره شيوعًا." },
+      { heading: "حلول ناجعة موجودة", body: "اضطرابات القلق تُعالج بنجاح. العلاجات السلوكية المعرفية تعلّم كيفية التعرف على الأفكار القلقة وتفكيكها؛ وللنشاط البدني المنتظم أثر مثبت؛ وعند الضرورة يساعد علاج دوائي مؤطّر على تجاوز مرحلة صعبة. أسوأ استراتيجية هي التداوي الذاتي، خاصة بالمهدئات دون متابعة." },
+      { heading: "الموعد الأول هو الأصعب غالبًا", body: "في تونس، لا تزال استشارة « الطبيب النفسي » محاطة بالمحظورات. الاستشارة عن بُعد غيّرت المعادلة: التحدث من المنزل وبسرية تامة يخفّض كثيرًا حاجز الاتصال الأول. كثير من الأطباء النفسيين يقترحون اليوم هذه الصيغة للتقييم الأول وللمتابعة." },
+      { heading: "حالة طارئة: لا تبقَ وحدك", body: "الأفكار السوداء أو الانتحارية لا يُستهان بها أبدًا. تحدث فورًا إلى شخص قريب واستشر بشكل عاجل — الإسعاف على الرقم 190. طلب المساعدة ليس ضعفًا: إنه القرار الأشجع والأكثر نجاعة." },
+    ],
   },
   {
     slug: "acne-adolescent-adulte-traitements",
@@ -97,6 +116,11 @@ export const ARTICLES: Article[] = [
       { heading: "Une maladie, pas un manque d'hygiène", body: "L'acné résulte d'un excès de sébum, d'une obstruction des pores et d'une inflammation — sous influence hormonale et génétique. Se laver le visage dix fois par jour n'y change rien, et les gommages agressifs aggravent souvent l'inflammation. À l'inverse, un nettoyage doux matin et soir et une crème hydratante non comédogène constituent la base de toute routine efficace." },
       { heading: "Les erreurs qui laissent des traces", body: "Percer les boutons, c'est transformer une lésion temporaire en cicatrice définitive ou en tache pigmentée — particulièrement visible sur les peaux méditerranéennes. L'exposition au soleil « qui assèche les boutons » est un faux ami : l'amélioration apparente de l'été est presque toujours suivie d'une poussée de rebond en automne." },
       { heading: "Quand voir un dermatologue ?", body: "Si l'acné résiste à trois mois de soins bien conduits, laisse des marques, ou pèse sur le moral, une consultation s'impose. Le dermatologue dispose d'un arsenal gradué : traitements locaux à base de rétinoïdes ou de peroxyde de benzoyle, antibiotiques courts, traitement hormonal chez la femme, et isotrétinoïne pour les formes sévères — sous surveillance stricte." },
+    ],
+    sectionsAr: [
+      { heading: "مرض، وليس نقص نظافة", body: "ينتج حب الشباب عن إفراز زائد للدهون وانسداد المسام والتهاب — تحت تأثير هرموني ووراثي. غسل الوجه عشر مرات يوميًا لا يغيّر شيئًا، والتقشير العنيف يزيد الالتهاب سوءًا غالبًا. في المقابل، تنظيف لطيف صباحًا ومساءً وكريم مرطّب لا يسد المسام هما أساس كل روتين ناجع." },
+      { heading: "أخطاء تترك آثارًا", body: "الضغط على الحبوب يحوّل آفة مؤقتة إلى ندبة دائمة أو بقعة داكنة — تظهر بوضوح خاصة على البشرة المتوسطية. والتعرض للشمس « الذي يجفف الحبوب » صديق زائف: التحسّن الظاهري في الصيف يتبعه دائمًا تقريبًا انتكاس في الخريف." },
+      { heading: "متى نستشير طبيب الجلد؟", body: "إذا قاوم حب الشباب ثلاثة أشهر من العناية الجيدة، أو ترك آثارًا، أو أثّر على المعنويات، فالاستشارة ضرورية. يمتلك طبيب الجلد ترسانة متدرجة: علاجات موضعية بالريتينويدات أو بيروكسيد البنزويل، مضادات حيوية قصيرة، علاج هرموني عند المرأة، والإيزوتريتينوين للحالات الشديدة — تحت مراقبة صارمة." },
     ],
   },
   {
@@ -118,6 +142,12 @@ export const ARTICLES: Article[] = [
       { heading: "Le prédiabète se rattrape", body: "Au stade de prédiabète, perdre 5 à 7 % de son poids et marcher 30 minutes par jour réduit de moitié le risque d'évoluer vers un diabète installé. C'est l'intervention médicale la plus rentable qui existe — elle ne coûte rien et n'a que des effets secondaires positifs." },
       { heading: "Vivre avec, sans complications", body: "Un diabète bien suivi est compatible avec une vie parfaitement normale. La clé : un suivi régulier (hémoglobine glyquée tous les 3 mois, fond d'œil et bilan rénal annuels, examen des pieds), l'observance du traitement et un médecin de famille qui coordonne le tout. Le suivi CNAM (APCI) prend en charge l'essentiel des soins liés au diabète." },
     ],
+    sectionsAr: [
+      { heading: "قضية وطنية", body: "ينتشر السكري من النوع الثاني بسرعة في تونس، مدفوعًا بقلة الحركة والتغذية الغنية بالسكريات السريعة وزيادة الوزن. خصوصيته أنه يتطور في صمت لسنوات: العطش غير المعتاد وكثرة التبول والتعب والالتهابات المتكررة لا تظهر غالبًا إلا متأخرة، عندما يكون سكر الدم مرتفعًا جدًا." },
+      { heading: "من يجب أن يُجري الفحص؟", body: "يُنصح بتحليل سكر الدم على الريق بانتظام ابتداءً من سن 45، وقبل ذلك عند زيادة الوزن أو وجود سكري في العائلة أو ارتفاع ضغط أو سكري أثناء حمل سابق. يُجرى التحليل في أي مخبر، وتُفسَّر النتيجة مع طبيبك — فالقيمة الحدّية (« ما قبل السكري ») هي بالضبط أفضل فرصة للتحرك." },
+      { heading: "ما قبل السكري يمكن تداركه", body: "في مرحلة ما قبل السكري، إنقاص 5 إلى 7٪ من الوزن والمشي 30 دقيقة يوميًا يخفّضان إلى النصف خطر التحول إلى سكري مؤكد. إنه التدخل الطبي الأكثر مردودية على الإطلاق — لا يكلف شيئًا وليست له سوى آثار جانبية إيجابية." },
+      { heading: "التعايش معه دون مضاعفات", body: "السكري المتابَع جيدًا يتوافق مع حياة طبيعية تمامًا. المفتاح: متابعة منتظمة (الهيموغلوبين السكري كل 3 أشهر، فحص قاع العين والكلى سنويًا، فحص القدمين)، والالتزام بالعلاج، وطبيب عائلة ينسّق كل ذلك. نظام CNAM (الأمراض المزمنة APCI) يغطي أساسيات العلاج المرتبط بالسكري." },
+    ],
   },
   {
     slug: "otite-enfant-signes-conduite",
@@ -136,6 +166,11 @@ export const ARTICLES: Article[] = [
       { heading: "Pourquoi les enfants surtout ?", body: "Chez le jeune enfant, la trompe d'Eustache — le petit conduit qui relie l'oreille moyenne au nez — est courte et horizontale : les microbes du rhume y remontent facilement. C'est pourquoi la plupart des otites surviennent entre 6 mois et 3 ans, souvent dans la foulée d'une rhinopharyngite banale de crèche ou de jardin d'enfants." },
       { heading: "Les signes qui doivent alerter", body: "Un enfant qui pleure en se touchant l'oreille, dort mal, a de la fièvre ou entend moins bien mérite un examen des tympans. Chez le nourrisson, l'otite peut se manifester uniquement par de l'irritabilité, un refus de téter ou des troubles digestifs. Un écoulement de liquide par l'oreille impose une consultation rapide." },
       { heading: "Quand consulter l'ORL ?", body: "Le médecin de famille ou le pédiatre traite la plupart des otites. L'avis ORL devient utile quand elles se répètent (plus de 3 ou 4 par an), quand du liquide persiste derrière le tympan plus de trois mois (otite séreuse), ou quand l'audition semble baisser — car une oreille qui entend mal à 2 ans peut retarder le langage. L'ORL évaluera alors l'intérêt d'aérateurs trans-tympaniques (« yoyos ») ou de l'ablation des végétations." },
+    ],
+    sectionsAr: [
+      { heading: "لماذا الأطفال بالذات؟", body: "عند الطفل الصغير، تكون قناة أوستاش — القناة الصغيرة الرابطة بين الأذن الوسطى والأنف — قصيرة وأفقية، فتصعد إليها جراثيم الزكام بسهولة. لذلك تحدث معظم التهابات الأذن بين 6 أشهر و3 سنوات، غالبًا عقب زكام عادي في الحضانة أو رياض الأطفال." },
+      { heading: "علامات يجب الانتباه إليها", body: "طفل يبكي ويلمس أذنه، ينام بشكل سيئ، لديه حمى أو يسمع أقل من المعتاد، يستحق فحص طبلة الأذن. عند الرضيع قد يظهر الالتهاب فقط في شكل انفعال أو رفض الرضاعة أو اضطرابات هضمية. سيلان سائل من الأذن يستوجب استشارة سريعة." },
+      { heading: "متى نستشير أخصائي الأنف والأذن؟", body: "يعالج طبيب العائلة أو طبيب الأطفال معظم الالتهابات. يصبح رأي الأخصائي مفيدًا عند تكررها (أكثر من 3 أو 4 في السنة)، أو عند بقاء سائل خلف الطبلة أكثر من ثلاثة أشهر، أو عندما يبدو السمع متراجعًا — فأذن تسمع بشكل سيئ في سن الثانية قد تؤخر الكلام. سيقيّم الأخصائي حينها جدوى أنابيب التهوية أو استئصال اللحميات." },
     ],
   },
   {
@@ -156,6 +191,11 @@ export const ARTICLES: Article[] = [
       { heading: "La règle 20-20-20", body: "Toutes les 20 minutes, regardez à 20 pieds (6 mètres) pendant 20 secondes : cette pause relâche l'accommodation et relance le clignement. Ajoutez un écran positionné légèrement sous le niveau des yeux, une taille de texte confortable, et des larmes artificielles sans conservateur si la sécheresse persiste." },
       { heading: "Enfants : la myopie explose", body: "Le temps d'écran et le manque de lumière naturelle contribuent à l'épidémie mondiale de myopie chez l'enfant. Deux mesures protectrices sont bien documentées : au moins 1 à 2 heures par jour dehors, et pas d'écran dans la chambre le soir. Un dépistage ophtalmologique est recommandé avant l'entrée à l'école, puis à chaque signe d'appel (plisse les yeux, se rapproche du tableau, maux de tête)." },
     ],
+    sectionsAr: [
+      { heading: "ماذا تفعل الشاشات فعلًا؟", body: "أمام الشاشة نرمش مرتين إلى ثلاث مرات أقل: يتبخر الغشاء الدمعي فيظهر الجفاف والوخز وتشوّش الرؤية آخر النهار. يضاف إلى ذلك جهد التركيز الدائم عن قرب الذي يُتعب عضلات العين — خاصة بعد الأربعين مع بداية طول النظر الشيخوخي." },
+      { heading: "قاعدة 20-20-20", body: "كل 20 دقيقة، انظر إلى مسافة 6 أمتار لمدة 20 ثانية: هذه الاستراحة ترخي عضلات التركيز وتعيد تنشيط الرمش. أضف إلى ذلك شاشة موضوعة قليلًا تحت مستوى العينين، وحجم خط مريحًا، ودموعًا اصطناعية دون مواد حافظة إذا استمر الجفاف." },
+      { heading: "الأطفال: قصر النظر يتفشى", body: "وقت الشاشة ونقص الضوء الطبيعي يساهمان في الانتشار العالمي لقصر النظر عند الأطفال. إجراءان وقائيان موثّقان جيدًا: ساعة إلى ساعتين على الأقل يوميًا في الهواء الطلق، ولا شاشة في الغرفة مساءً. يُنصح بفحص عيون قبل دخول المدرسة، ثم عند كل علامة (تضييق العينين، الاقتراب من السبورة، صداع)." },
+    ],
   },
   {
     slug: "reflux-gastrique-brulures-estomac",
@@ -174,6 +214,11 @@ export const ARTICLES: Article[] = [
       { heading: "Un mécanisme simple", body: "Le reflux survient quand le « clapet » entre l'œsophage et l'estomac ferme mal : l'acide remonte, provoquant brûlures derrière le sternum et remontées acides, surtout après les repas et en position allongée. Repas copieux et tardifs, café, menthe, fritures, tabac et surpoids sont les principaux facteurs aggravants." },
       { heading: "Les gestes qui soulagent", body: "Dîner léger au moins deux à trois heures avant le coucher, surélever la tête du lit de 10-15 cm, fractionner les repas et perdre quelques kilos suffisent souvent à faire disparaître les symptômes occasionnels. Les antiacides en vente libre dépannent, mais leur usage quotidien prolongé sans avis médical masque parfois un problème qui mérite d'être exploré." },
       { heading: "Les signaux d'alarme", body: "Une difficulté à avaler, des vomissements répétés, un amaigrissement involontaire, une anémie ou des symptômes qui persistent malgré le traitement justifient une consultation de gastro-entérologie et, le plus souvent, une fibroscopie. Cet examen court et bien toléré permet de vérifier l'œsophage et l'estomac et d'écarter les complications." },
+    ],
+    sectionsAr: [
+      { heading: "آلية بسيطة", body: "يحدث الارتجاع عندما لا يُغلق « الصمام » بين المريء والمعدة جيدًا: يصعد الحمض مسببًا حرقة خلف عظم الصدر وارتجاعات حمضية، خاصة بعد الوجبات وفي وضعية الاستلقاء. الوجبات الدسمة والمتأخرة والقهوة والنعناع والمقليات والتدخين وزيادة الوزن هي أبرز العوامل المفاقمة." },
+      { heading: "عادات تخفف الأعراض", body: "عشاء خفيف قبل النوم بساعتين إلى ثلاث على الأقل، رفع رأس السرير 10-15 سم، تقسيم الوجبات وإنقاص بعض الكيلوغرامات: غالبًا ما يكفي ذلك لإزالة الأعراض العرضية. مضادات الحموضة المتاحة دون وصفة تسعف مؤقتًا، لكن استعمالها اليومي المطوّل دون رأي طبي قد يخفي مشكلة تستحق الفحص." },
+      { heading: "إشارات الإنذار", body: "صعوبة البلع، القيء المتكرر، نقص الوزن غير المقصود، فقر الدم أو أعراض تستمر رغم العلاج: كلها تستوجب استشارة أخصائي الجهاز الهضمي وغالبًا تنظيرًا. هذا الفحص قصير وجيد التحمل، يسمح بفحص المريء والمعدة واستبعاد المضاعفات." },
     ],
   },
   {
@@ -194,6 +239,12 @@ export const ARTICLES: Article[] = [
       { heading: "Un rythme régulier ensuite", body: "Le suivi standard comporte une consultation par mois, avec trois échographies de référence (une par trimestre). Entre 24 et 28 semaines, le dépistage du diabète gestationnel est particulièrement important en Tunisie où le terrain diabétique est fréquent. Tension, poids, mouvements du bébé et col sont surveillés à chaque visite." },
       { heading: "Les signes qui imposent de consulter vite", body: "Saignements, douleurs abdominales intenses, fièvre, maux de tête violents avec troubles visuels, diminution nette des mouvements du bébé ou perte de liquide : n'attendez pas le prochain rendez-vous. Appelez votre gynécologue ou rendez-vous à la maternité — mieux vaut dix fausses alertes qu'une vraie complication négligée." },
       { heading: "Préparer l'après", body: "Le suivi ne s'arrête pas à l'accouchement : consultation post-natale, rééducation périnéale, contraception et soutien à l'allaitement font partie du parcours. C'est aussi le moment de programmer les premières visites du nouveau-né chez le pédiatre — vous pouvez déjà les réserver en ligne." },
+    ],
+    sectionsAr: [
+      { heading: "الثلث الأول أساسي", body: "منذ التحليل الإيجابي، تؤكد الاستشارة الأولى الحمل وتراجع السوابق وتصف الفحوصات الأولية: فصيلة الدم، التحاليل المصلية، سكر الدم، تحليل البول. الموجات فوق الصوتية للثلث الأول (بين الأسبوعين 11 و13 مثاليًا) تحدد عمر الحمل بدقة وتشكل محطة أساسية في الكشف المبكر." },
+      { heading: "إيقاع منتظم بعد ذلك", body: "تشمل المتابعة العادية استشارة شهرية مع ثلاثة فحوصات بالموجات مرجعية (واحد لكل ثلث). بين الأسبوعين 24 و28، يكتسي كشف سكري الحمل أهمية خاصة في تونس حيث الاستعداد للسكري شائع. يُراقب في كل زيارة الضغط والوزن وحركات الجنين وعنق الرحم." },
+      { heading: "علامات تستوجب استشارة عاجلة", body: "نزيف، آلام بطن شديدة، حمى، صداع عنيف مع اضطرابات بصرية، تراجع واضح لحركات الجنين أو نزول سائل: لا تنتظري الموعد القادم. اتصلي بطبيبتك أو توجهي إلى قسم الولادة — عشرة إنذارات كاذبة خير من مضاعفة حقيقية مهملة." },
+      { heading: "التحضير لما بعد الولادة", body: "لا تتوقف المتابعة عند الولادة: استشارة ما بعد الولادة، إعادة تأهيل العجان، وسائل منع الحمل ودعم الرضاعة كلها جزء من المسار. وهو أيضًا وقت برمجة الزيارات الأولى للمولود عند طبيب الأطفال — يمكنكم حجزها من الآن عبر الإنترنت." },
     ],
   },
 ];

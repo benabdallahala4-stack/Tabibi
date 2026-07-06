@@ -16,91 +16,62 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ============ Hero ============ */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary-800 via-primary-700 to-primary-900 text-white">
-        {/* Halos animés en arrière-plan */}
-        <div className="blob pointer-events-none absolute -top-32 -left-24 h-96 w-96 rounded-full bg-primary-400/20 blur-3xl" />
-        <div className="blob pointer-events-none absolute -bottom-40 right-0 h-[28rem] w-[28rem] rounded-full bg-teal-300/10 blur-3xl" style={{ animationDelay: "-8s" }} />
+      {/* ============ Hero — centré, sobre ============ */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-primary-800 to-primary-900 text-white">
+        {/* Anneaux décoratifs très discrets, non animés */}
+        <svg
+          className="pointer-events-none absolute right-0 top-0 h-full w-1/2 opacity-[0.06]"
+          viewBox="0 0 400 400"
+          preserveAspectRatio="xMaxYMin slice"
+          aria-hidden="true"
+        >
+          <g fill="none" stroke="white" strokeWidth="1.5">
+            <circle cx="340" cy="70" r="120" />
+            <circle cx="340" cy="70" r="180" />
+            <circle cx="340" cy="70" r="240" />
+          </g>
+        </svg>
 
-        <div className="relative mx-auto grid max-w-6xl gap-12 px-4 py-16 lg:grid-cols-2 lg:items-center lg:py-24">
-          {/* Colonne texte */}
-          <div>
-            <Reveal>
-              <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium tracking-wide text-primary-100 ring-1 ring-white/15">
-                <Icon name="sparkle" className="h-3.5 w-3.5" />
-                {fr ? "La santé tunisienne, en un clic" : "الصحة التونسية بنقرة واحدة"}
-              </span>
-            </Reveal>
-            <Reveal delay={100}>
-              <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-                {t("home.heroTitle")}
-              </h1>
-            </Reveal>
-            <Reveal delay={200}>
-              <p className="mt-4 max-w-xl text-lg text-primary-100/90">{t("home.heroText")}</p>
-            </Reveal>
-            <Reveal delay={300}>
-              <div className="mt-8 max-w-2xl">
-                <SearchBar />
-              </div>
-            </Reveal>
-            <Reveal delay={400}>
-              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-primary-100">
-                {[t("home.badge.free"), t("home.badge.reminders"), t("home.badge.tele"), t("home.badge.cnam")].map((b) => (
-                  <span key={b} className="inline-flex items-center gap-1.5">
-                    <Icon name="check" className="h-4 w-4 text-teal-300" />
-                    {b.replace(/^✓\s*/, "")}
-                  </span>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-
-          {/* Colonne visuelle : carte de réservation flottante */}
-          <Reveal delay={250} className="hidden lg:block">
-            <div className="relative mx-auto max-w-sm">
-              <div className="float-anim rounded-3xl bg-white p-6 text-slate-800 shadow-2xl">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-600 font-bold text-white">AB</span>
-                  <div>
-                    <p className="font-bold">Dr Amine Ben Salah</p>
-                    <p className="text-sm text-slate-500">{fr ? "Cardiologie · Tunis" : "أمراض القلب · تونس"}</p>
-                  </div>
-                  <span className="ms-auto inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-1 text-xs font-semibold text-amber-700">
-                    <Icon name="star" className="h-3 w-3 fill-current" /> 4.9
-                  </span>
-                </div>
-                <p className="mt-5 text-xs font-semibold uppercase tracking-wide text-slate-400">
-                  {fr ? "Aujourd'hui" : "اليوم"}
-                </p>
-                <div className="mt-2 grid grid-cols-4 gap-2 text-center text-sm" dir="ltr">
-                  {["09:00", "09:30", "11:00", "14:30"].map((h, i) => (
-                    <span
-                      key={h}
-                      className={`rounded-lg py-2 font-medium ${i === 1 ? "bg-primary-600 text-white" : "bg-primary-50 text-primary-700"}`}
-                    >
-                      {h}
-                    </span>
-                  ))}
-                </div>
-                <button type="button" className="mt-5 w-full rounded-xl bg-primary-600 py-3 text-sm font-semibold text-white">
-                  {fr ? "Confirmer le rendez-vous" : "تأكيد الموعد"}
-                </button>
-              </div>
-
-              {/* Badges flottants */}
-              <div className="float-anim-slow absolute -left-12 top-8 flex items-center gap-2 rounded-2xl bg-white/95 px-4 py-3 text-sm font-semibold text-slate-700 shadow-xl backdrop-blur">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sky-100 text-sky-600">
-                  <Icon name="video" className="h-4 w-4" />
-                </span>
-                {fr ? "Téléconsultation" : "استشارة عن بُعد"}
-              </div>
-              <div className="float-anim absolute -bottom-6 -right-8 flex items-center gap-2 rounded-2xl bg-white/95 px-4 py-3 text-sm font-semibold text-slate-700 shadow-xl backdrop-blur" style={{ animationDelay: "-3s" }}>
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-                  <Icon name="shield" className="h-4 w-4" />
-                </span>
-                {fr ? "RDV confirmé" : "تم تأكيد الموعد"}
-              </div>
+        <div className="relative mx-auto flex max-w-3xl flex-col items-center px-4 py-20 text-center sm:py-24">
+          <Reveal>
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium tracking-wide text-primary-100 ring-1 ring-white/15">
+              <Icon name="sparkle" className="h-3.5 w-3.5" />
+              {fr
+                ? `${DOCTORS.length}+ praticiens vérifiés · ${CITIES.length} villes`
+                : `${DOCTORS.length}+ طبيبًا موثّقًا · ${CITIES.length} مدينة`}
+            </span>
+          </Reveal>
+          <Reveal delay={100}>
+            <h1
+              className={`mt-6 text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl ${
+                fr ? "font-serif" : "font-sans font-bold"
+              }`}
+            >
+              {t("home.heroTitle")}
+            </h1>
+          </Reveal>
+          <Reveal delay={200}>
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-primary-100/90">
+              {t("home.heroText")}{" "}
+              <span dir="rtl" className="font-medium">صحتك أولويتنا</span>
+            </p>
+          </Reveal>
+          <Reveal delay={300}>
+            <div className="mt-8 w-full max-w-2xl">
+              <SearchBar />
+            </div>
+          </Reveal>
+          <Reveal delay={400}>
+            <div className="mt-6 flex flex-wrap justify-center gap-2.5">
+              {SPECIALTIES.slice(0, 5).map((s) => (
+                <Link
+                  key={s.id}
+                  href={`/recherche?q=${encodeURIComponent(s.label)}`}
+                  className="rounded-full bg-white/10 px-4 py-1.5 text-sm text-primary-50 ring-1 ring-white/15 transition hover:bg-white/20"
+                >
+                  {locale === "ar" ? s.labelAr : s.label}
+                </Link>
+              ))}
             </div>
           </Reveal>
         </div>
@@ -299,31 +270,89 @@ export default function HomePage() {
         </Reveal>
       </section>
 
-      {/* ============ Bandeau praticiens ============ */}
-      <section className="mx-auto max-w-6xl px-4 pb-20">
-        <Reveal>
-          <div className="hover-lift relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary-700 to-primary-600 p-10 text-white">
-            <div className="blob pointer-events-none absolute -left-20 -bottom-20 h-64 w-64 rounded-full bg-teal-300/20 blur-3xl" />
-            <div className="relative flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
-              <div className="flex items-start gap-4">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/20">
-                  <Icon name="stethoscope" className="h-6 w-6" />
-                </span>
-                <div>
-                  <h2 className="text-xl font-bold">{t("home.proBanner.title")}</h2>
-                  <p className="mt-1 max-w-xl text-sm text-primary-100">{t("home.proBanner.text")}</p>
-                </div>
+      {/* ============ SaaS : le logiciel des soignants ============ */}
+      <section className="bg-gradient-to-b from-white to-primary-50/60 py-20">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            {/* Texte + fonctionnalités */}
+            <div>
+              <Reveal>
+                <p className="text-xs font-semibold uppercase tracking-widest text-primary-600">
+                  Tabibi Pro · SaaS
+                </p>
+                <h2 className="mt-2 text-3xl font-bold leading-tight text-slate-800">
+                  {fr
+                    ? "Le logiciel qui gère votre cabinet, du premier RDV à la caisse"
+                    : "البرنامج الذي يدير عيادتك، من أول موعد إلى الصندوق"}
+                </h2>
+                <p className="mt-3 max-w-lg text-slate-600">
+                  {fr
+                    ? "Bien plus qu'un annuaire : Tabibi Pro est la solution complète des médecins et des cliniques pour digitaliser leur travail quotidien — sans installation, depuis n'importe quel appareil."
+                    : "أكثر بكثير من دليل: طبيبي برو هو الحل الكامل للأطباء والمصحات لرقمنة عملهم اليومي — دون تثبيت، ومن أي جهاز."}
+                </p>
+              </Reveal>
+              <div className="mt-7 grid gap-4 sm:grid-cols-2">
+                {([
+                  { icon: "calendar", fr: "Agenda & RDV en ligne 24/7", ar: "جدول ومواعيد عبر الإنترنت 24/7" },
+                  { icon: "file", fr: "Dossiers patients & historique", ar: "ملفات المرضى والسجل الطبي" },
+                  { icon: "activity", fr: "Caisse, impayés & statistiques", ar: "الصندوق وغير المدفوع والإحصائيات" },
+                  { icon: "clock", fr: "File d'attente en temps réel", ar: "طابور انتظار في الوقت الحقيقي" },
+                  { icon: "message", fr: "Messagerie sécurisée patients", ar: "مراسلة آمنة مع المرضى" },
+                  { icon: "video", fr: "Téléconsultation intégrée", ar: "استشارة فيديو مدمجة" },
+                ] as const).map((f, i) => (
+                  <Reveal key={f.fr} delay={i * 80}>
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-primary-600 shadow-sm ring-1 ring-primary-100">
+                        <Icon name={f.icon} className="h-4.5 w-4.5" />
+                      </span>
+                      <span className="text-sm font-medium text-slate-700">{fr ? f.fr : f.ar}</span>
+                    </div>
+                  </Reveal>
+                ))}
               </div>
-              <Link
-                href="/pro"
-                className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-primary-700 transition hover:bg-primary-50"
-              >
-                {t("home.proBanner.cta")}
-                <Icon name="arrow-right" className={`h-4 w-4 ${locale === "ar" ? "rotate-180" : ""}`} />
-              </Link>
+              <Reveal delay={300}>
+                <div className="mt-8 flex flex-wrap items-center gap-3">
+                  <Link
+                    href="/pro/inscription"
+                    className="inline-flex items-center gap-2 rounded-xl bg-primary-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-primary-600/25 transition hover:bg-primary-700"
+                  >
+                    {fr ? "Commencer gratuitement" : "ابدأ مجانًا"}
+                    <Icon name="arrow-right" className={`h-4 w-4 ${locale === "ar" ? "rotate-180" : ""}`} />
+                  </Link>
+                  <Link
+                    href="/pro/tarifs"
+                    className="rounded-xl bg-white px-7 py-3.5 text-sm font-semibold text-primary-700 ring-1 ring-primary-200 transition hover:bg-primary-50"
+                  >
+                    {fr ? "Voir les tarifs" : "الأسعار"}
+                  </Link>
+                  <span className="text-xs text-slate-400">
+                    {fr ? "Sans carte bancaire · Plan gratuit inclus" : "دون بطاقة بنكية · خطة مجانية"}
+                  </span>
+                </div>
+              </Reveal>
+              <Reveal delay={380}>
+                <p className="mt-4 text-sm text-slate-500">
+                  {fr ? "Vous dirigez une clinique ?" : "تدير مصحة؟"}{" "}
+                  <Link href="/clinique-admin" className="font-semibold text-primary-600 hover:underline">
+                    {fr ? "Découvrez l'espace clinique" : "اكتشف فضاء المصحات"}
+                  </Link>
+                </p>
+              </Reveal>
             </div>
+
+            {/* Illustration logiciel */}
+            <Reveal delay={200}>
+              <div className="relative">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/illustrations/cabinet-software.svg"
+                  alt={fr ? "Tableau de bord Tabibi Pro" : "لوحة تحكم طبيبي برو"}
+                  className="float-anim mx-auto w-full max-w-lg drop-shadow-xl"
+                />
+              </div>
+            </Reveal>
           </div>
-        </Reveal>
+        </div>
       </section>
     </>
   );

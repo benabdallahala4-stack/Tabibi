@@ -42,7 +42,8 @@ export default function ProPage() {
   return (
     <>
       <section className="bg-gradient-to-br from-primary-800 to-primary-900 text-white">
-        <div className="mx-auto max-w-6xl px-4 py-16">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 lg:grid-cols-2">
+        <div>
           <p className="text-sm font-semibold uppercase tracking-widest text-primary-300">
             {t("pro.kicker")}
           </p>
@@ -80,6 +81,15 @@ export default function ProPage() {
               ? "Conforme à la pratique tunisienne : les certificats médicaux et ordonnances sont remis en main propre après examen — Tabibi n'émet aucun document médical en ligne, il en garde uniquement la trace dans le dossier. La téléconsultation sert au contrôle et au suivi."
               : "مطابق للممارسة الطبية التونسية: الشهادات الطبية والوصفات تُسلَّم يدًا بيد بعد الفحص — طبيبي لا يُصدر أي وثيقة طبية عبر الإنترنت، بل يحتفظ فقط بأثرها في الملف. الاستشارة عن بُعد مخصصة للمراقبة والمتابعة."}
           </p>
+        </div>
+        <div className="hidden lg:block">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/illustrations/teleconsultation.svg"
+            alt={locale === "fr" ? "Téléconsultation avec Tabibi Pro" : "استشارة عن بُعد مع طبيبي برو"}
+            className="mx-auto w-full max-w-md drop-shadow-2xl"
+          />
+        </div>
         </div>
       </section>
 
