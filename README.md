@@ -37,9 +37,38 @@ La liste complète des fonctionnalités Doctolib analysées, **les paliers premi
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
+npm run dev      # http://localhost:3000  (mode local, sans base)
 npm run build    # build de production
 ```
+
+## 🐳 Stack complète en local (front + API + base)
+
+Un seul `docker compose` lance **PostgreSQL + l'application**, applique les
+migrations et sème les comptes de test :
+
+```bash
+cp .env.example .env
+docker compose up --build
+# → http://localhost:3000  (mode « cloud » : comptes, RDV multi-appareils)
+```
+
+Détails, commandes utiles et **checklist de mise en production** :
+[`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
+
+## 🔐 Rôles & comptes de test
+
+Cinq rôles ; les espaces professionnels ne sont pas accessibles au grand public.
+Connectez-vous en démo sur **`/connexion`** en choisissant un rôle :
+
+| Rôle | Compte | Téléphone (OTP) | Espace |
+|------|--------|-----------------|--------|
+| Patient | Yasmine Gharbi | `+216 20 000 001` | `/mes-rdv` |
+| Médecin | Dr Amine Ben Salah | `+216 20 000 002` | `/pro/dashboard` |
+| Clinique | Clinique Carthage Internationale | `+216 71 000 003` | `/clinique-admin` |
+| Laboratoire | Laboratoire Ibn Sina | `+216 71 000 004` | `/labo` |
+| Administration | Équipe Tabibi | `+216 20 000 009` | `/admin` |
+
+Matrice d'accès complète et modèle de sécurité : [`docs/ROLES.md`](docs/ROLES.md).
 
 ## ❓ Où sont enregistrés les rendez-vous ?
 

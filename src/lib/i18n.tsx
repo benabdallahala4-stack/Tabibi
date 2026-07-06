@@ -16,6 +16,13 @@ const DICT: Record<string, { fr: string; ar: string }> = {
   "footer.tagline": { fr: "La santé des Tunisiens, en un clic.", ar: "صحة التونسيين بنقرة واحدة." },
   "footer.patients": { fr: "Patients", ar: "المرضى" },
   "footer.pros": { fr: "Professionnels", ar: "المهنيون" },
+  "footer.services": { fr: "Services", ar: "الخدمات" },
+  "footer.pricing": { fr: "Tarifs Pro", ar: "أسعار برو" },
+  "footer.proLogin": { fr: "Connexion professionnels", ar: "دخول المهنيين" },
+  "footer.proNote": {
+    fr: "Espaces médecin, clinique et laboratoire — accès réservé après connexion.",
+    ar: "فضاءات الطبيب والمصحة والمخبر — دخول محجوز بعد تسجيل الدخول.",
+  },
   "footer.searchDoctor": { fr: "Rechercher un médecin", ar: "البحث عن طبيب" },
   "footer.manageAppointments": { fr: "Gérer mes rendez-vous", ar: "إدارة مواعيدي" },
   "footer.joinPro": { fr: "Rejoindre Tabibi Pro", ar: "انضم إلى طبيبي برو" },

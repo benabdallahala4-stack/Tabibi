@@ -13,6 +13,7 @@ import {
   MAX_TOTAL_BYTES,
 } from "@/lib/medicalRecord";
 import { useLocale } from "@/lib/i18n";
+import { useRoleGate, SessionBar } from "@/components/RoleGuard";
 
 const L = {
   fr: {
@@ -44,6 +45,7 @@ const L = {
 };
 
 export default function LaboPage() {
+  const gate = useRoleGate(["labo", "medecin", "admin"]);
   const { locale } = useLocale();
   const t = L[locale];
   const [labName, setLabName] = useState("");
@@ -88,7 +90,11 @@ export default function LaboPage() {
     reader.readAsDataURL(file);
   }
 
+  if (gate) return gate;
+
   return (
+    <>
+    <SessionBar />
     <div className="mx-auto max-w-2xl px-4 py-10">
       <h1 className="text-2xl font-bold text-slate-800">🧪 {t.title}</h1>
       <p className="mt-1 text-sm text-slate-500">{t.sub}</p>
@@ -128,5 +134,6 @@ export default function LaboPage() {
 
       <p className="mt-4 text-center text-xs text-slate-400">{t.note}</p>
     </div>
+    </>
   );
 }

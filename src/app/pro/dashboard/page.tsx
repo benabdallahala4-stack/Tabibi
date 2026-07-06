@@ -18,6 +18,7 @@ import {
 } from "@/lib/pro";
 import { accessRecordWithCode, type MedicalRecord } from "@/lib/medicalRecord";
 import { loadQueue, saveQueue, type QueueState } from "@/lib/queue";
+import { useRoleGate, SessionBar } from "@/components/RoleGuard";
 import { allQuestions, answerQuestion, type QnaQuestion } from "@/lib/qna";
 import { SPECIALTIES } from "@/lib/data";
 import { loadPlan, planAllows, PLAN_LABELS, TAB_MIN_PLAN, type Plan } from "@/lib/plan";
@@ -44,6 +45,7 @@ const METHOD_LABEL: Record<PaymentMethod, string> = {
 };
 
 export default function ProDashboard() {
+  const gate = useRoleGate(["medecin", "admin"]);
   const [tab, setTab] = useState<TabId>("agenda");
   const [ws, setWs] = useState<ProWorkspace | null>(null);
   const [bookings, setBookings] = useState<Appointment[]>([]);
@@ -66,9 +68,12 @@ export default function ProDashboard() {
     saveWorkspace(next);
   }
 
+  if (gate) return gate;
   if (!ws) return <p className="p-10 text-slate-400">Chargement…</p>;
 
   return (
+    <>
+    <SessionBar />
     <div className="mx-auto max-w-6xl px-4 py-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
@@ -136,6 +141,7 @@ export default function ProDashboard() {
         )}
       </div>
     </div>
+    </>
   );
 }
 

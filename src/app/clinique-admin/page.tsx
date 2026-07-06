@@ -5,6 +5,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useRoleGate, SessionBar } from "@/components/RoleGuard";
 import { CLINICS } from "@/lib/clinics";
 import { DOCTORS } from "@/lib/data";
 
@@ -28,6 +29,7 @@ const TABS = [
 const CLINIC = CLINICS[0];
 
 export default function ClinicAdminPage() {
+  const gate = useRoleGate(["clinique", "admin"]);
   const [tab, setTab] = useState<(typeof TABS)[number]["id"]>("devis");
   const [quotes, setQuotes] = useState<QuoteRequest[] | null>(null);
 
@@ -53,7 +55,11 @@ export default function ClinicAdminPage() {
     return { total: quotes?.length ?? 0, byCountry: [...byCountry.entries()] };
   }, [quotes]);
 
+  if (gate) return gate;
+
   return (
+    <>
+    <SessionBar />
     <div className="mx-auto max-w-5xl px-4 py-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
@@ -224,5 +230,6 @@ export default function ClinicAdminPage() {
         )}
       </div>
     </div>
+    </>
   );
 }

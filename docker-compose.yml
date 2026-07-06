@@ -1,0 +1,50 @@
+# Tabibi — stack complète locale : base de données + application (front + API).
+#
+#   cp .env.example .env      # ajustez si besoin
+#   docker compose up --build
+#   → http://localhost:3000  (mode « cloud » : comptes, RDV multi-appareils)
+#
+# Le service « web » applique les migrations Prisma, sème les comptes de test,
+# puis démarre Next.js (front + routes API dans le même service).
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: tabibi
+      POSTGRES_PASSWORD: tabibi
+      POSTGRES_DB: tabibi
+    ports:
+      - "5432:5432"
+    volumes:
+      - tabibi_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tabibi -d tabibi"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://tabibi:tabibi@db:5432/tabibi?schema=public
+      SESSION_SECRET: ${SESSION_SECRET:-change-me-in-production}
+      NODE_ENV: production
+      # Optionnels — décommentez pour activer :
+      # ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      # SMS_GATEWAY_URL: ${SMS_GATEWAY_URL}
+      # SMS_GATEWAY_TOKEN: ${SMS_GATEWAY_TOKEN}
+    command: >
+      sh -c "npx prisma migrate deploy &&
+             node prisma/seed.mjs &&
+             npx next start"
+    ports:
+      - "3000:3000"
+
+volumes:
+  tabibi_pgdata:

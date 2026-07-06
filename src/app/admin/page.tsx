@@ -7,6 +7,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useRoleGate, SessionBar } from "@/components/RoleGuard";
 import { DOCTORS, SPECIALTIES } from "@/lib/data";
 import { CLINICS } from "@/lib/clinics";
 import { LABS } from "@/lib/labs";
@@ -36,6 +37,7 @@ const TABS = [
 const TYPE_LABEL = { medecin: "🩺 Médecin", clinique: "🏥 Clinique", laboratoire: "🧪 Laboratoire" };
 
 export default function AdminPage() {
+  const gate = useRoleGate(["admin"]);
   const [tab, setTab] = useState<(typeof TABS)[number]["id"]>("verifs");
   const [leads, setLeads] = useState<Lead[] | null>(null);
   const [questions, setQuestions] = useState<QnaQuestion[]>([]);
@@ -91,7 +93,11 @@ L'équipe Tabibi — le système d'exploitation de la santé tunisienne`;
     }
   }
 
+  if (gate) return gate;
+
   return (
+    <>
+    <SessionBar />
     <div className="mx-auto max-w-5xl px-4 py-8">
       <h1 className="text-2xl font-bold text-slate-800">Back-office Tabibi</h1>
       <p className="text-sm text-slate-500">
@@ -295,5 +301,6 @@ L'équipe Tabibi — le système d'exploitation de la santé tunisienne`;
         )}
       </div>
     </div>
+    </>
   );
 }
