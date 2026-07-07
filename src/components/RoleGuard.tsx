@@ -75,6 +75,7 @@ export function SessionBar() {
   }, []);
   if (!session) return null;
   const isDoctor = session.role === "medecin" || session.role === "admin";
+  const isSecretary = session.role === "secretaire";
   return (
     <div className="border-b border-slate-200 bg-slate-50">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-2 text-xs">
@@ -90,6 +91,12 @@ export function SessionBar() {
             <Link href="/pro/agenda" className="rounded-md px-2.5 py-1 text-slate-600 hover:bg-white hover:text-primary-700">📅 Agenda</Link>
             <Link href="/pro/ordonnances" className="rounded-md px-2.5 py-1 text-slate-600 hover:bg-white hover:text-primary-700">📝 Ordonnancier</Link>
             <Link href="/pro/certificats" className="rounded-md px-2.5 py-1 text-slate-600 hover:bg-white hover:text-primary-700">📄 Certificats</Link>
+            <Link href="/pro/bulletin" className="rounded-md px-2.5 py-1 text-slate-600 hover:bg-white hover:text-primary-700">🧾 Bulletin CNAM</Link>
+          </nav>
+        )}
+        {isSecretary && (
+          <nav className="flex flex-wrap items-center gap-1 font-medium">
+            <Link href="/pro/agenda" className="rounded-md px-2.5 py-1 text-slate-600 hover:bg-white hover:text-primary-700">📅 Agenda</Link>
             <Link href="/pro/bulletin" className="rounded-md px-2.5 py-1 text-slate-600 hover:bg-white hover:text-primary-700">🧾 Bulletin CNAM</Link>
           </nav>
         )}

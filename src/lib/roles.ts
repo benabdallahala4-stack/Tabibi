@@ -1,6 +1,6 @@
 // Rôles & contrôle d'accès (démo).
 //
-// Le site distingue cinq rôles. Les espaces professionnels ne doivent JAMAIS
+// Le site distingue six rôles. Les espaces professionnels ne doivent JAMAIS
 // être accessibles au grand public — ils sont protégés par RoleGuard.
 //
 // Démo : la « session » est un rôle choisi sur /connexion et stocké en
@@ -8,11 +8,12 @@
 // compte (champ User.role), vérifié côté serveur à chaque requête + OTP/session
 // (voir docs/ARCHITECTURE.md et docs/ROLES.md).
 
-export type Role = "patient" | "medecin" | "clinique" | "labo" | "admin";
+export type Role = "patient" | "medecin" | "secretaire" | "clinique" | "labo" | "admin";
 
 export const ROLE_LABELS: Record<Role, string> = {
   patient: "Patient",
   medecin: "Médecin",
+  secretaire: "Secrétaire",
   clinique: "Clinique",
   labo: "Laboratoire",
   admin: "Administration",
@@ -47,6 +48,15 @@ export const MOCK_USERS: MockUser[] = [
     home: "/pro/dashboard",
     doctorSlug: "dr-amine-ben-salah-cardiologie-tunis",
     desc: "Agenda, dossiers patients, caisse, file d'attente, questions publiques.",
+  },
+  {
+    key: "secretaire-amira",
+    role: "secretaire",
+    name: "Amira Sassi (secrétaire)",
+    phone: "+216 20 000 005",
+    home: "/pro/agenda",
+    doctorSlug: "dr-amine-ben-salah-cardiologie-tunis",
+    desc: "Gère l'agenda et la file d'attente du cabinet — sans accès aux dossiers cliniques.",
   },
   {
     key: "clinique-carthage",
@@ -106,6 +116,10 @@ export function logout(): void {
 /** Matrice d'accès : rôles autorisés par espace protégé (source de vérité). */
 export const ACCESS: Record<string, Role[]> = {
   "/pro/dashboard": ["medecin", "admin"],
+  "/pro/agenda": ["medecin", "secretaire", "admin"], // la secrétaire gère l'agenda
+  "/pro/ordonnances": ["medecin", "admin"], // clinique : médecin uniquement
+  "/pro/certificats": ["medecin", "admin"],
+  "/pro/bulletin": ["medecin", "secretaire", "admin"], // la secrétaire prépare les bulletins
   "/clinique-admin": ["clinique", "admin"],
   "/labo": ["labo", "medecin", "admin"], // le labo dépose ; un médecin peut tester
   "/admin": ["admin"],

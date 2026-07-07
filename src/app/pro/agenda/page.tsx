@@ -31,7 +31,7 @@ function addDays(d: Date, n: number): Date {
 }
 
 export default function AgendaPage() {
-  const gate = useRoleGate(["medecin", "admin"]);
+  const gate = useRoleGate(["medecin", "secretaire", "admin"]);
   const { locale } = useLocale();
   const fr = locale === "fr";
 

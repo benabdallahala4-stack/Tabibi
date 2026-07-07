@@ -9,6 +9,7 @@ const db = new PrismaClient();
 const USERS = [
   { phone: "+21620000001", name: "Yasmine Gharbi", role: "patient" },
   { phone: "+21620000002", name: "Dr Amine Ben Salah", role: "medecin" },
+  { phone: "+21620000005", name: "Amira Sassi (secrétaire)", role: "secretaire" },
   { phone: "+21671000003", name: "Clinique Carthage Internationale", role: "clinique" },
   { phone: "+21671000004", name: "Laboratoire Ibn Sina", role: "labo" },
   { phone: "+21620000009", name: "Équipe Seha", role: "admin" },
