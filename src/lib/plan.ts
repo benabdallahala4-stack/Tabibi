@@ -7,10 +7,12 @@ export type Plan = "gratuit" | "essentiel" | "avance" | "premium";
 
 const KEY = "seha.pro.plan";
 
+// Trois paliers présentés au médecin : Gratuit · Pro · Premium.
+// (Les identifiants internes essentiel/avance sont regroupés sous « Pro ».)
 export const PLAN_LABELS: Record<Plan, string> = {
   gratuit: "Gratuit",
-  essentiel: "Essentiel",
-  avance: "Avancé",
+  essentiel: "Pro",
+  avance: "Pro",
   premium: "Premium",
 };
 
