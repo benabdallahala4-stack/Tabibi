@@ -40,6 +40,11 @@ export default function DoctorCard({ doctor, distanceKm }: { doctor: Doctor; dis
                 {t("card.cnam")}
               </span>
             )}
+            {(doctor.tiersPayant ?? doctor.cnam) && (
+              <span className="rounded-full bg-primary-50 px-2 py-0.5 font-medium text-primary-700">
+                {locale === "ar" ? "دفع مسبق" : "Tiers payant"}
+              </span>
+            )}
             {doctor.teleconsultation && (
               <span className="rounded-full bg-sky-50 px-2 py-0.5 font-medium text-sky-700">
                 {t("card.tele")}

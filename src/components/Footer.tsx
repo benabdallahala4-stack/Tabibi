@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useLocale } from "@/lib/i18n";
 
 export default function Footer() {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   return (
     <footer className="mt-16 border-t border-slate-200 bg-white">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:grid-cols-4">
@@ -32,6 +32,7 @@ export default function Footer() {
             <li><Link href="/dossier" className="hover:text-primary-600">{t("nav.dossier")}</Link></li>
             <li><Link href="/questions" className="hover:text-primary-600">{t("nav.qna")}</Link></li>
             <li><Link href="/sante" className="hover:text-primary-600">{t("nav.magazine")}</Link></li>
+            <li><Link href="/cnam" className="hover:text-primary-600">{locale === "ar" ? "الكنام والتعويض" : "CNAM & remboursement"}</Link></li>
             <li><Link href="/plus" className="hover:text-primary-600">Seha Plus</Link></li>
           </ul>
         </div>

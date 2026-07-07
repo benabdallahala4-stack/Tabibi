@@ -17,6 +17,9 @@ export interface Doctor {
   photoSeed: string; // initials used for the avatar
   languages: string[];
   cnam: boolean; // conventionné CNAM
+  cnamConvention?: string; // n° de conventionnement CNAM (affiché sur le profil)
+  tiersPayant?: boolean; // pratique le tiers payant / prise en charge CNAM
+  insurers?: string[]; // ids d'assurances privées/mutuelles acceptées (voir insurance.ts)
   teleconsultation: boolean;
   priceTnd: number; // consultation de base en dinars
   rating: number;
