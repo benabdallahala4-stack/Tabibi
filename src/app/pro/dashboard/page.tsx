@@ -42,7 +42,7 @@ type View = "agenda" | "patients" | "caisse" | "file" | "teleconsultation" | "an
 
 const NAV: NavItem[] = [
   { id: "agenda", label: "Agenda", icon: "M4 5h16M4 5v14h16V5M8 3v4M16 3v4" },
-  { id: "patients", label: "Patients", icon: "M16 14a4 4 0 10-8 0M12 10a3 3 0 100-6 3 3 0 000 6" },
+  { id: "patients", label: "Patients", icon: "M16 14a4 4 0 10-8 0M12 10a3 3 0 100-6 3 3 0 000 6", href: "/pro/patients" },
   { id: "ordonnances", label: "Ordonnancier", icon: "M7 4h7l4 4v12H7zM14 4v4h4", href: "/pro/ordonnances" },
   { id: "caisse", label: "Caisse", icon: "M3 7h18v10H3zM3 11h18" },
   { id: "file", label: "File d'attente", icon: "M5 4h14M7 4v6l3 3-3 3v4M17 4v6l-3 3 3 3v4", badge: 3 },
