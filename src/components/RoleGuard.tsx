@@ -89,6 +89,7 @@ export function SessionBar() {
             <Link href="/pro/dashboard" className="rounded-md px-2.5 py-1 text-slate-600 hover:bg-white hover:text-primary-700">📊 Tableau de bord</Link>
             <Link href="/pro/ordonnances" className="rounded-md px-2.5 py-1 text-slate-600 hover:bg-white hover:text-primary-700">📝 Ordonnancier</Link>
             <Link href="/pro/certificats" className="rounded-md px-2.5 py-1 text-slate-600 hover:bg-white hover:text-primary-700">📄 Certificats</Link>
+            <Link href="/pro/bulletin" className="rounded-md px-2.5 py-1 text-slate-600 hover:bg-white hover:text-primary-700">🧾 Bulletin CNAM</Link>
           </nav>
         )}
         <button
