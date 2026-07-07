@@ -7,7 +7,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { useRoleGate, SessionBar } from "@/components/RoleGuard";
+import { useRoleGate } from "@/components/RoleGuard";
+import AppShell from "@/components/AppShell";
 import { useLocale } from "@/lib/i18n";
 import { MEDICINES, type Medicine } from "@/lib/medicines";
 
@@ -58,8 +59,7 @@ export default function OrdonnancesPage() {
   const today = "06/07/2026"; // démo : date figée (déterministe)
 
   return (
-    <>
-      <SessionBar />
+    <AppShell>
       <div className="mx-auto max-w-6xl px-4 py-6 print:hidden">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -216,7 +216,7 @@ export default function OrdonnancesPage() {
       <div className="hidden print:block">
         <OrdonnanceSheet fr={fr} doctor={doctor} patient={patient} lines={lines} date={today} />
       </div>
-    </>
+    </AppShell>
   );
 }
 

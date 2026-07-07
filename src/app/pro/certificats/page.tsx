@@ -6,7 +6,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { useRoleGate, SessionBar } from "@/components/RoleGuard";
+import { useRoleGate } from "@/components/RoleGuard";
+import AppShell from "@/components/AppShell";
 import { useLocale } from "@/lib/i18n";
 
 type TplId = "arret" | "aptitude" | "presence" | "bonnesante" | "reprise";
@@ -75,8 +76,7 @@ export default function CertificatsPage() {
   const doctor = { name: "Dr Amine Ben Salah", specialty: fr ? "Cardiologue" : "طبيب قلب", address: "12 Avenue Habib Bourguiba, 1001 Tunis", order: "12345" };
 
   return (
-    <>
-      <SessionBar />
+    <AppShell>
       <div className="mx-auto max-w-6xl px-4 py-6 print:hidden">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -135,7 +135,7 @@ export default function CertificatsPage() {
       <div className="hidden print:block">
         <CertSheet fr={fr} doctor={doctor} tpl={tpl} name={name} days={days} date={date} />
       </div>
-    </>
+    </AppShell>
   );
 }
 

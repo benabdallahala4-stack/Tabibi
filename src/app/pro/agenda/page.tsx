@@ -5,7 +5,8 @@
 // ajouter un. Démo : rendez-vous en localStorage (mode cloud = PostgreSQL).
 
 import { useEffect, useMemo, useState } from "react";
-import { useRoleGate, SessionBar } from "@/components/RoleGuard";
+import { useRoleGate } from "@/components/RoleGuard";
+import AppShell from "@/components/AppShell";
 import { useLocale } from "@/lib/i18n";
 import { listAppointments, saveAppointment, cancelAppointment } from "@/lib/appointments";
 import type { Appointment } from "@/lib/types";
@@ -90,8 +91,7 @@ export default function AgendaPage() {
     : "";
 
   return (
-    <>
-      <SessionBar />
+    <AppShell>
       <div className="mx-auto max-w-6xl px-4 py-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -193,6 +193,6 @@ export default function AgendaPage() {
           {fr ? "Démo : les rendez-vous sont stockés sur cet appareil. En mode cloud, ils sont synchronisés (PostgreSQL) et anti-surréservation." : "تجريبي: تُحفظ المواعيد على هذا الجهاز. في وضع السحابة تُزامَن (PostgreSQL) مع منع الحجز المزدوج."}
         </p>
       </div>
-    </>
+    </AppShell>
   );
 }
