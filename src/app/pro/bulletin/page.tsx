@@ -20,7 +20,7 @@ const QUALITY = [
 ];
 
 export default function BulletinPage() {
-  const gate = useRoleGate(["medecin", "admin"]);
+  const gate = useRoleGate(["medecin", "secretaire", "admin"]);
   const { locale } = useLocale();
   const fr = locale === "fr";
 
