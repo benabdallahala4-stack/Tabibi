@@ -5,7 +5,7 @@ export const SPECIALTIES: Specialty[] = [
   { id: "dentiste", label: "Dentiste", labelAr: "طب الأسنان", emoji: "🦷" },
   { id: "cardiologie", label: "Cardiologie", labelAr: "أمراض القلب", emoji: "❤️" },
   { id: "dermatologie", label: "Dermatologie", labelAr: "الأمراض الجلدية", emoji: "🧴" },
-  { id: "gynecologie", label: "Gynécologie-Obstétrique", labelAr: "أمراض النساء والتوليد", emoji: "��" },
+  { id: "gynecologie", label: "Gynécologie-Obstétrique", labelAr: "أمراض النساء والتوليد", emoji: "🤰" },
   { id: "pediatrie", label: "Pédiatrie", labelAr: "طب الأطفال", emoji: "🧒" },
   { id: "ophtalmologie", label: "Ophtalmologie", labelAr: "طب العيون", emoji: "👁️" },
   { id: "orl", label: "ORL", labelAr: "أنف أذن حنجرة", emoji: "👂" },
