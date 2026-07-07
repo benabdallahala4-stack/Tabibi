@@ -65,5 +65,9 @@ export interface Appointment {
   patientEmail: string;
   reason: string;
   createdAt: string;
-  status: "confirme" | "annule";
+  // en_attente : demandé par le patient, en attente de validation du médecin.
+  // confirme : validé par le médecin (ou ajouté directement au cabinet).
+  // refuse : demande déclinée. annule : annulé. termine : consultation faite.
+  status: "en_attente" | "confirme" | "refuse" | "annule" | "termine";
+  source?: "en_ligne" | "cabinet"; // origine du RDV
 }

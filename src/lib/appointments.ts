@@ -21,9 +21,11 @@ export function saveAppointment(appt: Appointment): void {
 }
 
 export function cancelAppointment(id: string): void {
-  const all = listAppointments().map((a) =>
-    a.id === id ? { ...a, status: "annule" as const } : a
-  );
+  updateAppointmentStatus(id, "annule");
+}
+
+export function updateAppointmentStatus(id: string, status: Appointment["status"]): void {
+  const all = listAppointments().map((a) => (a.id === id ? { ...a, status } : a));
   window.localStorage.setItem(KEY, JSON.stringify(all));
 }
 
