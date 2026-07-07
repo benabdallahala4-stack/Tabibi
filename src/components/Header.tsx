@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { useLocale } from "@/lib/i18n";
+import { loadSession, type Session } from "@/lib/roles";
 
 export default function Header() {
   const { t, locale, setLocale } = useLocale();
-  const { data: session } = useSession();
+  const [session, setSession] = useState<Session | null>(null);
+  useEffect(() => setSession(loadSession()), []);
 
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
@@ -48,9 +50,10 @@ export default function Header() {
             className="rounded-lg px-3 py-2 font-medium text-slate-600 hover:bg-slate-100"
             title={t("nav.account")}
           >
-            {session?.user?.image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={session.user.image} alt="" className="h-6 w-6 rounded-full" />
+            {session ? (
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary-100 text-xs font-bold text-primary-700">
+                {session.name.trim().charAt(0).toUpperCase() || "👤"}
+              </span>
             ) : (
               <span>👤</span>
             )}

@@ -12,7 +12,9 @@ datasource db {
 
 model User {
   id           String        @id @default(cuid())
-  phone        String        @unique
+  email        String?       @unique
+  passwordHash String? // scrypt ; null pour les comptes Google
+  phone        String?       @unique
   name         String?
   role         String        @default("patient") // patient | medecin | clinique | labo | admin
   createdAt    DateTime      @default(now())

@@ -1,12 +1,10 @@
-// Rôles & contrôle d'accès (démo).
+// Rôles & contrôle d'accès.
 //
 // Le site distingue six rôles. Les espaces professionnels ne doivent JAMAIS
 // être accessibles au grand public — ils sont protégés par RoleGuard.
 //
-// Démo : la « session » est un rôle choisi sur /connexion et stocké en
-// localStorage (comptes fictifs ci-dessous). Production : rôle porté par le
-// compte (champ User.role), vérifié côté serveur à chaque requête + OTP/session
-// (voir docs/ARCHITECTURE.md et docs/ROLES.md).
+// La « session » cliente (localStorage) porte le rôle pour l'UX ; la vraie
+// protection est côté serveur (cookie HMAC + User.role relu en base).
 
 export type Role = "patient" | "medecin" | "secretaire" | "clinique" | "labo" | "admin";
 
@@ -19,72 +17,6 @@ export const ROLE_LABELS: Record<Role, string> = {
   admin: "Administration",
 };
 
-export interface MockUser {
-  key: string;
-  role: Role;
-  name: string;
-  phone: string; // pour l'OTP SMS en production
-  home: string; // page d'accueil après connexion
-  desc: string;
-  doctorSlug?: string;
-  clinicSlug?: string;
-}
-
-/** Comptes de test — à utiliser pour explorer chaque rôle. */
-export const MOCK_USERS: MockUser[] = [
-  {
-    key: "patiente-yasmine",
-    role: "patient",
-    name: "Yasmine Gharbi",
-    phone: "+216 20 000 001",
-    home: "/mes-rdv",
-    desc: "Réserve des rendez-vous, gère son dossier médical et ses documents.",
-  },
-  {
-    key: "dr-ben-salah",
-    role: "medecin",
-    name: "Dr Amine Ben Salah",
-    phone: "+216 20 000 002",
-    home: "/pro/dashboard",
-    doctorSlug: "dr-amine-ben-salah-cardiologie-tunis",
-    desc: "Agenda, dossiers patients, caisse, file d'attente, questions publiques.",
-  },
-  {
-    key: "secretaire-amira",
-    role: "secretaire",
-    name: "Amira Sassi (secrétaire)",
-    phone: "+216 20 000 005",
-    home: "/pro/agenda",
-    doctorSlug: "dr-amine-ben-salah-cardiologie-tunis",
-    desc: "Gère l'agenda et la file d'attente du cabinet — sans accès aux dossiers cliniques.",
-  },
-  {
-    key: "clinique-carthage",
-    role: "clinique",
-    name: "Clinique Carthage Internationale",
-    phone: "+216 71 000 003",
-    home: "/clinique-admin",
-    clinicSlug: "clinique-carthage-internationale-tunis",
-    desc: "Demandes de devis, praticiens rattachés, statistiques internationales.",
-  },
-  {
-    key: "labo-ibn-sina",
-    role: "labo",
-    name: "Laboratoire Ibn Sina",
-    phone: "+216 71 000 004",
-    home: "/labo",
-    desc: "Dépôt des résultats d'analyses dans le dossier du patient.",
-  },
-  {
-    key: "admin-seha",
-    role: "admin",
-    name: "Équipe Seha",
-    phone: "+216 20 000 009",
-    home: "/admin",
-    desc: "Vérification des inscriptions, invitations médecins, modération.",
-  },
-];
-
 export interface Session {
   key: string;
   role: Role;
@@ -93,6 +25,16 @@ export interface Session {
 }
 
 const KEY = "seha.session";
+
+/** Page d'accueil par défaut selon le rôle (après connexion). */
+export const HOME_BY_ROLE: Record<Role, string> = {
+  patient: "/mes-rdv",
+  medecin: "/pro/dashboard",
+  secretaire: "/pro/agenda",
+  clinique: "/clinique-admin",
+  labo: "/labo",
+  admin: "/admin",
+};
 
 export function loadSession(): Session | null {
   if (typeof window === "undefined") return null;
@@ -104,13 +46,25 @@ export function loadSession(): Session | null {
   }
 }
 
-export function loginAs(user: MockUser): void {
-  const session: Session = { key: user.key, role: user.role, name: user.name, home: user.home };
+/** Enregistre la session cliente à partir d'un utilisateur serveur (réel). */
+export function saveSession(user: { id: string; name?: string | null; role: string }): Session {
+  const role = (user.role as Role) ?? "patient";
+  const session: Session = {
+    key: user.id,
+    role,
+    name: user.name ?? "Mon compte",
+    home: HOME_BY_ROLE[role] ?? "/",
+  };
   window.localStorage.setItem(KEY, JSON.stringify(session));
+  return session;
 }
 
 export function logout(): void {
   window.localStorage.removeItem(KEY);
+  // Efface aussi le cookie de session serveur (best-effort).
+  if (typeof fetch !== "undefined") {
+    fetch("/api/auth/logout", { method: "POST" }).catch(() => {});
+  }
 }
 
 /** Matrice d'accès : rôles autorisés par espace protégé (source de vérité). */

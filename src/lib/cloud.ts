@@ -1,6 +1,6 @@
 // Client du mode « cloud » : détecte la disponibilité de l'API (base de
-// données), gère la session OTP et synchronise les rendez-vous.
-// Si l'API est indisponible, tout le site continue en mode local.
+// données) et synchronise les rendez-vous. Si l'API est indisponible, tout
+// le site continue en mode local.
 
 import type { Appointment } from "./types";
 
@@ -20,8 +20,9 @@ export async function cloudAvailable(): Promise<boolean> {
 
 export interface CloudUser {
   id: string;
-  phone: string;
+  email?: string | null;
   name?: string | null;
+  role?: string | null;
 }
 
 export async function cloudMe(): Promise<CloudUser | null> {
@@ -34,41 +35,9 @@ export async function cloudMe(): Promise<CloudUser | null> {
   }
 }
 
-export async function cloudRequestOtp(phone: string): Promise<{ ok: boolean; devCode?: string; error?: string }> {
-  try {
-    const r = await fetch("/api/otp/request", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone }),
-    });
-    const j = await r.json();
-    return r.ok ? { ok: true, devCode: j.devCode } : { ok: false, error: j.error };
-  } catch {
-    return { ok: false, error: "network" };
-  }
-}
-
-export async function cloudVerifyOtp(
-  phone: string,
-  code: string,
-  name?: string
-): Promise<{ ok: boolean; user?: CloudUser; error?: string }> {
-  try {
-    const r = await fetch("/api/otp/verify", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone, code, name }),
-    });
-    const j = await r.json();
-    return r.ok ? { ok: true, user: j.user } : { ok: false, error: j.error };
-  } catch {
-    return { ok: false, error: "network" };
-  }
-}
-
 export async function cloudLogout(): Promise<void> {
   try {
-    await fetch("/api/me", { method: "DELETE" });
+    await fetch("/api/auth/logout", { method: "POST" });
   } catch {
     /* ignore */
   }

@@ -1,5 +1,7 @@
 // Sessions par cookie HttpOnly signé HMAC (sans dépendance externe).
-// Format du jeton : base64url(userId|phone|exp) + "." + HMAC-SHA256.
+// Format du jeton : base64url(userId|exp) + "." + HMAC-SHA256.
+// Le rôle et le profil sont relus en base à partir de userId — on ne fait
+// jamais confiance à une valeur (rôle, e-mail) portée par le cookie.
 
 import { createHmac, timingSafeEqual } from "crypto";
 import { cookies } from "next/headers";
@@ -17,12 +19,11 @@ function sign(payload: string): string {
 
 export interface SessionData {
   userId: string;
-  phone: string;
 }
 
 export function createToken(data: SessionData): string {
   const exp = Math.floor(Date.now() / 1000) + MAX_AGE_S;
-  const payload = Buffer.from(`${data.userId}|${data.phone}|${exp}`).toString("base64url");
+  const payload = Buffer.from(`${data.userId}|${exp}`).toString("base64url");
   return `${payload}.${sign(payload)}`;
 }
 
@@ -34,9 +35,9 @@ export function verifyToken(token: string | undefined): SessionData | null {
   const a = Buffer.from(mac);
   const b = Buffer.from(expected);
   if (a.length !== b.length || !timingSafeEqual(a, b)) return null;
-  const [userId, phone, expStr] = Buffer.from(payload, "base64url").toString().split("|");
-  if (!userId || !phone || Number(expStr) < Date.now() / 1000) return null;
-  return { userId, phone };
+  const [userId, expStr] = Buffer.from(payload, "base64url").toString().split("|");
+  if (!userId || Number(expStr) < Date.now() / 1000) return null;
+  return { userId };
 }
 
 export function readSession(): SessionData | null {
