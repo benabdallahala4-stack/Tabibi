@@ -61,6 +61,13 @@ export function saveSession(user: { id: string; name?: string | null; role: stri
 
 export function logout(): void {
   window.localStorage.removeItem(KEY);
+  // Repasse en thème clair (le sombre est réservé à l'espace connecté).
+  try {
+    window.localStorage.setItem("seha.theme", "light");
+    document.documentElement.classList.remove("dark");
+  } catch {
+    /* ignore */
+  }
   // Efface aussi le cookie de session serveur (best-effort).
   if (typeof fetch !== "undefined") {
     fetch("/api/auth/logout", { method: "POST" }).catch(() => {});
@@ -70,11 +77,11 @@ export function logout(): void {
 /** Matrice d'accès : rôles autorisés par espace protégé (source de vérité). */
 export const ACCESS: Record<string, Role[]> = {
   "/pro/dashboard": ["medecin", "admin"],
-  "/pro/agenda": ["medecin", "secretaire", "admin"], // la secrétaire gère l'agenda
-  "/pro/ordonnances": ["medecin", "admin"], // clinique : médecin uniquement
+  "/pro/agenda": ["medecin", "secretaire", "admin"],
+  "/pro/ordonnances": ["medecin", "admin"],
   "/pro/certificats": ["medecin", "admin"],
-  "/pro/bulletin": ["medecin", "secretaire", "admin"], // la secrétaire prépare les bulletins
+  "/pro/bulletin": ["medecin", "secretaire", "admin"],
   "/clinique-admin": ["clinique", "admin"],
-  "/labo": ["labo", "medecin", "admin"], // le labo dépose ; un médecin peut tester
+  "/labo": ["labo", "medecin", "admin"],
   "/admin": ["admin"],
 };

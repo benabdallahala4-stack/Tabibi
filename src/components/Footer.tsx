@@ -1,10 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useLocale } from "@/lib/i18n";
+import { loadSession } from "@/lib/roles";
 
 export default function Footer() {
   const { t, locale } = useLocale();
+  // Masqué dans l'espace connecté (l'application a sa propre barre latérale).
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => setLoggedIn(!!loadSession()), []);
+  if (loggedIn) return null;
   return (
     <footer className="mt-16 border-t border-slate-200 bg-white">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:grid-cols-4">

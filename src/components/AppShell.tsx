@@ -2,8 +2,8 @@
 
 // Coquille applicative commune (patients et professionnels) : barre latérale
 // gauche avec la navigation propre au rôle, thème clair par défaut avec bascule
-// sombre, carte de profil et déconnexion. Le thème sombre est limité à cet
-// espace (la classe `dark` est posée ici) — le site public reste clair.
+// sombre, carte de profil et déconnexion. Non connecté : rendu simple (page
+// publique, sans barre latérale).
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -61,79 +61,80 @@ export default function AppShell({
   const [session, setSession] = useState<Session | null>(null);
   useEffect(() => setSession(loadSession()), []);
 
-  const role: Role = session?.role ?? "patient";
+  // Visiteur non connecté : pas de barre latérale (page publique normale).
+  if (!session) return <>{children}</>;
+
+  const role: Role = session.role;
   const items = nav ?? (role === "patient" ? PATIENT_NAV : DOCTOR_NAV);
-  const name = session?.name ?? "Mon compte";
+  const name = session.name ?? "Mon compte";
   const initial = name.trim().charAt(0).toUpperCase() || "?";
 
   return (
-    <div className={theme === "dark" ? "dark" : ""}>
-      <div className="min-h-[calc(100vh-8rem)] bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100">
-        <div className="mx-auto flex max-w-[1400px] flex-col gap-4 p-4 lg:flex-row lg:p-6">
-          <aside className="lg:w-60 lg:shrink-0">
-            <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200 dark:bg-slate-800/60 dark:ring-slate-700">
-              <div className="flex items-center gap-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-700 dark:bg-primary-500/20 dark:text-primary-300">
-                  {initial}
-                </span>
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-bold text-slate-800 dark:text-white">{name}</p>
-                  <p className="truncate text-xs text-slate-500 dark:text-slate-400">{ROLE_LABELS[role]}</p>
-                </div>
-              </div>
-
-              <nav className="mt-4 space-y-1">
-                {items.map((item) => {
-                  const isActive = item.href ? pathname === item.href : active === item.id;
-                  const cls = `flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
-                    isActive
-                      ? "bg-primary-600 text-white"
-                      : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700/60 dark:hover:text-white"
-                  }`;
-                  const inner = (
-                    <>
-                      <svg className="h-[18px] w-[18px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                        <path d={item.icon} />
-                      </svg>
-                      <span className="flex-1 text-left">{item.label}</span>
-                      {item.badge ? (
-                        <span className="rounded-full bg-accent-600 px-1.5 py-0.5 text-[10px] font-bold text-white">{item.badge}</span>
-                      ) : null}
-                      {item.premium ? (
-                        <span className="rounded-full bg-violet-100 px-1.5 py-0.5 text-[10px] font-semibold text-violet-700 dark:bg-violet-500/20 dark:text-violet-300">Premium</span>
-                      ) : null}
-                    </>
-                  );
-                  return item.href ? (
-                    <Link key={item.id} href={item.href} className={cls}>{inner}</Link>
-                  ) : (
-                    <button key={item.id} type="button" onClick={() => onSelect?.(item.id)} className={cls}>{inner}</button>
-                  );
-                })}
-              </nav>
-
-              <div className="mt-4 flex items-center justify-between border-t border-slate-200 pt-3 dark:border-slate-700">
-                <button
-                  type="button"
-                  onClick={toggle}
-                  className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-xs font-medium text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-700/60"
-                  aria-label="Basculer le thème"
-                >
-                  {theme === "dark" ? "☀️ Clair" : "🌙 Sombre"}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => { logout(); window.location.href = "/connexion"; }}
-                  className="rounded-lg px-2 py-1.5 text-xs font-medium text-slate-500 hover:text-accent-600 dark:text-slate-400"
-                >
-                  Déconnexion
-                </button>
+    <div className="min-h-[calc(100vh-3.75rem)] bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100">
+      <div className="mx-auto flex max-w-[1400px] flex-col gap-4 p-4 lg:flex-row lg:p-6">
+        <aside className="lg:w-60 lg:shrink-0 print:hidden">
+          <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200 dark:bg-slate-800/60 dark:ring-slate-700">
+            <div className="flex items-center gap-3">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary-100 text-sm font-bold text-primary-700 dark:bg-primary-500/20 dark:text-primary-300">
+                {initial}
+              </span>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-bold text-slate-800 dark:text-white">{name}</p>
+                <p className="truncate text-xs text-slate-500 dark:text-slate-400">{ROLE_LABELS[role]}</p>
               </div>
             </div>
-          </aside>
 
-          <main className="min-w-0 flex-1">{children}</main>
-        </div>
+            <nav className="mt-4 space-y-1">
+              {items.map((item) => {
+                const isActive = item.href ? pathname === item.href : active === item.id;
+                const cls = `flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
+                  isActive
+                    ? "bg-primary-600 text-white"
+                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700/60 dark:hover:text-white"
+                }`;
+                const inner = (
+                  <>
+                    <svg className="h-[18px] w-[18px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                      <path d={item.icon} />
+                    </svg>
+                    <span className="flex-1 text-left">{item.label}</span>
+                    {item.badge ? (
+                      <span className="rounded-full bg-accent-600 px-1.5 py-0.5 text-[10px] font-bold text-white">{item.badge}</span>
+                    ) : null}
+                    {item.premium ? (
+                      <span className="rounded-full bg-violet-100 px-1.5 py-0.5 text-[10px] font-semibold text-violet-700 dark:bg-violet-500/20 dark:text-violet-300">Premium</span>
+                    ) : null}
+                  </>
+                );
+                return item.href ? (
+                  <Link key={item.id} href={item.href} className={cls}>{inner}</Link>
+                ) : (
+                  <button key={item.id} type="button" onClick={() => onSelect?.(item.id)} className={cls}>{inner}</button>
+                );
+              })}
+            </nav>
+
+            <div className="mt-4 flex items-center justify-between border-t border-slate-200 pt-3 dark:border-slate-700">
+              <button
+                type="button"
+                onClick={toggle}
+                className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-xs font-medium text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-700/60"
+                aria-label="Basculer le thème"
+              >
+                {theme === "dark" ? "☀️ Clair" : "🌙 Sombre"}
+              </button>
+              <button
+                type="button"
+                onClick={() => { logout(); window.location.href = "/connexion"; }}
+                className="rounded-lg px-2 py-1.5 text-xs font-medium text-slate-500 hover:text-accent-600 dark:text-slate-400"
+              >
+                Déconnexion
+              </button>
+            </div>
+          </div>
+        </aside>
+
+        <main className="min-w-0 flex-1">{children}</main>
       </div>
     </div>
   );
