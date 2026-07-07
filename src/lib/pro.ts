@@ -33,6 +33,40 @@ export interface ProPatient {
   origin: "Tunisie" | "Libye" | "Algérie" | "Autre";
   allergies: string;
   chronic: string; // maladies chroniques
+  // Champs enrichis (optionnels — rétro-compatibles avec l'ancien seed)
+  gender?: "H" | "F";
+  email?: string;
+  address?: string;
+  city?: string;
+  bloodGroup?: string; // O+, A-, …
+  cnamId?: string; // identifiant unique CNAM
+  insurer?: string; // CNAM / assurance privée / aucun
+  antecedents?: string; // antécédents médicaux/chirurgicaux/familiaux
+  treatments?: string; // traitements en cours
+  notes?: string; // note libre du praticien
+  createdAt?: string; // YYYY-MM-DD
+}
+
+export interface VitalsRecord {
+  id: string;
+  patientId: string;
+  date: string; // YYYY-MM-DD
+  weightKg?: number;
+  heightCm?: number;
+  systolic?: number; // TA systolique
+  diastolic?: number; // TA diastolique
+  heartRate?: number; // bpm
+  tempC?: number;
+  glycemia?: number; // g/L
+  spo2?: number; // %
+}
+
+export interface MedicalDocument {
+  id: string;
+  patientId: string;
+  date: string; // YYYY-MM-DD
+  title: string;
+  kind: "analyse" | "imagerie" | "ordonnance" | "certificat" | "courrier" | "autre";
 }
 
 export interface FollowUp {
@@ -60,6 +94,8 @@ export interface ProWorkspace {
   consultations: ConsultationRecord[];
   followUps: FollowUp[];
   threads: MessageThread[];
+  vitals: VitalsRecord[];
+  documents: MedicalDocument[];
 }
 
 const KEY = "seha.pro.workspace.v1";
@@ -74,6 +110,16 @@ const SEED: ProWorkspace = {
       origin: "Tunisie",
       allergies: "Pénicilline",
       chronic: "Hypertension artérielle",
+      gender: "H",
+      email: "m.karray@example.tn",
+      address: "Rue de Marseille, Tunis",
+      city: "Tunis",
+      bloodGroup: "O+",
+      cnamId: "0123456-78",
+      insurer: "CNAM",
+      antecedents: "Père hypertendu. Appendicectomie 1992.",
+      treatments: "Amlodipine 5mg",
+      createdAt: "2024-02-14",
     },
     {
       id: "p2",
@@ -83,6 +129,13 @@ const SEED: ProWorkspace = {
       origin: "Tunisie",
       allergies: "—",
       chronic: "—",
+      gender: "F",
+      email: "fatma.jebali@example.tn",
+      city: "Ariana",
+      bloodGroup: "A+",
+      insurer: "Assurance privée (STAR)",
+      antecedents: "RAS.",
+      createdAt: "2025-01-09",
     },
     {
       id: "p3",
@@ -92,6 +145,15 @@ const SEED: ProWorkspace = {
       origin: "Libye",
       allergies: "—",
       chronic: "Diabète type 2, insuffisance coronarienne",
+      gender: "H",
+      address: "Tripoli, Libye",
+      city: "Tripoli",
+      bloodGroup: "B+",
+      insurer: "Aucun (patient international)",
+      antecedents: "Diabète depuis 2009. Stent coronaire 2021 (Tunis).",
+      treatments: "Bisoprolol 5mg, Aspirine 100mg, Metformine 1000mg",
+      notes: "Patient suivi à distance entre deux séjours à Tunis.",
+      createdAt: "2025-11-20",
     },
   ],
   consultations: [
@@ -157,6 +219,17 @@ const SEED: ProWorkspace = {
       ],
     },
   ],
+  vitals: [
+    { id: "v1", patientId: "p1", date: "2026-06-22", weightKg: 84, heightCm: 174, systolic: 140, diastolic: 90, heartRate: 78, glycemia: 0.98 },
+    { id: "v2", patientId: "p1", date: "2026-03-15", weightKg: 86, heightCm: 174, systolic: 150, diastolic: 95, heartRate: 82 },
+    { id: "v3", patientId: "p3", date: "2026-07-03", weightKg: 79, heightCm: 170, systolic: 135, diastolic: 85, heartRate: 72, glycemia: 1.45, spo2: 97 },
+  ],
+  documents: [
+    { id: "d1", patientId: "p1", date: "2026-06-22", title: "ECG de repos", kind: "analyse" },
+    { id: "d2", patientId: "p3", date: "2026-07-03", title: "Échographie cardiaque", kind: "imagerie" },
+    { id: "d3", patientId: "p3", date: "2026-07-03", title: "Bilan lipidique + HbA1c", kind: "analyse" },
+    { id: "d4", patientId: "p2", date: "2026-06-29", title: "Compte-rendu téléconsultation", kind: "courrier" },
+  ],
 };
 
 export function loadWorkspace(): ProWorkspace {
@@ -167,10 +240,27 @@ export function loadWorkspace(): ProWorkspace {
       window.localStorage.setItem(KEY, JSON.stringify(SEED));
       return SEED;
     }
-    return JSON.parse(raw) as ProWorkspace;
+    const parsed = JSON.parse(raw) as Partial<ProWorkspace>;
+    // Rétro-compatibilité : garantir la présence des nouveaux tableaux.
+    return {
+      patients: parsed.patients ?? [],
+      consultations: parsed.consultations ?? [],
+      followUps: parsed.followUps ?? [],
+      threads: parsed.threads ?? [],
+      vitals: parsed.vitals ?? [],
+      documents: parsed.documents ?? [],
+    };
   } catch {
     return SEED;
   }
+}
+
+// Âge à partir de l'année de naissance (approximation, année courante figée
+// côté démo pour rester déterministe SSR/CSR).
+export function ageFromBirthYear(birthYear: string): number | null {
+  const y = parseInt(birthYear, 10);
+  if (!y || y < 1900) return null;
+  return 2026 - y;
 }
 
 export function saveWorkspace(ws: ProWorkspace): void {
