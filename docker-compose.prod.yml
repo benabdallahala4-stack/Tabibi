@@ -1,0 +1,70 @@
+# Seha — production sur VPS (Hostinger, Contabo, OVH…).
+# Stack : PostgreSQL (privé) + Next.js (privé) + Caddy (HTTPS automatique).
+#
+#   cp .env.prod.example .env      # renseignez DOMAIN, mots de passe, secret
+#   docker compose -f docker-compose.prod.yml up -d --build
+#   → https://<DOMAIN>  (Caddy obtient le certificat Let's Encrypt tout seul)
+#
+# Différences avec docker-compose.yml (dev local) :
+#  - la base et l'app ne publient AUCUN port sur l'hôte (réseau interne only) ;
+#  - Caddy est le seul exposé (80/443) et termine le TLS ;
+#  - les secrets viennent de .env (jamais de valeurs par défaut faibles).
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-seha}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?definissez POSTGRES_PASSWORD dans .env}
+      POSTGRES_DB: ${POSTGRES_DB:-seha}
+    volumes:
+      - seha_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-seha} -d ${POSTGRES_DB:-seha}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    # Pas de `ports:` — la base reste privée sur le réseau Docker.
+
+  web:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-seha}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-seha}?schema=public
+      SESSION_SECRET: ${SESSION_SECRET:?definissez SESSION_SECRET dans .env (openssl rand -base64 32)}
+      NODE_ENV: production
+      # Optionnels — laissez vide pour désactiver la fonctionnalité :
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      SMS_GATEWAY_URL: ${SMS_GATEWAY_URL:-}
+      SMS_GATEWAY_TOKEN: ${SMS_GATEWAY_TOKEN:-}
+    command: >
+      sh -c "npx prisma migrate deploy &&
+             node prisma/seed.mjs &&
+             npx next start"
+    expose:
+      - "3000"
+    # Pas de `ports:` — seul Caddy parle à l'app.
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - web
+    environment:
+      DOMAIN: ${DOMAIN:?definissez DOMAIN dans .env (ex. seha.tn)}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  seha_pgdata:
+  caddy_data:
+  caddy_config:

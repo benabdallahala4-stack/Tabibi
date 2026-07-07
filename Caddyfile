@@ -1,0 +1,22 @@
+# Caddy — reverse proxy + HTTPS automatique (Let's Encrypt).
+# Le domaine est injecté via la variable d'environnement DOMAIN (docker-compose).
+# Caddy obtient et renouvelle le certificat TLS tout seul, tant que le DNS de
+# DOMAIN pointe vers l'IP du VPS et que les ports 80/443 sont ouverts.
+
+{$DOMAIN} {
+	encode gzip zstd
+	reverse_proxy web:3000
+
+	# En-têtes de sécurité de base.
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "SAMEORIGIN"
+		Referrer-Policy "strict-origin-when-cross-origin"
+	}
+}
+
+# Optionnel : rediriger www vers le domaine nu (décommentez si besoin).
+# www.{$DOMAIN} {
+# 	redir https://{$DOMAIN}{uri} permanent
+# }
