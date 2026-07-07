@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { loadPlan, savePlan, PLAN_LABELS, type Plan } from "@/lib/plan";
 import { useLocale } from "@/lib/i18n";
+import AppShell from "@/components/AppShell";
 
 type Feat = { fr: string; ar: string; lock?: "pro" | "premium" };
 
@@ -99,6 +100,7 @@ export default function TarifsPage() {
   }
 
   return (
+    <AppShell>
     <div className="mx-auto max-w-6xl px-4 py-10">
       <h1 className="text-center text-3xl font-bold text-slate-800">{fr ? "Tarifs Seha Pro" : "أسعار صحة برو"}</h1>
       <p className="mx-auto mt-2 max-w-xl text-center text-slate-500">
@@ -231,5 +233,6 @@ export default function TarifsPage() {
         </div>
       )}
     </div>
+    </AppShell>
   );
 }

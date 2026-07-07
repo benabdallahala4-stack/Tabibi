@@ -7,7 +7,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { useRoleGate, SessionBar } from "@/components/RoleGuard";
+import { useRoleGate } from "@/components/RoleGuard";
+import AppShell from "@/components/AppShell";
 import { useLocale } from "@/lib/i18n";
 import { SPECIALTIES } from "@/lib/data";
 import { estimateReimbursement } from "@/lib/insurance";
@@ -41,8 +42,7 @@ export default function BulletinPage() {
   if (gate) return gate;
 
   return (
-    <>
-      <SessionBar />
+    <AppShell>
       <div className="mx-auto max-w-6xl px-4 py-6 print:hidden">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -105,7 +105,7 @@ export default function BulletinPage() {
       <div className="hidden print:block">
         <BulletinSheet fr={fr} doctor={doctor} f={f} est={est} date={date} />
       </div>
-    </>
+    </AppShell>
   );
 }
 

@@ -5,6 +5,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "@/lib/i18n";
+import AppShell from "@/components/AppShell";
 import {
   emptyRecord,
   generateCode,
@@ -162,6 +163,7 @@ export default function DossierPage() {
   };
 
   return (
+    <AppShell>
     <div className="mx-auto max-w-3xl px-4 py-8">
       <h1 className="text-2xl font-bold text-slate-800">🗄️ {t.title}</h1>
       <p className="mt-1 text-sm text-slate-500">{t.sub}</p>
@@ -299,5 +301,6 @@ export default function DossierPage() {
         <p className="mt-4 rounded-xl bg-slate-50 p-3 text-xs leading-relaxed text-slate-500">{t.legal}</p>
       </section>
     </div>
+    </AppShell>
   );
 }
