@@ -3,8 +3,10 @@
 import { useState } from "react";
 import BookingWidget from "@/components/BookingWidget";
 import VerifiedReviews from "@/components/VerifiedReviews";
+import Link from "next/link";
 import type { Doctor } from "@/lib/types";
 import { mapsEmbedUrl, mapsUrl } from "@/lib/data";
+import { doctorInsurance, insurerLabel } from "@/lib/insurance";
 import { FacebookIcon, InstagramIcon, LinkedInIcon, GlobeIcon } from "@/components/Icons";
 import { useLocale } from "@/lib/i18n";
 
@@ -149,6 +151,80 @@ export default function DoctorProfile({ doctor }: { doctor: Doctor }) {
               </div>
             </dl>
           </section>
+
+          {/* Assurance & remboursement */}
+          {(() => {
+            const ins = doctorInsurance(doctor);
+            const fr = locale === "fr";
+            return (
+              <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg font-bold text-slate-800">
+                    {fr ? "Assurance & remboursement" : "التأمين والتعويض"}
+                  </h2>
+                  <Link href="/cnam" className="text-xs font-medium text-primary-600 hover:underline">
+                    {fr ? "En savoir plus" : "المزيد"}
+                  </Link>
+                </div>
+
+                <div className="mt-3 flex flex-wrap gap-1.5 text-xs">
+                  <span className={`rounded-full px-2.5 py-1 font-medium ${ins.cnam ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-500"}`}>
+                    {ins.cnam ? (fr ? "✓ Conventionné CNAM" : "✓ متعاقد مع الكنام") : fr ? "Non conventionné CNAM" : "غير متعاقد"}
+                  </span>
+                  {ins.tiersPayant && (
+                    <span className="rounded-full bg-primary-50 px-2.5 py-1 font-medium text-primary-700">
+                      {fr ? "✓ Tiers payant" : "✓ دفع مسبق"}
+                    </span>
+                  )}
+                </div>
+
+                {ins.convention && (
+                  <p className="mt-2 text-xs text-slate-400">
+                    {fr ? "N° de conventionnement" : "رقم التعاقد"} · <span dir="ltr">{ins.convention}</span>
+                  </p>
+                )}
+
+                {/* Estimation de remboursement */}
+                {ins.cnam && (
+                  <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+                    <div className="rounded-xl bg-slate-50 p-2.5 ring-1 ring-slate-200">
+                      <p className="text-[10px] uppercase tracking-wide text-slate-500">{fr ? "Consultation" : "الاستشارة"}</p>
+                      <p className="mt-0.5 text-lg font-bold text-slate-800">{ins.reimbursement.price} DT</p>
+                    </div>
+                    <div className="rounded-xl bg-emerald-50 p-2.5 ring-1 ring-emerald-100">
+                      <p className="text-[10px] uppercase tracking-wide text-emerald-700">{fr ? "Remboursé ≈" : "مُعوَّض ≈"}</p>
+                      <p className="mt-0.5 text-lg font-bold text-emerald-700">{ins.reimbursement.reimbursed} DT</p>
+                    </div>
+                    <div className="rounded-xl bg-primary-50 p-2.5 ring-1 ring-primary-100">
+                      <p className="text-[10px] uppercase tracking-wide text-primary-700">{fr ? "Reste ≈" : "يبقى ≈"}</p>
+                      <p className="mt-0.5 text-lg font-bold text-primary-700">{ins.reimbursement.outOfPocket} DT</p>
+                    </div>
+                  </div>
+                )}
+
+                {ins.insurers.length > 0 && (
+                  <div className="mt-4">
+                    <p className="text-xs font-medium text-slate-600">{fr ? "Assurances acceptées" : "التأمينات المقبولة"}</p>
+                    <div className="mt-1.5 flex flex-wrap gap-1.5">
+                      {ins.insurers.map((id) => (
+                        <span key={id} className="rounded-full bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-600 ring-1 ring-slate-200">
+                          {insurerLabel(id)}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {ins.cnam && (
+                  <p className="mt-3 text-[11px] leading-relaxed text-slate-400">
+                    {fr
+                      ? "Estimation indicative sur le tarif de référence CNAM (≥70 %). Les maladies chroniques (APCI) sont prises en charge à 100 %."
+                      : "تقدير إرشادي على التعريفة المرجعية للكنام (≥70٪). الأمراض المزمنة (APCI) تُغطّى 100٪."}
+                  </p>
+                )}
+              </section>
+            );
+          })()}
 
           {/* Localisation Google Maps */}
           <section className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
