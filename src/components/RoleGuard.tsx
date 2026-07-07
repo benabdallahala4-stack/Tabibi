@@ -74,15 +74,23 @@ export function SessionBar() {
     setSession(loadSession());
   }, []);
   if (!session) return null;
+  const isDoctor = session.role === "medecin" || session.role === "admin";
   return (
     <div className="border-b border-slate-200 bg-slate-50">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2 text-xs">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-2 text-xs">
         <span className="text-slate-500">
           Connecté : <span className="font-semibold text-slate-700">{session.name}</span>{" "}
           <span className="rounded-full bg-primary-50 px-2 py-0.5 font-medium text-primary-700">
             {ROLE_LABELS[session.role]}
           </span>
         </span>
+        {isDoctor && (
+          <nav className="flex flex-wrap items-center gap-1 font-medium">
+            <Link href="/pro/dashboard" className="rounded-md px-2.5 py-1 text-slate-600 hover:bg-white hover:text-primary-700">📊 Tableau de bord</Link>
+            <Link href="/pro/ordonnances" className="rounded-md px-2.5 py-1 text-slate-600 hover:bg-white hover:text-primary-700">📝 Ordonnancier</Link>
+            <Link href="/pro/certificats" className="rounded-md px-2.5 py-1 text-slate-600 hover:bg-white hover:text-primary-700">📄 Certificats</Link>
+          </nav>
+        )}
         <button
           type="button"
           onClick={() => {
