@@ -39,10 +39,12 @@ export default function MyAppointmentsPage() {
   }
 
   const todayIso = new Date().toISOString().slice(0, 10);
+  const ar = locale === "ar";
   const confirmed = (appointments ?? []).filter((a) => a.status === "confirme");
+  const pending = (appointments ?? []).filter((a) => a.status === "en_attente" && a.dateIso >= todayIso);
   const upcoming = confirmed.filter((a) => a.dateIso >= todayIso);
   const past = confirmed.filter((a) => a.dateIso < todayIso).sort((a, b) => b.dateIso.localeCompare(a.dateIso));
-  const cancelled = (appointments ?? []).filter((a) => a.status === "annule");
+  const cancelled = (appointments ?? []).filter((a) => a.status === "annule" || a.status === "refuse");
 
   return (
     <AppShell>
@@ -68,6 +70,34 @@ export default function MyAppointmentsPage() {
         </div>
       ) : (
         <>
+          {pending.length > 0 && (
+            <section className="mt-6 space-y-3">
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-amber-500">
+                {ar ? "في انتظار تأكيد الطبيب" : "En attente de confirmation du médecin"}
+              </h2>
+              {pending.map((a) => (
+                <div key={a.id} className={`flex flex-col justify-between gap-3 border-l-4 border-amber-400 p-5 sm:flex-row sm:items-center ${CARD}`}>
+                  <div>
+                    <p className="font-semibold text-slate-800 dark:text-white">
+                      <Link href={`/medecin/${a.doctorSlug}`} className="hover:underline">{a.doctorName}</Link>
+                      <span className="ms-2 rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-700 dark:bg-amber-500/20 dark:text-amber-300">
+                        {ar ? "قيد الانتظار" : "En attente"}
+                      </span>
+                    </p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
+                      {a.specialty} · {city(a.city)} · {a.kind === "cabinet" ? t("booking.inCabinet") : t("booking.inTele")}
+                    </p>
+                    <p className="mt-1 text-sm font-medium text-amber-700 dark:text-amber-300" dir="ltr">{a.dateIso} {a.time}</p>
+                    <p className="mt-1 text-xs text-slate-400">{ar ? "ستتلقى إشعارًا عند تأكيد الطبيب." : "Vous serez notifié dès que le médecin aura confirmé."}</p>
+                  </div>
+                  <button type="button" onClick={() => cancel(a.id)} className="rounded-xl bg-slate-100 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-200">
+                    {ar ? "إلغاء الطلب" : "Annuler la demande"}
+                  </button>
+                </div>
+              ))}
+            </section>
+          )}
+
           <section className="mt-6 space-y-4">
             {upcoming.map((a) => (
               <div key={a.id} className={`flex flex-col justify-between gap-4 p-5 sm:flex-row sm:items-center ${CARD}`}>

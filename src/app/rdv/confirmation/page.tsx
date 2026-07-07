@@ -32,15 +32,26 @@ function ConfirmationContent() {
     );
   }
 
+  const pending = appt.status === "en_attente";
+  const fr = t("confirm.title") === "Rendez-vous confirmé !";
+
   return (
     <div className="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
       <div className="flex items-center gap-3">
-        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-2xl">
-          ✓
+        <span className={`flex h-12 w-12 items-center justify-center rounded-full text-2xl ${pending ? "bg-amber-100" : "bg-emerald-100"}`}>
+          {pending ? "⏳" : "✓"}
         </span>
         <div>
-          <h1 className="text-xl font-bold text-slate-800">{t("confirm.title")}</h1>
-          <p className="text-sm text-slate-500">{t("confirm.sub")}</p>
+          <h1 className="text-xl font-bold text-slate-800">
+            {pending ? (fr ? "Demande envoyée !" : "تم إرسال الطلب!") : t("confirm.title")}
+          </h1>
+          <p className="text-sm text-slate-500">
+            {pending
+              ? fr
+                ? "Le médecin doit confirmer ce créneau. Vous serez notifié dès sa réponse."
+                : "على الطبيب تأكيد هذا الموعد. ستتلقى إشعارًا فور رده."
+              : t("confirm.sub")}
+          </p>
         </div>
       </div>
       <dl className="mt-6 grid gap-4 border-t border-slate-100 pt-6 text-sm sm:grid-cols-2">
@@ -87,7 +98,7 @@ function ConfirmationContent() {
       </a>
 
       <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-        {appt.kind === "teleconsultation" && (
+        {appt.kind === "teleconsultation" && !pending && (
           <Link
             href={`/visio?rdv=${appt.id}`}
             className="rounded-xl bg-sky-600 px-6 py-3 text-center text-sm font-semibold text-white transition hover:bg-sky-700"
