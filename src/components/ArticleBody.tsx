@@ -5,8 +5,9 @@
 
 import Link from "next/link";
 import ArticleCover from "@/components/ArticleCover";
+import DialectCallout from "@/components/DialectCallout";
 import { Icon } from "@/components/Icons";
-import type { Article } from "@/lib/articles";
+import { articleDialects, type Article } from "@/lib/articles";
 import { SPECIALTIES } from "@/lib/data";
 import { useLocale } from "@/lib/i18n";
 
@@ -21,6 +22,7 @@ export default function ArticleBody({
   const fr = locale === "fr";
   const specialty = SPECIALTIES.find((s) => s.id === article.specialtyId);
   const sections = fr ? article.sections : article.sectionsAr;
+  const dialects = articleDialects(article.slug);
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-8">
@@ -61,6 +63,9 @@ export default function ArticleBody({
           </section>
         ))}
       </div>
+
+      {/* L'essentiel en darija (تونسي / ليبي / جزائري) */}
+      {dialects && <DialectCallout dialects={dialects} fr={fr} />}
 
       {/* CTA prise de RDV */}
       {specialty && (
