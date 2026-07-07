@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Doctor } from "@/lib/types";
-import { upcomingSlots, type DaySlots } from "@/lib/slots";
-import { saveAppointment } from "@/lib/appointments";
+import { type DaySlots } from "@/lib/slots";
+import { bookableSlots, loadAvailability } from "@/lib/availability";
+import { listAppointments, saveAppointment } from "@/lib/appointments";
 import { loadProfile } from "@/lib/profile";
 import { notifyUser } from "@/lib/notify";
 import { cloudPushAppointment } from "@/lib/cloud";
@@ -23,7 +24,16 @@ export default function BookingWidget({ doctor }: { doctor: Doctor }) {
   const [slotTaken, setSlotTaken] = useState(false);
 
   useEffect(() => {
-    setDays(upcomingSlots(doctor.slug, new Date(), 7));
+    // Créneaux issus des disponibilités réelles du médecin, moins les créneaux
+    // déjà pris (RDV confirmés ou en attente).
+    const av = loadAvailability(doctor.slug);
+    const booked: Record<string, Set<string>> = {};
+    for (const a of listAppointments()) {
+      if (a.doctorSlug !== doctor.slug) continue;
+      if (a.status === "annule" || a.status === "refuse") continue;
+      (booked[a.dateIso] ??= new Set()).add(a.time);
+    }
+    setDays(bookableSlots(av, new Date(), 14, booked));
     const profile = loadProfile();
     setForm((f) => ({ ...f, name: profile.name, phone: profile.phone, email: profile.email }));
   }, [doctor.slug]);
@@ -50,7 +60,9 @@ export default function BookingWidget({ doctor }: { doctor: Doctor }) {
       patientEmail: form.email.trim(),
       reason: form.reason.trim(),
       createdAt: new Date().toISOString(),
-      status: "confirme" as const,
+      // Demande en attente de validation par le médecin (il confirme ou refuse).
+      status: "en_attente" as const,
+      source: "en_ligne" as const,
     };
     // Mode cloud (compte connecté + base de données) : le serveur garantit
     // qu'un même créneau ne peut pas être réservé deux fois.
@@ -62,8 +74,8 @@ export default function BookingWidget({ doctor }: { doctor: Doctor }) {
     }
     saveAppointment(appt);
     notifyUser(
-      "Seha — rendez-vous confirmé ✓",
-      `${doctor.fullName} · ${selected.dateIso} à ${selected.time}`
+      "Seha — demande envoyée ⏳",
+      `${doctor.fullName} · ${selected.dateIso} à ${selected.time} — en attente de confirmation`
     );
     router.push(`/rdv/confirmation?id=${id}`);
   }
