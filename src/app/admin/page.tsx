@@ -42,6 +42,7 @@ export default function AdminPage() {
   const [leads, setLeads] = useState<Lead[] | null>(null);
   const [questions, setQuestions] = useState<QnaQuestion[]>([]);
   const [copied, setCopied] = useState("");
+  const [ordre, setOrdre] = useState<Record<number, "ok" | "ko">>({});
 
   useEffect(() => {
     try {
@@ -61,6 +62,15 @@ export default function AdminPage() {
   function setStatus(index: number, status: Lead["status"]) {
     if (!leads) return;
     persist(leads.map((l, i) => (i === index ? { ...l, status } : l)));
+  }
+
+  // Vérification du n° d'inscription au Conseil national de l'ordre des médecins
+  // (CNOM). Démo : contrôle du format (4 à 6 chiffres) + simulation de la
+  // recherche au tableau de l'Ordre. Production : appel à l'annuaire officiel.
+  function verifyOrdre(index: number, l: Lead) {
+    const num = (l.registration || "").replace(/\s/g, "");
+    const valid = /^\d{4,6}$/.test(num);
+    setOrdre((o) => ({ ...o, [index]: valid ? "ok" : "ko" }));
   }
 
   const unanswered = useMemo(() => questions.filter((q) => q.answers.length === 0), [questions]);
@@ -171,6 +181,27 @@ L'équipe Seha — le système d'exploitation de la santé tunisienne`;
                         <> · N° registre : <span className="font-mono font-medium">{l.registration}</span></>
                       )}
                     </p>
+                    {l.type === "medecin" && (
+                      <div className="mt-2 flex flex-wrap items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => verifyOrdre(i, l)}
+                          className="rounded-lg bg-primary-50 px-3 py-1.5 text-xs font-semibold text-primary-700 ring-1 ring-primary-200 hover:bg-primary-100"
+                        >
+                          🔎 Vérifier au tableau de l&apos;Ordre (CNOM)
+                        </button>
+                        {ordre[i] === "ok" && (
+                          <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
+                            ✓ N° {l.registration} trouvé au tableau de l&apos;Ordre
+                          </span>
+                        )}
+                        {ordre[i] === "ko" && (
+                          <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-accent-600">
+                            ✗ N° introuvable / format invalide — vérifier manuellement
+                          </span>
+                        )}
+                      </div>
+                    )}
                     <div className="mt-2 flex flex-wrap gap-2">
                       {l.status === "en_attente" ? (
                         <>
