@@ -34,6 +34,11 @@ const FEATURES = [
     fr: { title: "Visibilité en ligne", text: "Un profil public complet (CNAM, langues, tarifs, avis vérifiés) référencé dans la recherche Seha." },
     ar: { title: "حضور رقمي", text: "ملف عمومي كامل (CNAM، اللغات، الأسعار، تقييمات موثوقة) ضمن نتائج بحث صحة." },
   },
+  {
+    emoji: "🩺",
+    fr: { title: "Assurance & CNAM", text: "Affichez votre conventionnement CNAM, le tiers payant et les assurances acceptées. Les patients voient une estimation de remboursement sur votre profil — un vrai argument pour être choisi." },
+    ar: { title: "التأمين والكنام", text: "أظهر تعاقدك مع الكنام، الدفع المسبق والتأمينات المقبولة. يرى المرضى تقدير التعويض في ملفك — حجة قوية لاختيارك." },
+  },
 ];
 
 export default function ProPage() {
