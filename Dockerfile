@@ -11,7 +11,9 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # --- Dépendances ---
 FROM base AS deps
 COPY package.json package-lock.json ./
-RUN npm ci
+# --ignore-scripts : on saute le postinstall (prisma generate) ici car le
+# schéma Prisma n'est pas encore copié. La génération se fait au stage build.
+RUN npm ci --ignore-scripts
 
 # --- Build ---
 FROM base AS build
