@@ -2,6 +2,7 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -33,7 +34,6 @@ const config: Config = {
           "Arial",
           "sans-serif",
         ],
-        // Serif de titre (polices système — élégant, sans téléchargement).
         serif: [
           "Iowan Old Style",
           "Palatino Linotype",

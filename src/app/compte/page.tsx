@@ -1,156 +1,133 @@
 "use client";
 
+// Mon compte : profil, changement de mot de passe, abonnement, déconnexion.
+// Affiché dans la coquille applicative (barre latérale selon le rôle, thème
+// clair par défaut avec bascule sombre).
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { loadProfile, saveProfile } from "@/lib/profile";
-import { useLocale } from "@/lib/i18n";
-import { cloudMe, cloudLogout, type CloudUser } from "@/lib/cloud";
-import { loadSession, logout as clearClientSession, ROLE_LABELS, type Role } from "@/lib/roles";
+import AppShell from "@/components/AppShell";
+import { cloudMe, type CloudUser } from "@/lib/cloud";
+import { loadSession, ROLE_LABELS, type Role } from "@/lib/roles";
+import { loadPlan, PLAN_LABELS, type Plan } from "@/lib/plan";
+
+const CARD = "rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 dark:bg-slate-800/60 dark:ring-slate-700";
+const INPUT = "w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-primary-200 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100";
 
 export default function AccountPage() {
-  const { t, locale } = useLocale();
-  const fr = locale === "fr";
   const [user, setUser] = useState<CloudUser | null>(null);
-  const [checked, setChecked] = useState(false);
-  const [profile, setProfile] = useState({ name: "", phone: "", email: "" });
-  const [saved, setSaved] = useState(false);
+  const [role, setRole] = useState<Role>("patient");
+  const [plan, setPlan] = useState<Plan>("gratuit");
 
   useEffect(() => {
-    setProfile(loadProfile());
+    setPlan(loadPlan());
     const local = loadSession();
-    // Priorité au compte serveur (cookie) ; repli sur la session cliente.
+    if (local) setRole(local.role);
     (async () => {
       const me = await cloudMe();
-      if (me) setUser(me);
-      else if (local) setUser({ id: local.key, name: local.name, role: local.role });
-      setChecked(true);
+      if (me) {
+        setUser(me);
+        if (me.role) setRole(me.role as Role);
+      } else if (local) {
+        setUser({ id: local.key, name: local.name, role: local.role });
+      }
     })();
   }, []);
 
-  function save(e: React.FormEvent) {
-    e.preventDefault();
-    saveProfile(profile);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
-  }
+  const isDoctor = role === "medecin" || role === "admin";
 
-  async function doLogout() {
-    await cloudLogout();
-    clearClientSession();
-    setUser(null);
+  return (
+    <AppShell>
+      <div className="space-y-5">
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Mon compte</h1>
+
+        {/* Profil */}
+        <section className={CARD}>
+          <div className="flex items-center gap-4">
+            <span className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-100 text-xl font-bold text-primary-700 dark:bg-primary-500/20 dark:text-primary-300">
+              {(user?.name ?? "?").trim().charAt(0).toUpperCase()}
+            </span>
+            <div>
+              <p className="text-lg font-bold text-slate-800 dark:text-white">{user?.name ?? "Mon compte"}</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">{user?.email ?? "—"}</p>
+              <span className="mt-1 inline-block rounded-full bg-primary-50 px-2 py-0.5 text-xs font-medium text-primary-700 dark:bg-primary-500/15 dark:text-primary-300">
+                {ROLE_LABELS[role]}
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* Abonnement */}
+        <section className={CARD}>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="font-bold text-slate-800 dark:text-white">Abonnement</h2>
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                Plan actuel : <span className="font-semibold text-slate-700 dark:text-slate-200">{PLAN_LABELS[plan] ?? "Gratuit"}</span>
+              </p>
+            </div>
+            <Link
+              href={isDoctor ? "/pro/tarifs" : "/pro"}
+              className="rounded-xl bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-700"
+            >
+              {isDoctor ? "Gérer / changer d'abonnement" : "Découvrir Seha Pro"}
+            </Link>
+          </div>
+        </section>
+
+        {/* Mot de passe */}
+        <ChangePassword />
+      </div>
+    </AppShell>
+  );
+}
+
+function ChangePassword() {
+  const [current, setCurrent] = useState("");
+  const [next, setNext] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    setBusy(true);
+    setMsg(null);
+    try {
+      const res = await fetch("/api/auth/change-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ current, next }),
+      });
+      const data = await res.json();
+      if (!res.ok) setMsg({ ok: false, text: data.error ?? "Échec du changement." });
+      else {
+        setMsg({ ok: true, text: "Mot de passe mis à jour." });
+        setCurrent("");
+        setNext("");
+      }
+    } catch {
+      setMsg({ ok: false, text: "Erreur réseau." });
+    } finally {
+      setBusy(false);
+    }
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8">
-      <h1 className="text-2xl font-bold text-slate-800">{t("account.title")}</h1>
-
-      {/* Compte */}
-      <section className="mt-6 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-        {!checked ? (
-          <p className="text-sm text-slate-400">{fr ? "Chargement…" : "جارٍ التحميل…"}</p>
-        ) : user ? (
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary-100 text-lg font-bold text-primary-700">
-                {(user.name ?? "?").trim().charAt(0).toUpperCase()}
-              </span>
-              <div>
-                <p className="text-sm text-slate-500">{fr ? "Connecté en tant que" : "متصل بصفة"}</p>
-                <p className="font-semibold text-slate-800">{user.name ?? user.email}</p>
-                {user.role && (
-                  <span className="mt-0.5 inline-block rounded-full bg-primary-50 px-2 py-0.5 text-xs font-medium text-primary-700">
-                    {ROLE_LABELS[user.role as Role] ?? user.role}
-                  </span>
-                )}
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={doLogout}
-              className="rounded-xl bg-slate-100 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-200"
-            >
-              {fr ? "Se déconnecter" : "تسجيل الخروج"}
-            </button>
-          </div>
-        ) : (
-          <div className="text-center">
-            <p className="text-sm text-slate-600">
-              {fr ? "Vous n'êtes pas connecté." : "لست متصلاً."}
-            </p>
-            <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:justify-center">
-              <Link
-                href="/connexion"
-                className="rounded-xl bg-primary-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-700"
-              >
-                {fr ? "Se connecter" : "تسجيل الدخول"}
-              </Link>
-              <Link
-                href="/inscription"
-                className="rounded-xl bg-slate-100 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-200"
-              >
-                {fr ? "Créer un compte" : "إنشاء حساب"}
-              </Link>
-            </div>
-          </div>
+    <section className={CARD}>
+      <h2 className="font-bold text-slate-800 dark:text-white">Changer mon mot de passe</h2>
+      <form onSubmit={submit} className="mt-3 grid max-w-sm gap-3">
+        <input type="password" autoComplete="current-password" value={current} onChange={(e) => setCurrent(e.target.value)} placeholder="Mot de passe actuel" className={INPUT} />
+        <input type="password" autoComplete="new-password" minLength={8} required value={next} onChange={(e) => setNext(e.target.value)} placeholder="Nouveau mot de passe (min. 8)" className={INPUT} />
+        {msg && (
+          <p className={`text-sm ${msg.ok ? "text-emerald-600 dark:text-emerald-400" : "text-accent-600"}`}>{msg.text}</p>
         )}
-      </section>
-
-      {/* Profil local (pré-remplissage des réservations) */}
-      <section className="mt-6 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-lg font-bold text-slate-800">{t("account.profileTitle")}</h2>
-        <p className="mt-1 text-sm text-slate-500">{t("account.profileText")}</p>
-        <form onSubmit={save} className="mt-4 grid gap-3">
-          <input
-            type="text"
-            placeholder={t("booking.name")}
-            value={profile.name}
-            onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-            className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary-400"
-          />
-          <input
-            type="tel"
-            placeholder={t("booking.phone")}
-            value={profile.phone}
-            onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
-            className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary-400"
-          />
-          <input
-            type="email"
-            placeholder={t("booking.email")}
-            value={profile.email}
-            onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-            className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary-400"
-          />
-          <button
-            type="submit"
-            className="rounded-xl bg-primary-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-700"
-          >
-            {saved ? t("account.saved") : t("account.save")}
-          </button>
-        </form>
-      </section>
-
-      {/* Dossier médical */}
-      <a
-        href="/dossier"
-        className="mt-6 flex items-center justify-between rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 transition hover:ring-primary-400"
-      >
-        <span>
-          <span className="block font-semibold text-slate-800">🗄️ {t("nav.dossier")}</span>
-          <span className="mt-0.5 block text-sm text-slate-500">
-            {fr
-              ? "Allergies, traitements, documents (photos/PDF) et partage sécurisé avec votre médecin."
-              : "الحساسية، الأدوية، الوثائق (صور/PDF) والمشاركة الآمنة مع طبيبك."}
-          </span>
-        </span>
-        <span className="text-2xl text-slate-300">›</span>
-      </a>
-
-      {/* Où sont mes données ? */}
-      <section className="mt-6 rounded-2xl bg-primary-50 p-6 ring-1 ring-primary-100">
-        <h2 className="font-semibold text-primary-900">💡 {t("account.whereTitle")}</h2>
-        <p className="mt-2 text-sm leading-relaxed text-primary-800">{t("account.whereText")}</p>
-      </section>
-    </div>
+        <button type="submit" disabled={busy} className="rounded-xl bg-primary-600 px-6 py-3 text-sm font-semibold text-white hover:bg-primary-700 disabled:opacity-60">
+          {busy ? "Mise à jour…" : "Mettre à jour"}
+        </button>
+      </form>
+      <p className="mt-3 text-xs text-slate-400">
+        Compte créé via Google ? Laissez « actuel » vide pour définir un premier mot de passe.
+      </p>
+    </section>
   );
 }
